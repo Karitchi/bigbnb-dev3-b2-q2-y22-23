@@ -1,30 +1,40 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div>
+    <header class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Logo ici</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Se connecter</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">S'inscrire</a>
+          </li>
+        </ul>
+      </div>
+    </header>
+    <router-view/>
+    <!-- Contenu de la page ici -->
+
+    <footer class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <a href="#" class="mx-2">big_bnb.inc</a>|
+            <router-link to="/login" class="mx-2">Confidentialité</router-link>|
+            <a href="#" class="mx-2">Conditions générales</a>|
+            <a href="#" class="mx-2">Plan du site</a>|
+            <a href="#" class="mx-2">Infos de l'entreprise</a>|
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
 </template>
 
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
