@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header class="navbar navbar-expand-lg navbar-light bg-light">
+    <header class="navbar navbar-expand-lg my-header">
       <a class="navbar-brand" href="#">Logo ici</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -18,8 +18,14 @@
     </header>
     <router-view/>
     <!-- Contenu de la page ici -->
+    <section>
+      <div >
+        <h2>Test titre</h2>
+        <p>Test simple texte</p>
+      </div>
+    </section>
 
-    <footer class="bg-light py-3">
+    <footer class="my-footer py-3">
       <div class="container">
         <div class="row">
           <div class="col-md-12 text-center">
@@ -36,5 +42,6 @@
 </template>
 
 
-<style>
+<style lang="scss">
+  @import './assets/variables.scss';
 </style>
