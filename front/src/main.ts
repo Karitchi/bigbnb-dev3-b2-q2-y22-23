@@ -5,4 +5,6 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './assets/variables.scss'
 
-createApp(App).use(router).mount('#app')
+const app = createApp(App);
+app.use(router).mount('#app')
+app.config.globalProperties.$api = 'http://localhost:12345/'
