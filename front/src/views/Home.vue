@@ -1,20 +1,7 @@
 <template>
   <div class="container-fluid p-5">
-    <div class="row m-0">
-      <card />
-      <card />
-      <card />
-      <card />
-      <card />
-      <card />
-      <card />
-      <card />
-      <card />
-      <card />
-      <card />
-      <card />
-      <card />
-      <card />
+    <div v-for="hotel in this.hotels" class="row m-0">
+      <card-hotel :hotel="hotel" />
     </div>
   </div>
 </template>
@@ -24,13 +11,32 @@
 </style>
 
 
-<script lang="ts">
-import Card from '../components/Card.vue'
+<script>
+import CardHotel from '../components/CardHotel.vue'
+import axios from "axios";
 
 export default {
-    name: 'App',
-    components: {
-        Card,
+  name: 'App',
+  components: {
+        CardHotel,
+  },
+
+  data() {
+    return {
+      hotels: []
     }
+  },
+
+  methods: {
+    fetchAllHotels() {
+      axios.get(`${this.$api}hotels/`)
+      .then(response => this.hotels = response.data)
+    }
+  },
+
+  mounted() {
+    this.fetchAllHotels();
+  }
+
 }
 </script>

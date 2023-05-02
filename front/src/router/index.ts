@@ -3,6 +3,8 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import About from '../views/About.vue'
+import MyHotels from '../views/MyHotels.vue'
+import MyBookings from '../views/MyBookings.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -24,6 +26,16 @@ const routes: Array<RouteRecordRaw> = [
     path: '/about',
     name: 'About',
     component: About
+  },
+  {
+    path: '/my_hotels',
+    name: 'MyHotels',
+    component: MyHotels
+  },
+  {
+    path: '/my_bookings',
+    name: 'MyBookins',
+    component: MyBookings
   }
 ]
 
