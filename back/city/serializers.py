@@ -3,6 +3,8 @@ from .models import City
 
 
 class CitySerializers(serializers.HyperlinkedModelSerializer):
+    id = serializers.IntegerField(source='city_id')
+
     class Meta:
         model = City
-        fields = ('city_id', 'name', 'country', 'location_x', 'location_y')
+        fields = ('id', 'name', 'country', 'location_x', 'location_y')

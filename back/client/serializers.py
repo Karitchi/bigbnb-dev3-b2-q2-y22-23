@@ -3,6 +3,8 @@ from .models import Client
 
 
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
+    id = serializers.IntegerField(source='client_id')
+
     class Meta:
         model = Client
-        fields = ('client_id', 'name', 'lastname', 'mail', 'password')
+        fields = ('id', 'name', 'lastname', 'mail', 'password')

@@ -3,6 +3,9 @@ from .models import HotelOwner
 
 
 class HotelOwnerSerializer(serializers.HyperlinkedModelSerializer):
+    id = serializers.IntegerField(source='hotel_owner_id')
+    company = serializers.CharField(source='society_name')
+
     class Meta:
         model = HotelOwner
-        fields = ('hotel_owner_id', 'name', 'lastname', 'society_name', 'mail', 'password')
+        fields = ('id', 'name', 'lastname', 'company', 'mail', 'password')
