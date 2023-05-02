@@ -1,0 +1,30 @@
+<template>
+    <nav class="navbar navbar-expand-lg my-header" data-bs-theme="dark">
+        <div class="container-fluid">
+
+            <router-link class="navbar-brand" to="/">Big bnb</router-link>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <router-link class="nav-link active" aria-current="page" to="/">Home</router-link>
+                    </li>
+
+                    <li class="nav-item">
+                        <router-link class="nav-link active" aria-current="page" to="/about">About</router-link>
+                    </li>
+                </ul>
+
+                <form class="d-flex ms-auto" role="search">
+                    <input class="form-control me-3" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                </form>
+            </div>
+
+        </div>
+    </nav>
+</template>

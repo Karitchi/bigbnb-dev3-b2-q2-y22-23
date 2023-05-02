@@ -1,29 +1,8 @@
 <template>
   <div>
-    <header class="navbar navbar-expand-lg my-header">
-      <a class="navbar-brand" href="#">Logo ici</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="#">Se connecter</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">S'inscrire</a>
-          </li>
-        </ul>
-      </div>
-    </header>
+    <Navbar />
     <router-view/>
     <!-- Contenu de la page ici -->
-    <section>
-      <div >
-        <h2>Test titre</h2>
-        <p>Test simple texte</p>
-      </div>
-    </section>
 
     <footer class="my-footer py-3">
       <div class="container">
@@ -33,15 +12,29 @@
             <router-link to="/login" class="mx-2">Confidentialité</router-link>|
             <a href="#" class="mx-2">Conditions générales</a>|
             <a href="#" class="mx-2">Plan du site</a>|
-            <a href="#" class="mx-2">Infos de l'entreprise</a>|
+            <router-link to="/about" class="mx-2">Infos de l'entreprise</router-link>|
           </div>
         </div>
       </div>
     </footer>
   </div>
+
 </template>
 
 
 <style lang="scss">
   @import './assets/variables.scss';
 </style>
+
+<script lang="ts">
+import Navbar from './components/Navbar.vue'
+import Footer from './components/Footer.vue'
+
+export default {
+  name: 'App',
+  components: {
+    Navbar,
+    Footer,
+  }
+}
+</script>
