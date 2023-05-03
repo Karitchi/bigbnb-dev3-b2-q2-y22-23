@@ -42,11 +42,12 @@ export default {
       .then(response => this.applyHotels(response.data));
     },
 
-    applyHotels(response) {
-      this.hotels = response;
+    applyHotels(responseData) {
+      console.log(responseData)
+      this.hotels = responseData.filter(hotel => hotel.hotel_owner === this.hotelOwner);
       for (let i = 0; i < this.hotels.length; i++) {
-        axios.get(this.hotels[i].city_id)
-        .then(response => this.hotels[i].city_id = response.data);
+        axios.get(`${this.$api}cities/${this.hotels[i].city}`)
+        .then(response => this.hotels[i].city = response.data);
       }
     }
   },

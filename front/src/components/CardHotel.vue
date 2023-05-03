@@ -6,7 +6,7 @@
                 <h3 class="cart-title">{{ this.hotel.name }}</h3>
               <p class="card-text"> <i>{{ this.hotel.description }}</i></p>
                 <a href="#" class="btn btn-outline-primary" style="margin-bottom: 5px">Plus d'informations</a>
-              <p class="card-footer">By <i>{{ this.hotelOwner.society_name }}</i></p>
+              <p class="card-footer">By <i>{{ this.hotelOwner.company }}</i></p>
             </div>
         </div>
     </div>
@@ -26,19 +26,19 @@ export default {
   props: ['hotel'],
   data() {
     return {
-      hotelOwner: {}
+      hotelOwner: {},
     }
   },
 
   methods: {
-    getHotelOwner(id) {
-      axios.get(`${this.hotel.hotel_owner_id}`)
+    setHotelOwner() {
+      axios.get(`${this.$api}hotel_owners/${this.hotel.hotel_owner}`)
       .then(response => this.hotelOwner = response.data);
     }
   },
 
   mounted() {
-    this.getHotelOwner(this.hotel);
+    this.setHotelOwner();
   }
 }
 </script>

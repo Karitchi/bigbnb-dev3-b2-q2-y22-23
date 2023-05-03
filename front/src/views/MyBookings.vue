@@ -1,5 +1,5 @@
 <template>
-  <hotel-owner-navbar :hotel_owner="this.hotelOwner" :is-my-hotel="false" />
+  <hotel-owner-navbar :hotel_owner="this.hotel_owner" :is-my-hotel="false" />
 </template>
 
 <script>

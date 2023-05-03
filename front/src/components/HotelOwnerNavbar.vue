@@ -29,9 +29,11 @@ ul {
 </style>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "HotelOwnerNavbar",
-  props: ['hotel_owner', 'isMyHotel']
+  props: ['hotel_owner', 'isMyHotel'],
 }
 </script>
 
