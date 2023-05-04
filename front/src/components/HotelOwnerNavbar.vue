@@ -26,17 +26,18 @@ ul {
 .active {
   text-decoration: #0D6EFD underline 3px;
 }
+
+.badge {
+  background-color: red;
+  color: white;
+  font-size: 0.5em;
+}
 </style>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "HotelOwnerNavbar",
   props: ['hotel_owner', 'isMyHotel'],
 }
 </script>
 
-<style scoped>
-
-</style>
