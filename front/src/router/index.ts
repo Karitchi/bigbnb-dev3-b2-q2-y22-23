@@ -41,7 +41,7 @@ const routes: Array<RouteRecordRaw> = [
   {
 	path: '/Hotelfilter',
 	name: 'HotelFilter',
-	component: HotelFilter.vue
+	component: HotelFilter
 }
 ]
 
