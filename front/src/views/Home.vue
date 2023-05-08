@@ -11,7 +11,7 @@ fetch('http://127.0.0.1:8000/hotels/')
 
 
 <template>
-  <CardHotel v-for="hotel in hotels" :key="hotel.id" :name="hotel.name" :description="hotel.description" :hotel_owner="hotel.hotel_owner" />
+  <CardHotel v-for="hotel in hotels" :key="hotel.id" :id="hotel.id" :name="hotel.name" :description="hotel.description" :hotel_owner="hotel.hotel_owner" />
 </template>
 
 <style scoped></style>

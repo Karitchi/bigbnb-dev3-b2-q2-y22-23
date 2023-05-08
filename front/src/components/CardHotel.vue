@@ -1,5 +1,6 @@
 <script setup lang="ts">
 defineProps([
+  "id",
   "name",
   "description",
   "hotel_owner",
@@ -13,7 +14,7 @@ defineProps([
       <div class="card-body">
         <h3 class="cart-title">{{ name }}</h3>
         <p class="card-text"> <i>{{ description }}</i></p>
-        <a href="#" class="btn btn-outline-primary" style="margin-bottom: 5px">Plus d'informations</a>
+        <router-link :to="'/hotels/' + id" class="btn btn-outline-primary">Plus d'informations</router-link>
         <p class="card-footer">By <i>{{ hotel_owner }}</i></p>
       </div>
     </div>

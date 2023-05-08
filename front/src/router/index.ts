@@ -39,7 +39,7 @@ const routes: Array<RouteRecordRaw> = [
     component: MyBookings
   },
   {
-    path: '/hotel-details',
+    path: '/hotels/:id',
     name: 'HotelDetails',
     component: HotelDetails
   },
