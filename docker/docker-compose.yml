@@ -1,0 +1,61 @@
+services:
+# # ---
+#   node:
+#     image: node:18.16.0
+#     container_name: node
+#     ports:
+#       - 8080:8080
+#     volumes:
+#       - ./front:/front
+#     command: >
+#       sh -c "tail -f /dev/null"
+# # ---
+#   python:
+#     image: python:3.11.3
+#     container_name: django
+#     ports:
+#       - 8000:8000
+#     volumes:
+#       - ./back:/back
+#     command: >
+#       sh -c "pip install --upgrade pip &&
+#       cd back &&
+#       pip install -r requirements.txt &&
+#       tail -f /dev/null"
+# # ---
+
+# ---
+  python:
+    build:
+      context: .
+      dockerfile: python:3.11.3.dockerfile
+    container_name: big-bnb-python
+    ports:
+      - 8000:8000
+    volumes:
+      - ../back:/back
+# ---
+  node:
+    build:
+      context: .
+      dockerfile: node:18.16.0.dockerfile
+    container_name: big-bnb-node
+    ports:
+      - 8080:8080
+    volumes:
+      - ../front:/front
+# ---
+  mariadb:
+    build:
+      context: .
+      dockerfile: mariadb:10.11.2.dockerfile
+    container_name: big-bnb-mariadb
+    environment:
+      - MARIADB_ROOT_PASSWORD=root
+      - MARIADB_USER=user
+      - MARIADB_PASSWORD=user
+      - MARIADB_DATABASE=big_bnb
+    ports:
+      - 3306:3306
+    volumes:
+      - ../mariadb:/var/lib/mysql
