@@ -3,11 +3,10 @@ from .models import Hotel
 
 
 class HotelSerializer(serializers.HyperlinkedModelSerializer):
-    id = serializers.IntegerField(source='hotel_id')
-    hotel_owner = serializers.PrimaryKeyRelatedField(source='hotel_owner_id', read_only=True)
-    city = serializers.PrimaryKeyRelatedField(source='city_id', read_only=True)
+    hotel_owner = serializers.IntegerField(source='hotel_owner_id_id')
+    city = serializers.IntegerField(source='city_id_id')
     rooms = serializers.IntegerField(source='room_quantity')
 
     class Meta:
         model = Hotel
-        fields = ('id', 'hotel_owner', 'name', 'image', 'description', 'city', 'rooms', 'price')
+        fields = ('hotel_owner', 'name', 'image', 'description', 'city', 'rooms', 'price')
