@@ -95,9 +95,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'big_bnb',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'USER': 'user',
+        'PASSWORD': 'user',
+        'HOST': 'mariadb-10.11.2',
         'PORT': '3306',
     }
 }
