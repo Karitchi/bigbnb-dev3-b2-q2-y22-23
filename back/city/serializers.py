@@ -3,7 +3,7 @@ from .models import City
 
 
 class CitySerializers(serializers.HyperlinkedModelSerializer):
-    id = serializers.IntegerField(source='city_id')
+    id = serializers.IntegerField(source='city_id', required=False)
 
     class Meta:
         model = City
