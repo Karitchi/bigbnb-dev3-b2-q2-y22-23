@@ -32,13 +32,13 @@ def hotel_detail(request, hotel_id):
         return Response(HotelSerializer(hotel).data)
 
     if request.method == 'PATCH':
-        if len(request.data['image']) > 100:
+        if 'img' in request.data.keys() and len(request.data['img']) > 100:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         
         if len(request.data['name']) < 3 or len(request.data['name']) > 100:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         
-        if request.data['price'] <= '0':
+        if request.data['price'] <= 0:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         
         serializer = HotelSerializer(hotel, data=request.data, partial=True)
