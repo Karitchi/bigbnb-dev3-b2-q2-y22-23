@@ -3,14 +3,15 @@ from .models import Booking
 
 
 class BookingSerializer(serializers.HyperlinkedModelSerializer):
+    id = serializers.IntegerField(source='booking_id', required=False)
     client = serializers.IntegerField(source='client_id_id')
     hotel = serializers.IntegerField(source='hotel_id_id')
     rooms = serializers.IntegerField(source='booked_rooms')
 
     class Meta:
         model = Booking
-        fields = ('client', 'hotel', 'start_date', 'end_date', 'rooms', 'total_price',
-                  'payment_date', 'payment_method', 'unread')
+        fields = ('id', 'client', 'hotel', 'start_date', 'end_date', 'rooms', 'total_price',
+                  'payment_date', 'payment_method', 'unread', 'approved')
 
 
 def data_from_booking(booking: Booking) -> dict[str:object]:

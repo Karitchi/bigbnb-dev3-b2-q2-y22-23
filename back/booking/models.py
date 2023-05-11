@@ -14,3 +14,4 @@ class Booking(models.Model):
     payment_date = models.DateField()
     payment_method = models.CharField(max_length=20)
     unread = models.BooleanField(default=True)
+    approved = models.BooleanField(null=True)
