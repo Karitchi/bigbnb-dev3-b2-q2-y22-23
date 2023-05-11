@@ -29,6 +29,7 @@
 import HotelOwnerNavbar from "../components/HotelOwnerNavbar";
 import CardBooking from "@/components/CardBooking";
 import axios from "axios";
+import {ref} from "vue";
 export default {
   name: "MyBookings",
   components: {CardBooking, HotelOwnerNavbar},
@@ -49,9 +50,9 @@ export default {
     },
 
     setHotels(responseData) {
-      for (let i in responseData) {
-        if (responseData[i].hotel_owner === this.hotelOwner) {
-          this.hotels.push(responseData[i].id);
+      for (let data of responseData) {
+        if (data.hotel_owner === this.hotelOwner) {
+          this.hotels.push(data.id);
         }
       }
     },
@@ -63,7 +64,7 @@ export default {
 
     setBookings(responseData) {
       this.bookings = responseData
-          .filter(data => this.hotels.includes(data.hotel))
+          .filter(data => this.hotels.includes(data.hotel) && data.approved === null)
           .sort((a, b) => {
             if (!a.unread && b.unread)
               return 1;
@@ -73,20 +74,31 @@ export default {
       this.bookingsFiltered = this.bookings;
     },
 
-
-
     onAccept(id) {
-      this.bookings = this.bookings.filter(booking => booking.id !== id);
+      axios.patch(`${this.$api}set_booking_approved/${id}/`, {'approved': true})
+      .then(response => this.bookings = this.bookings.filter(booking => booking.id !== id));
     },
 
     onRefuse(id) {
-      this.bookings = this.bookings.filter(booking => booking.id !== id);
+      axios.patch(`${this.$api}set_booking_approved/${id}/`, {'approved': false})
+      .then(response =>this.bookings = this.bookings.filter(booking => booking.id !== id));
+    },
+
+    setBookingsToRead() {
+      for (let booking of this.bookings) {
+        if (booking.unread)
+          axios.patch(`${this.$api}set_booking_read/${booking.id}/`, {'unread': false})
+      }
     }
   },
 
   mounted() {
+    window.onbeforeunload = this.setBookingsToRead;
+    window.onblur = this.setBookingsToRead;
+    window.onmouseout = this.setBookingsToRead;
     this.fetchHotels();
     this.fetchBookings();
-  }
+  },
+
 }
 </script>

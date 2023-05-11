@@ -3,7 +3,7 @@ from .models import Client
 
 
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
-    id = serializers.IntegerField(source='client_id')
+    id = serializers.IntegerField(source='client_id', required=False)
 
     class Meta:
         model = Client

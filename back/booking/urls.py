@@ -1,11 +1,10 @@
-from django.urls import include, path
-from rest_framework import routers
-from .views import BookingViewSets
+from django.urls import path
 
-router = routers.DefaultRouter()
-router.register(r'bookings', BookingViewSets)
+from . import views
 
 urlpatterns = [
-    path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('bookings/', views.all_bookings),
+    path('bookings/<int:booking_id>/', views.bookings_details),
+    path('set_booking_read/<int:booking_id>/', views.set_read),
+    path('set_booking_approved/<int:booking_id>/', views.set_approved)
 ]

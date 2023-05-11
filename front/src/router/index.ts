@@ -6,6 +6,7 @@ import About from '../views/About.vue'
 import MyHotels from '../views/MyHotels.vue'
 import MyBookings from '../views/MyBookings.vue'
 import HotelDetails from '../views/HotelDetails.vue'
+import Modification from '../views/Modification.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -42,6 +43,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/hotels/:id',
     name: 'HotelDetails',
     component: HotelDetails
+  },
+  {
+    path: '/modification/:id',
+    name: 'Modification',
+    component: Modification
   },
 ]
 

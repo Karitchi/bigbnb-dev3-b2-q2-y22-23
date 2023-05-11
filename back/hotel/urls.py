@@ -1,11 +1,8 @@
-from django.urls import include, path
-from rest_framework import routers
-from .views import HotelViewSets
+from django.urls import path
 
-router = routers.DefaultRouter()
-router.register(r'hotels', HotelViewSets)
+from . import views
 
 urlpatterns = [
-    path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('hotels/', views.all_hotels),
+    path('hotels/<int:hotel_id>/', views.hotel_detail)
 ]
