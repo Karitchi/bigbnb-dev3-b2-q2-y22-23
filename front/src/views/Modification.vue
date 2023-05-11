@@ -14,8 +14,8 @@
         </div>
 
         <div class="form-row">
-          <label for="image" class="my-label">Image:</label>
-          <input type="text" id="image" v-model="image" class="my-input input2">
+          <label for="image" class="my-label">img:</label>
+          <input type="text" id="image" v-model="img" class="my-input input2">
         </div>
 
         <div class="form-row">
@@ -57,7 +57,7 @@
       return {
         hotel: {},
        name : "",
-       image : "",
+       img : "",
        description : "",
         price : "",
         errorForm: ''
@@ -73,7 +73,7 @@
       modifierHotel() {
        /*const imageRegex = /\.(jpeg|jpg|gif|png)$/i; // Expression régulière pour vérifier les extensions d'image courantes, a voir quelles extensions on utilisera !
         
-       if (!imageRegex.test(this.image)) {
+       if (!imageRegex.test(this.img)) {
           this.errorForm = "Le lien vers l'image de l'hôtel n'est pas valide.";
           return;
        }
