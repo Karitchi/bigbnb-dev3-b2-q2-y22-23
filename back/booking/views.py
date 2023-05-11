@@ -1,9 +1,9 @@
-from rest_framework import viewsets, status
+from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .serializers import BookingSerializer, data_from_booking
 from .models import Booking
+from .serializers import BookingSerializer
 
 
 @api_view(['GET', 'POST'])

@@ -1,11 +1,9 @@
-from rest_framework import views
+from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import status
-from django.core.exceptions import ObjectDoesNotExist
 
-from .serializers import HotelSerializer
 from .models import Hotel
+from .serializers import HotelSerializer
 
 
 @api_view(['GET', 'POST'])
