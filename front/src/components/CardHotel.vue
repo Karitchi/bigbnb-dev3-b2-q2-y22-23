@@ -5,7 +5,7 @@
             <div class="card-body">
                 <h3 class="cart-title">{{ this.hotel.name }}</h3>
               <p class="card-text"> <i>{{ this.hotel.description }}</i></p>
-                <a href="#" class="btn btn-outline-primary" style="margin-bottom: 5px">Plus d'informations</a>
+                <router-link :to="this.router" class="btn btn-outline-primary" style="margin-bottom: 5px">Plus d'informations</router-link>
               <p class="card-footer">By <i>{{ this.hotelOwner.company }}</i></p>
             </div>
         </div>
@@ -27,6 +27,7 @@ export default {
   data() {
     return {
       hotelOwner: {},
+      router: "",
     }
   },
 
@@ -38,6 +39,7 @@ export default {
   },
 
   mounted() {
+    this.router = `/modification/${this.hotel.id}`;
     this.setHotelOwner();
   }
 }
