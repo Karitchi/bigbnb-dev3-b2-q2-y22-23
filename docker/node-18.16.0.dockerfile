@@ -13,8 +13,4 @@ run echo "alias grep='grep --color=auto'" >> /root/.bashrc
 run echo "alias fgrep='fgrep --color=auto'" >> /root/.bashrc
 run echo "alias egrep='egrep --color=auto'" >> /root/.bashrc
 
-
-
-
-
 cmd npm install && tail -f /dev/null
