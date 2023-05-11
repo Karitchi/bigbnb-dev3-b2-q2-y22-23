@@ -23,7 +23,7 @@ def all_hotels(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET', 'DELETE', 'PUT'])
+@api_view(['GET', 'DELETE', 'PATCH'])
 def hotel_detail(request, hotel_id):
     try:
         hotel = Hotel.objects.get(pk=hotel_id)
@@ -33,13 +33,21 @@ def hotel_detail(request, hotel_id):
     if request.method == 'GET':
         return Response(HotelSerializer(hotel).data)
 
-    if request.method == 'PUT':
-        serializer = HotelSerializer(hotel, data=request.data)
-        request.data['id'] = hotel.hotel_id
-        request.data['rooms'] = hotel.room_quantity
+    if request.method == 'PATCH':
+        if len(request.data['image']) > 100:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        if len(request.data['name']) < 3 or len(request.data['name']) > 100:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        if request.data['price'] <= '0':
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        serializer = HotelSerializer(hotel, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
+        print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     if request.method == 'DELETE':

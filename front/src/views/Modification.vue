@@ -1,25 +1,52 @@
 <template>
-  <div>
-    <button @click="goBack">Retour</button>
-    <h1>Modification de l'hôtel</h1>
+  <div class="page-container">
+    <div class="content-container">
+      <button @click="goBack" class="my-button hover-button">Retour</button>
+      <h1 class="my-heading titre">Modification de l'hôtel</h1>
 
-    <form @submit.prevent="modifierHotel">
-      <label for="nom">Nom de l'hôtel:</label>
-      <input type="text" id="nom" v-model="name">
+      <form @submit.prevent="modifierHotel" class="my-form">
+        <div v-if="errorForm !== ''" class="my-alert" role="alert">
+          {{ this.errorForm }}
+        </div>
+        <div class="form-row">
+          <label for="nom" class="my-label">Nom de l'hôtel:</label>
+          <input type="text" id="nom" v-model="name" class="my-input input1">
+        </div>
 
-      <label for="image">Image:</label>
-      <input type="file" id="image" @change="onFileChange">
+        <div class="form-row">
+          <label for="image" class="my-label">Image:</label>
+          <input type="text" id="image" v-model="image" class="my-input input2">
+        </div>
 
-      <label for="description">Description:</label>
-      <textarea id="description" v-model="hotel.description"></textarea>
+        <div class="form-row">
+          <label for="description" class="my-label">Description:</label>
+          <textarea id="description" v-model="description" class="my-textarea input3"></textarea>
+        </div>
 
-      <label for="prix">Prix de la chambre:</label>
-      <input type="number" step="0.01" id="prix" v-model="hotel.price">
+        <div class="form-row">
+          <label for="prix" class="my-label">Prix de la chambre:</label>
+          <input type="number" step="0.01" id="prix" v-model="price" class="my-input input4">
+        </div>
 
-      <button @click="test" type="submit">Enregistrer les modifications</button>
-    </form>
+        <button @click="test" type="submit" class="my-button hover-button">Enregistrer les modifications</button>
+      </form>
+      <footer class="my-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <a href="#" class="mx-2">big_bnb.inc</a>|
+            <router-link to="/login" class="mx-2">Confidentialité</router-link>|
+            <a href="#" class="mx-2">Conditions générales</a>|
+            <a href="#" class="mx-2">Plan du site</a>|
+            <router-link to="/about" class="mx-2">Infos de l'entreprise</router-link>|
+          </div>
+        </div>
+      </div>
+    </footer>
+    </div>
   </div>
 </template>
+
 
 
 <script>
@@ -32,36 +59,56 @@ export default {
       name : "",
       image : "",
       description : "",
-      price : ""
+      price : "",
+      errorForm: ''
     }
   },
   mounted() {
-    axios.get(`${this.$api}hotels/${this.$route.params.id}`).then(response=>this.hotel=response.data).catch(error => console.log("certaines données sont introuvables"))
-  }, // get {export default.$api -> django -> localhost port 8000} dans le tableau hotels/ ${export default.modification:id}on met tout dans une variabel reponse
+    axios.get(`${this.$api}hotels/${this.$route.params.id}`).then(response=>this.responseHotel(response.data)).catch(error => console.log("certaines données sont introuvables"))
+  }, // get {export default.$api -> django -> localhost port 8000} dans le tableau hotels/ {export default.modification:id}on met tout dans une variabel reponse
   methods: {
     goBack() {
       this.$router.go(-1);
     },
     modifierHotel() {
-      // Effectuer les modifications de l'hôtel ici
-      // utiliser les données de l'objet `hotel` pour envoyer les modifications au backend
-
-      // Exemple de code fictif pour l'envoi des modifications au backend
-      axios.put(`${this.$api}hotels/${this.$route.params.id}`, {
-        name: "nom",
-        price: 10.4,
-        image: "image.png",
-        description: "mon hôtel"
-      })
-        .then(response => {
-          // Traitement de la réponse du backend
-          // Par exemple, afficher un message de succès ou rediriger vers une autre page
-        })
-        .catch(error => {
+      //const imageRegex = /\.(jpeg|jpg|gif|png)$/i; // Expression régulière pour vérifier les extensions d'image courantes, a voir quelles extensions on utilisera !
+      //
+      //if (!imageRegex.test(this.image)) {
+      //  this.errorForm = "Le lien vers l'image de l'hôtel n'est pas valide.";
+      //  return;
+      //}
+      if (this.image.length > 100){
+        this.errorForm = "Le lien vers l'image de l'hotel ne doit pas dépasser 100 caractères"
+      }
+      if (this.name.length < 3 || this.name.length > 30) {
+        this.errorForm = "Le nom de l'hôtel doit contenir entre 3 et 30 caractères.";
+        return
+      }
+      if (this.price <= 0){
+        this.errorForm = "Prix null ou négatif"
+        return
+      }
+      //if (this.description.length > 255) {
+      //  this.errorForm = "La description de l'hotel ne doit pas dépasser 255 caractères."
+      //}
+      this.errorForm = ''
+      this.hotel.name = this.name
+      this.hotel.description = this.description
+      this.hotel.price = this.price
+      axios.patch(`${this.$api}hotels/${this.$route.params.id}/`, {
+        name: this.hotel.name,
+        price: this.hotel.price,
+        description: this.hotel.description
+      }).catch(error => {
           console.log("test");
-          // Gérer les erreurs lors de la modification de l'hôtel
-          // Par exemple, afficher un message d'erreur ou effectuer une autre action appropriée
         });
+    },
+
+    responseHotel(responseData) {
+      this.hotel = responseData;
+      this.name = this.hotel.name;
+      this.description = this.hotel.description;
+      this.price = this.hotel.price;
     },
     onFileChange(event) {
       // Gérer le changement de fichier d'image ici
@@ -69,12 +116,127 @@ export default {
     },
     test(){
       console.log(this.name)
-    }
+    },
   },
 };
 </script>
 
 <style scoped>
-  /* Styles CSS spécifiques à votre vue */
+
+.titre {
+  margin-left: 20px;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content-container {
+  flex: 1;
+  padding-bottom: 80px; /* Espacement en bas pour éviter que le footer ne chevauche le contenu */
+}
+.my-button {
+  background-color: #75ABBC;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.my-heading {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.my-form {
+  margin-top: 20px;
+  border: 3px solid #DFE0E2;
+  padding: 20px;
+  max-width: 1400px;
+  margin-left: 10px;
+}
+
+.form-row {
+  display: flex;
+  margin-bottom: 20px;
+  vertical-align: top;
+}
+
+.my-alert {
+  background-color: #F0AD4E;
+  color: white;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.my-label {
+  font-weight: bold;
+  float : left;
+}
+
+.my-input {
+  width: 40%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #DFE0E2;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.my-textarea {
+  width: 40%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #DFE0E2;
+  border-radius: 4px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.my-footer {
+  background-color: #75ABBC;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0;
+  color: #071013;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.my-footer a {
+  color: #1B4B5A;
+  text-decoration: none;
+}
+
+.my-footer .container {
+  padding: 1rem;
+}
+
+.hover-button:hover {
+  background-color: #326b80; /* Couleur plus foncée pour l'effet de survol */
+}
+.input1 {
+  margin-left: 10%;
+}
+
+.input2 {
+  margin-left: 14.6%;
+}
+
+.input3 {
+  margin-left: 11.5%;
+}
+
+.input4 {
+  margin-left: 7.4%;
+}
+
 </style>
   

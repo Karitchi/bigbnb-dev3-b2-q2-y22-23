@@ -13,7 +13,7 @@ class Hotel(models.Model):
     hotel_owner_id = models.ForeignKey(HotelOwner, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
     image = models.ImageField(upload_to=name_file)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     city_id = models.ForeignKey(City, on_delete=models.CASCADE)
     room_quantity = models.IntegerField()
     price = models.FloatField()
