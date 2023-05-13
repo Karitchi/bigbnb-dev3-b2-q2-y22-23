@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'city',
     'client',
     'hotel',
-    'booking'
+    'booking',
+    'image'
 ]
 
 MIDDLEWARE = [
