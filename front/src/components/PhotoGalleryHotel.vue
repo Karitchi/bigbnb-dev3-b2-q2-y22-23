@@ -1,28 +1,49 @@
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router';
+
+const route = useRoute()
+
+const urls = ref([])
+
+const isLoaded = ref(false)
+let firstImage
+
+onMounted(async () => {
+    let images = []
+    let response
+
+    response = await fetch(`http://127.0.0.1:8000/hotels/${route.params.id}/images`)
+    images.value = await response.json()
+
+
+
+    for (const image of images.value) {
+        urls.value.push(`http://127.0.0.1:8000${image.url}`)
+    }
+
+    firstImage = urls.value[0]
+    urls.value.shift()
+
+    isLoaded.value = true
+})
+</script>
+
 <template>
-    <div class="container-fluid p-5">
+    <div v-if="!isLoaded" class="text-center">
+        <div class="spinner-border" role="status"></div>
+    </div>
+    <div v-else class="container-fluid p-5">
         <div class="row p-1 bg-light  rounded border m-0 ">
             <div class="col p-1 big-col">
-                <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1025&q=80" class="img-fluid rounded big" alt="">
+                <img :src="firstImage" class="img-fluid rounded big" alt="">
             </div>
 
             <div class="col p-0">
                 <div class="row row-cols-2 m-0">
-                    <div class="col p-1 little-col">
-                        <img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80" class="img-fluid rounded little" alt="">
+                    <div v-for="url in urls" class="col p-1 little-col">
+                        <img :src="url" class="img-fluid rounded little" alt="">
                     </div>
-
-                    <div class="col p-1 little-col">
-                        <img src="https://plus.unsplash.com/premium_photo-1678286769630-4ea3d6878dfb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" class="img-fluid rounded little" alt="">
-                    </div>
-
-                    <div class="col p-1 little-col">
-                        <img src="https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80" class="img-fluid rounded little" alt="">
-                    </div>
-
-                    <div class="col p-1 little-col ">
-                        <img src="https://images.unsplash.com/photo-1679678690998-88c8711cbe5f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80" class="img-fluid rounded little" alt="">
-                    </div>
-
                 </div>
             </div>
         </div>

@@ -22,9 +22,9 @@ onMounted(async () => {
     response = await fetch(`http://127.0.0.1:8000/hotel_owners/${hotel.value.hotel_owner}`)
     hotel_owner.value = await response.json()
 
-    console.log(hotel.value)
-    console.log(city.value)
-    console.log(hotel_owner.value)
+    // console.log(hotel.value)
+    // console.log(city.value)
+    // console.log(hotel_owner.value)
 
     isLoaded.value = true
 })
