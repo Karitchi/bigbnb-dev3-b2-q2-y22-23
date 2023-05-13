@@ -6,6 +6,8 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from .serializers import HotelSerializer
 from .models import Hotel
+from image.models import Image
+from image.serializers import ImageSerializer
 
 
 @api_view(['GET', 'POST'])
@@ -46,3 +48,14 @@ def hotel_detail(request, hotel_id):
         hotel.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+@api_view(['GET'])
+def hotel_images(request, hotel_id):
+
+    try:
+        images = Image.objects.filter(hotel_id=hotel_id)
+    except Image.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'GET':
+        serializer = ImageSerializer(images, many=True)
+        return Response(serializer.data)

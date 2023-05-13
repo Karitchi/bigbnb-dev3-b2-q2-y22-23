@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'city',
     'client',
     'hotel',
-    'booking'
+    'booking',
+    'image'
 ]
 
 MIDDLEWARE = [
@@ -87,7 +88,7 @@ DATABASES = {
         'NAME': 'big_bnb',
         'USER': 'user',
         'PASSWORD': 'user',
-        'HOST': 'mariadb-10.11.2',
+        'HOST': 'big-bnb-mariadb',
         'PORT': '3306',
     }
 }
