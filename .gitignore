@@ -3,3 +3,6 @@ venv/
 __pycache__/
 migrations/
 media
+docker
+mariadb
+mariadb-script.txt
