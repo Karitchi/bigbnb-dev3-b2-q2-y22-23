@@ -39,7 +39,7 @@ export default {
   components: {HotelOwnerNavbar, CardHotel},
   data() {
     return {
-      hotelOwner: 1,
+      hotelOwner: 2,
       hotels: [],
       hotelsFiltered: []
     }

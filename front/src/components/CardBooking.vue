@@ -111,7 +111,7 @@ export default {
     .then(response => this.setHotel(response.data));
 
     axios.get(`${this.$api}clients/${this.booking.client}`)
-    .then(response => this.client = response.data);
+    .then(response => this.setClient(response.data));
   },
 
   methods: {
@@ -119,6 +119,11 @@ export default {
       this.hotel = responseData;
       axios.get(`${this.$api}cities/${responseData.city}`)
           .then(response => this.city = response.data);
+    },
+
+    setClient(responseData) {
+      this.client = responseData['info'];
+      this.client['id'] = responseData['id'];
     },
 
     dateToString(date) {

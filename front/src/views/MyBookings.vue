@@ -36,7 +36,7 @@ export default {
 
   data() {
     return {
-      hotelOwner: 1,
+      hotelOwner: 2,
       hotels: [],
       bookings: [],
       bookingsFiltered: [],
@@ -75,19 +75,19 @@ export default {
     },
 
     onAccept(id) {
-      axios.patch(`${this.$api}set_booking_approved/${id}/`, {'approved': true})
+      axios.patch(`${this.$api}/bookings/set_booking_approved/${id}/`, {'approved': true})
       .then(response => this.bookings = this.bookings.filter(booking => booking.id !== id));
     },
 
     onRefuse(id) {
-      axios.patch(`${this.$api}set_booking_approved/${id}/`, {'approved': false})
+      axios.patch(`${this.$api}/bookings/set_booking_approved/${id}/`, {'approved': false})
       .then(response =>this.bookings = this.bookings.filter(booking => booking.id !== id));
     },
 
     setBookingsToRead() {
       for (let booking of this.bookings) {
         if (booking.unread)
-          axios.patch(`${this.$api}set_booking_read/${booking.id}/`, {'unread': false})
+          axios.patch(`${this.$api}/bookings/set_booking_read/${booking.id}/`, {'unread': false})
       }
     }
   },
