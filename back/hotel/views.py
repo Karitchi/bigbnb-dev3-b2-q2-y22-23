@@ -45,7 +45,6 @@ def hotel_detail(request, hotel_id):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-        print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     if request.method == 'DELETE':

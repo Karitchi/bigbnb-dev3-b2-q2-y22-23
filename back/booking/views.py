@@ -37,7 +37,6 @@ def bookings_details(request, booking_id):
 
 @api_view(['PATCH'])
 def set_read(request, booking_id):
-    print(request.data)
     try:
         booking = Booking.objects.all().get(pk=booking_id)
     except Booking.DoesNotExist:
