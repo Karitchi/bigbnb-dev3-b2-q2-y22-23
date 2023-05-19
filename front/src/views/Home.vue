@@ -42,13 +42,18 @@ export default {
 
     setHotels(responseData) {
       this.hotels = responseData;
-      if (!this.isHotelOwnerOf(this.hotel.id))
+      if (this.getUserType() !== this.$hotelOwnerUserType)
         return;
-      let id = this.getID();
-      this.hotels = this.hotels.sort((a, b) => {
-        if (a.hotelOwner === id) return 1;
-        if (b.hotelOwner === id) return -1;
-      });
+
+      this.hotels = this.hotels
+          .sort((a, b) => {
+            if (this.isHotelOwnerOf(a.hotel_owner) && !this.isHotelOwnerOf(b.hotel_owner))
+              return -1;
+            if (this.isHotelOwnerOf(b.hotel_owner) && !this.isHotelOwnerOf(a.hotel_owner))
+              return 1;
+          })
+
+      console.log(this.hotels)
     }
   },
 

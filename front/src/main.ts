@@ -60,12 +60,12 @@ app.mixin({
             return localStorage.getItem('type');
         },
 
-        isHotelOwnerOf(hotelID: number): boolean {
+        isHotelOwnerOf(hotelOwnerID: number): boolean {
             if (!this.isConnected())
                 return false;
             if (this.getUserType() !== this.$hotelOwnerUserType)
                 return false;
-            return this.getID() === hotelID;
+            return this.getID() === hotelOwnerID;
         }
     }
 })

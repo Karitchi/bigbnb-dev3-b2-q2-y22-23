@@ -38,7 +38,7 @@ export default {
     },
 
     goToHotel() {
-      if (!this.isConnected() || this.getID() !== this.hotel.hotel_owner) {
+      if (!this.isHotelOwnerOf(this.hotel.hotel_owner)) {
         this.$router.push(`/hotel_info/${this.hotel.id}`)
       } else {
         this.$router.push(`/modification/${this.hotel.id}`)
@@ -47,7 +47,7 @@ export default {
   },
 
   mounted() {
-    if (!this.isConnected() || this.getID() !== this.hotel.hotel_owner) {
+    if (!this.isHotelOwnerOf(this.hotel.hotel_owner)) {
       this.infoMsg = "Plus d'informations";
     } else {
       this.infoMsg = "Modifier informations"

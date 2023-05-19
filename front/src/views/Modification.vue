@@ -64,12 +64,6 @@
       }
    },
 
-    beforeMount() {
-      if (this.getUserType() !== this.$hotelOwnerUserType) {
-        this.$router.go(-1);
-      }
-    },
-
     mounted() {
       axios.get(`${this.$api}hotels/${this.$route.params.id}`)
           .then(response=>this.responseHotel(response.data))
@@ -112,7 +106,7 @@
 
       responseHotel(responseData) {
        this.hotel = responseData;
-       if (!this.isHotelOwnerOf(this.hotel.id)) {
+       if (!this.isHotelOwnerOf(this.hotel.hotel_owner)) {
          this.$router.go(-1);
        }
        this.name = this.hotel.name;
