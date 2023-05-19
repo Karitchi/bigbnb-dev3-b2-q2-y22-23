@@ -36,7 +36,7 @@ export default {
 
   data() {
     return {
-      hotelOwner: 2,
+      hotelOwner: null,
       hotels: [],
       bookings: [],
       bookingsFiltered: [],
@@ -90,6 +90,12 @@ export default {
           axios.patch(`${this.$api}/bookings/set_booking_read/${booking.id}/`, {'unread': false})
       }
     }
+  },
+
+  beforeMount() {
+    if (this.getUserType() !== this.$hotelOwnerUserType)
+      this.$router.go(-1);
+    this.hotelOwner = this.getID();
   },
 
   mounted() {

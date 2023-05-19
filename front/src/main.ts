@@ -7,8 +7,10 @@ import './assets/variables.scss'
 import VueJwtDecode from 'vue-jwt-decode'
 
 const app = createApp(App);
-app.use(router).mount('#app')
-app.config.globalProperties.$api = 'http://localhost:8000/'
+app.use(router).mount('#app');
+app.config.globalProperties.$api = 'http://localhost:8000/';
+app.config.globalProperties.$hotelOwnerUserType = 'hotel_owner';
+app.config.globalProperties.$clientUserType = 'client';
 
 app.mixin({
     methods: {
@@ -32,6 +34,38 @@ app.mixin({
 
         disconnect(): void {
             localStorage.clear();
+        },
+
+        getAuthenticatedRequestBody(): {'headers': {'Content-type': 'application/json', 'Authorization': string}} {
+            if (!this.isConnected())
+                throw "Not connected"
+            return {
+                'headers': {
+                    "Content-type": "application/json",
+                    'Authorization': String(localStorage.getItem('access'))
+                }
+            }
+        },
+
+        getID() {
+          if (!this.isConnected())
+              throw 'Not Connected'
+            return Number(localStorage.getItem('id'));
+        },
+
+        getUserType(): string | null {
+            if (!this.isConnected())
+                return null;
+
+            return localStorage.getItem('type');
+        },
+
+        isHotelOwnerOf(hotelID: number): boolean {
+            if (!this.isConnected())
+                return false;
+            if (this.getUserType() !== this.$hotelOwnerUserType)
+                return false;
+            return this.getID() === hotelID;
         }
     }
 })

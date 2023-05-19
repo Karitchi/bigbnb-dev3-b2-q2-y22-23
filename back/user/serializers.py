@@ -6,9 +6,16 @@ from user.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = get_user_model()
         fields = '__all__'
+
+
+class SimpleUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ('id', 'mail', 'name', 'lastname')
 
 
 class UserSerializerValidator:

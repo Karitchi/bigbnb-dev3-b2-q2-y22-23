@@ -1,13 +1,12 @@
-from rest_framework import status, viewsets
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth import get_user_model
+from rest_framework import status
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from client.models import Client
 from client.serializers import ClientSerializer
-from django.contrib.auth import get_user_model
-
-from user.serializers import UserSerializer, UserSerializerValidator
+from user.serializers import UserSerializerValidator
+from user.views import is_user_authorized
 
 User = get_user_model()
 
@@ -40,8 +39,14 @@ def client_details(request, client_id) -> Response:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        return Response(ClientSerializer(client).data, status=status.HTTP_200_OK)
+        return Response(
+            ClientSerializer(client, full_info=is_user_authorized(request, client_id)).data,
+            status=status.HTTP_200_OK
+        )
 
     if request.method == 'DELETE':
+        if not is_user_authorized(request, client_id):
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
         User.objects.filter(id=client.user_id).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

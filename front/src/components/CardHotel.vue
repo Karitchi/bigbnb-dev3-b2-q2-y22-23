@@ -5,7 +5,7 @@
             <div class="card-body">
                 <h3 class="cart-title">{{ this.hotel.name }}</h3>
               <p class="card-text"> <i>{{ this.hotel.description }}</i></p>
-                <router-link :to="this.router" class="btn btn-outline-primary" style="margin-bottom: 5px">Plus d'informations</router-link>
+                <button @click="this.goToHotel" class="btn btn-outline-primary" style="margin-bottom: 5px">{{ this.infoMsg }}</button>
               <p class="card-footer">By <i>{{ this.hotelOwner.company }}</i></p>
             </div>
         </div>
@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       hotelOwner: {},
-      router: "",
+      infoMsg: "",
     }
   },
 
@@ -35,11 +35,23 @@ export default {
     setHotelOwner() {
       axios.get(`${this.$api}hotel_owners/${this.hotel.hotel_owner}`)
       .then(response => this.hotelOwner = response.data);
+    },
+
+    goToHotel() {
+      if (!this.isConnected() || this.getID() !== this.hotel.hotel_owner) {
+        this.$router.push(`/hotel_info/${this.hotel.id}`)
+      } else {
+        this.$router.push(`/modification/${this.hotel.id}`)
+      }
     }
   },
 
   mounted() {
-    this.router = `/modification/${this.hotel.id}`;
+    if (!this.isConnected() || this.getID() !== this.hotel.hotel_owner) {
+      this.infoMsg = "Plus d'informations";
+    } else {
+      this.infoMsg = "Modifier informations"
+    }
     this.setHotelOwner();
   }
 }

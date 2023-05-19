@@ -109,7 +109,6 @@ export default {
   mounted() {
     axios.get(`${this.$api}hotels/${this.booking.hotel}`)
     .then(response => this.setHotel(response.data));
-
     axios.get(`${this.$api}clients/${this.booking.client}`)
     .then(response => this.setClient(response.data));
   },

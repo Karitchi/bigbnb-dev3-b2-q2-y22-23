@@ -1,5 +1,7 @@
+import json
 from abc import ABC
 
+import jwt
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
@@ -30,3 +32,22 @@ class UserTokenPairSerializer(TokenObtainPairSerializer):
 
 class UserTokenObtainPairView(TokenObtainPairView):
     serializer_class = UserTokenPairSerializer
+
+
+def decode_jwt_from_request(request) -> dict[str:any]:
+    if 'HTTP_AUTHORIZATION' not in request.META.keys():
+        raise ValueError('Not authorization')
+
+    from big_b_n_b.settings import SIMPLE_JWT
+    return jwt.decode(
+        request.META['HTTP_AUTHORIZATION'],
+        algorithms=SIMPLE_JWT['ALGORITHM'],
+        options={'verify_signature': False}
+    )
+
+
+def is_user_authorized(request, user_id: int) -> bool:
+    try:
+        return decode_jwt_from_request(request)['user_id'] == user_id
+    except ValueError:
+        return False

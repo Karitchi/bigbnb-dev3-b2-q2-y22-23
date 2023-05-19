@@ -63,8 +63,17 @@
         errorForm: ''
       }
    },
-   mounted() {
-      axios.get(`${this.$api}hotels/${this.$route.params.id}`).then(response=>this.responseHotel(response.data)).catch(error => console.log("certaines données sont introuvables"))
+
+    beforeMount() {
+      if (this.getUserType() !== this.$hotelOwnerUserType) {
+        this.$router.go(-1);
+      }
+    },
+
+    mounted() {
+      axios.get(`${this.$api}hotels/${this.$route.params.id}`)
+          .then(response=>this.responseHotel(response.data))
+          .catch(error => console.log("certaines données sont introuvables"))
     }, // get {export default.$api -> django -> localhost port 8000} dans le tableau hotels/ {export default.modification:id}on met tout dans une variabel reponse
     methods: {
      goBack() {
@@ -72,7 +81,7 @@
      },
       modifierHotel() {
        /*const imageRegex = /\.(jpeg|jpg|gif|png)$/i; // Expression régulière pour vérifier les extensions d'image courantes, a voir quelles extensions on utilisera !
-        
+
        if (!imageRegex.test(this.img)) {
           this.errorForm = "Le lien vers l'image de l'hôtel n'est pas valide.";
           return;
@@ -103,6 +112,9 @@
 
       responseHotel(responseData) {
        this.hotel = responseData;
+       if (!this.isHotelOwnerOf(this.hotel.id)) {
+         this.$router.go(-1);
+       }
        this.name = this.hotel.name;
         this.description = this.hotel.description;
         this.price = this.hotel.price;
@@ -221,4 +233,3 @@
 }
 
 </style>
-  
