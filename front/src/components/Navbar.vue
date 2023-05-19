@@ -19,12 +19,52 @@
                     </li>
                 </ul>
 
-                <form class="d-flex ms-auto" role="search">
-                    <input class="form-control me-3" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-primary" type="submit">Search</button>
-                </form>
+
+              <div class="d-flex ms-auto">
+                <div v-if="!this.connected">
+                  <router-link to="/login">Se connecter</router-link>
+                  <router-link to="/register">S'inscrire</router-link>
+                </div>
+                <div v-else>
+                  <router-link to="/">Mon profil</router-link>
+                  <button @click="this.setDisconnect()">Se déconnecter</button>
+                </div>
+
+              </div>
             </div>
 
         </div>
     </nav>
 </template>
+
+<script>
+
+
+import {useRoute} from "vue-router";
+import {watch, ref} from "vue";
+
+export default {
+  name: 'Navbar',
+
+
+  setup() {
+    const route = useRoute();
+    const connected = ref(localStorage.getItem('access') !== null);
+    watch(
+        () => route.path,
+        () => connected.value = localStorage.getItem('access') !== null
+    );
+
+    return {
+      connected
+    };
+  },
+
+  methods: {
+    setDisconnect() {
+      localStorage.clear();
+      this.connected = false;
+    }
+  }
+}
+</script>

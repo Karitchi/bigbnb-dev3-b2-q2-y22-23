@@ -27,8 +27,10 @@
 </style>
 
 <script lang="ts">
-import Navbar from './components/Navbar.vue'
-import Footer from './components/Footer.vue'
+import Navbar from '@/components/Navbar.vue'
+import Footer from '@/components/Footer.vue'
+import {watch} from "vue";
+import {useRoute} from "vue-router";
 
 export default {
   name: 'App',
