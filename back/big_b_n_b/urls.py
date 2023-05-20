@@ -9,6 +9,8 @@ urlpatterns = [
     path('', include('client.urls')),
     path('', include('hotel.urls')),
     path('', include('booking.urls')),
+    path('', include('review.urls')),
+    
     path('admin/', admin.site.urls)
 ]
 
