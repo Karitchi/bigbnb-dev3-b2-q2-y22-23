@@ -4,9 +4,9 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import api_view
 
 from user.serializers import UserSerializer, UserSerializerValidator
+from user.views import is_user_authorized
 from .serializers import HotelOwnerSerializer
 from .models import HotelOwner
-
 
 User = get_user_model()
 
@@ -18,17 +18,13 @@ def all_hotel_owners(request) -> Response:
         return Response(HotelOwnerSerializer(hotel_owners, many=True).data, status=status.HTTP_200_OK)
 
     if request.method == 'POST':
-        validator: UserSerializerValidator = UserSerializerValidator(data=request.data)
+        validator: UserSerializerValidator = UserSerializerValidator(data=request.data,
+                                                                     serializer_class=HotelOwnerSerializer)
         if not validator.is_valid():
             return validator.get_current_response()
 
-        validator.create_user()
-        hotel_owner_serializer = HotelOwnerSerializer(data=validator.get_final_data())
-        if not hotel_owner_serializer.is_valid():
+        return validator.get_current_response()
 
-            return Response(data=hotel_owner_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        hotel_owner_serializer.save()
-        return Response(status=status.HTTP_201_CREATED)
 
 @api_view(['GET', 'DELETE'])
 def hotel_owner_detail(request, hotel_owner_id):
@@ -38,8 +34,12 @@ def hotel_owner_detail(request, hotel_owner_id):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        return Response(HotelOwnerSerializer(hotel_owner).data, status=status.HTTP_200_OK)
+        return Response(
+            HotelOwnerSerializer(hotel_owner, full_info=is_user_authorized(request, hotel_owner_id)).data, status=status.HTTP_200_OK)
 
     if request.method == 'DELETE':
-        User.objects.filter(id=hotel_owner.user_id).delete()
+        if not is_user_authorized(request, hotel_owner_id):
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+        User.objects.filter(id=hotel_owner_id).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

@@ -18,17 +18,12 @@ def all_clients(request) -> Response:
         return Response(ClientSerializer(clients, many=True).data, status=status.HTTP_200_OK)
 
     if request.method == 'POST':
-        validator: UserSerializerValidator = UserSerializerValidator(data=request.data)
-        if not validator.is_valid():
+        validator: UserSerializerValidator = UserSerializerValidator(data=request.data,
+                                                                     serializer_class=ClientSerializer)
+        if validator.is_valid():
             return validator.get_current_response()
 
-        validator.create_user()
-        data = validator.get_final_data()
-        client_serializer = ClientSerializer(data=data)
-        if not client_serializer.is_valid():
-            return Response(data=client_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        client_serializer.save()
-        return Response(status=status.HTTP_201_CREATED)
+        return validator.get_current_response()
 
 
 @api_view(['GET', 'DELETE'])
@@ -40,9 +35,7 @@ def client_details(request, client_id) -> Response:
 
     if request.method == 'GET':
         return Response(
-            ClientSerializer(client, full_info=is_user_authorized(request, client_id)).data,
-            status=status.HTTP_200_OK
-        )
+            ClientSerializer(client, full_info=is_user_authorized(request, client_id)).data, status=status.HTTP_200_OK)
 
     if request.method == 'DELETE':
         if not is_user_authorized(request, client_id):
