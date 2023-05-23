@@ -12,25 +12,28 @@
       </div>
     </aside>
     <main class="main-content">
-      <div class="hotels-list">
-        <ul v-if="hotels.length">
-          <li v-for="hotel in hotels" :key="hotel.id">
-            <card-hotel :hotel="hotel" />
-          </li>
-        </ul>
-        <p v-else>No hotels found.</p>
-      </div>
-    </main>
+  	<div class="hotels-list">
+    		<ul v-if="hotels.length">
+      			<li v-for="hotel in hotels" :key="hotel.id">
+        			<card-hotel :hotel="hotel" />
+      			</li>
+    		</ul>
+    			<p v-else>No hotels found.</p>
+  	</div>
+</main>
+
   </div>
 </template>
 
 <script>
+//import VueSlider from 'vue-slider-component'
+//import 'vue-slider-component/theme/default.css'
+
 import axios from 'axios';
-import CardHotel from "@/components/CardHotel";
 
 export default {
   name: "HotelFilter",
-  components: { CardHotel },
+  components:v{ CardHotel },
   data() {
     return {
       hotels: [],
@@ -54,7 +57,20 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+        })
+        .finally(() => {
+          this.isLoading = false;
         });
+    },
+    
+    applyHotels(responseData) {
+      this.hotels = responseData.filter((hotel) => hotel.hotel_owner === this.hotelOwner);
+      for (let i = 0; i < this.hotels.length; i++) {
+        axios.get(`${this.$api}cities/${this.hotels[i].city}`).then((response) => {
+          this.hotels[i].city = response.data;
+        });
+      }
+      this.hotelsFiltered = JSON.parse(JSON.stringify(this.hotels));
     },
   },
 };
@@ -142,5 +158,4 @@ li {
   border: 1px solid #ccc;
   padding: 1rem;
 }
-
 </style>
