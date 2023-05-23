@@ -1,8 +1,10 @@
-from rest_framework import status
+from django.db.models import Min, Max, Avg
+from rest_framework import status, generics, viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .models import Hotel
+from city.models import City
+from .models import Hotel, HotelRating
 from .serializers import HotelSerializer
 
 
@@ -34,13 +36,13 @@ def hotel_detail(request, hotel_id):
     if request.method == 'PATCH':
         if 'img' in request.data.keys() and len(request.data['img']) > 100:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        
+
         if len(request.data['name']) < 3 or len(request.data['name']) > 100:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        
+
         if request.data['price'] <= 0:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        
+
         serializer = HotelSerializer(hotel, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
@@ -51,3 +53,23 @@ def hotel_detail(request, hotel_id):
         hotel.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+@api_view(['GET'])
+def filter_hotels(request):
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+
+    try:
+        min_price = float(min_price)
+        max_price = float(max_price)
+        if min_price < 0 or max_price < min_price:
+            raise ValueError
+
+    except ValueError:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    hotels = Hotel.objects.all()
+    hotels = hotels.filter(price__gte=min_price)
+    hotels = hotels.filter(price__lte=max_price)
+    serializer = HotelSerializer(hotels, many=True)
+    return Response(status=status.HTTP_200_OK, data=serializer.data)

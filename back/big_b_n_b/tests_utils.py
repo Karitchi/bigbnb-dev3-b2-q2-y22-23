@@ -11,7 +11,7 @@ from django.db.models.fields.files import ImageField
 from booking.models import Booking
 from city.models import City
 from client.models import Client
-from hotel.models import Hotel
+from hotel.models import Hotel, HotelRating
 from hotel_owner.models import HotelOwner
 
 User = get_user_model()
@@ -64,7 +64,7 @@ class BigBNBTestCase(TestCase):
             name="Novhotel",
             description="Un bel hôtel",
             room_quantity=100,
-            price=10,
+            price=60,
             hotel_owner_id=self.hotel_owner_obj,
             city_id=self.city
         )
@@ -78,6 +78,12 @@ class BigBNBTestCase(TestCase):
             payment_method="paypal",
             client_id=self.client_obj,
             hotel_id=self.hotel
+        )
+
+        self.rating = HotelRating.objects.create(
+            hotel_id=self.hotel,
+            client_id_id=self.client_obj.user_id,
+            rating=3
         )
 
     def get_new_booking_json_post(self) -> dict[str:any]:

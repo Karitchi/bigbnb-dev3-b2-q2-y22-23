@@ -7,6 +7,7 @@ import MyHotels from '../views/MyHotels.vue'
 import MyBookings from '../views/MyBookings.vue'
 import Modification from '../views/Modification.vue'
 import InfoHotel from '../views/InfoHotel.vue'
+import HotelFilter from '../views/HotelFilter.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -48,6 +49,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/hotel_info/:id',
     name: 'InfoHotel',
     component: InfoHotel
+  },
+  {
+	path: '/filter_hotels',
+	name: 'HotelFilter',
+	component: HotelFilter
   }
 ]
 

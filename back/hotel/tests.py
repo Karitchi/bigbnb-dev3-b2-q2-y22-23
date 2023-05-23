@@ -31,3 +31,60 @@ class TestEndpoints(BigBNBTestCase):
         request = self.factory.get('/hotels/')
         response = views.hotel_detail(request, hotel_id=self.hotel.hotel_id)
         self.assertEqual(response.status_code, 404)
+
+
+class HotelFilterTestCase(BigBNBTestCase):
+    __url = 'localhost:8000'
+
+    def test_filter_basic(self):
+        price_min = 0
+        price_max = 10000
+
+        request = self.factory.get(
+            f'http://{self.__url}/filter_hotels/?min_price={price_min}&max_price={price_max}', content_type='application/json')
+        content_type = request.headers.get('Content-Type')
+        response = views.filter_hotels(request)
+        self.assertEqual(content_type, 'application/json')
+        data = response.data
+        self.assertIsInstance(response.data, list)
+        self.assertEqual(response.status_code, 200)
+        for hotel in data:
+            self.assertGreaterEqual(hotel["price"], 0) and self.assertLessEqual(hotel["price"], 10000)
+            self.assertNotIn('key', hotel)
+            self.assertIn('id', hotel)
+            self.assertIn('hotel_owner', hotel)
+            self.assertIn('name', hotel)
+            self.assertIn('img', hotel)
+            self.assertIn('description', hotel)
+            self.assertIn('city', hotel)
+            self.assertIn('rooms', hotel)
+            self.assertIn('price', hotel)
+
+    def test_filter_string(self):
+        price_min = -5
+        price_max = 10000
+        request = self.factory.get(
+            f'http://{self.__url}/filter_hotels/?min_price={price_min}&max_price={price_max}')
+        response = views.filter_hotels(request)
+        self.assertEqual(response.status_code, 400)
+
+    def test_filter_neg(self):
+        price_min = 0
+        price_max = 10000000
+        request = self.factory.get(
+            f'http://{self.__url}/filter_hotels/?min_price={price_min}&max_price={price_max}')
+        response = views.filter_hotels(request)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(len(response.data) >= 1)
+
+    def test_filter_basic_one(self):
+        price_min = 50
+        price_max = 100
+
+        request = self.factory.get(
+            f'http://{self.__url}/filter_hotels/?min_price={price_min}&max_price={price_max}')
+        response = views.filter_hotels(request)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(len(response.data) >= 1)
+        for hotel in response.data:
+            self.assertGreaterEqual(hotel['price'], 50) and self.assertGreaterEqual(hotel['price'], 100)
