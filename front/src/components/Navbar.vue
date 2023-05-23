@@ -27,7 +27,7 @@
                 </div>
                 <div v-else>
                   <router-link to="/">Mon profil</router-link>
-                  <button @click="this.setDisconnect()">Se déconnecter</button>
+                  <button @click="this.setDisconnect()" data-test-id="button-disconnect">Se déconnecter</button>
                 </div>
 
               </div>
