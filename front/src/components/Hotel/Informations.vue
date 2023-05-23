@@ -37,41 +37,25 @@ onMounted(async () => {
 
     <div v-else class="container-fluid p-5">
 
-
         <h1 class="h1">{{ hotel.name }}</h1>
-        <h3>{{ hotel.description }}</h3>
-        <hr>
+        <hr class="pb-3">
 
-
-
-        <div class="row">
-            <div class="col">
-                <div class="card text-center bg-secondary-subtle">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ hotel.rooms }} rooms left</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card text-center bg-secondary-subtle">
-                    <div class="card-body">
-                        <h5 class="card-title">Located in {{ city.name }}, {{ city.country }}</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card text-center bg-secondary-subtle">
-                    <div class="card-body">
-                        <h5 class="card-title">For {{ hotel.price }} dollars</h5>
-                    </div>
-                </div>
-            </div>
+        <div>
+            <h5 class="pt-2 pb-2">{{ hotel.rooms }} rooms left</h5>
+            <h5 class="bi bi-geo pt-2 pb-2"> Located in {{ city.name }}, {{ city.country }}</h5>
+            <h5 class="bi bi-wallet pt-2 pb-2"> {{ hotel.price }} dollars per night</h5>
         </div>
 
-        <hr>
+        <hr class="pb-3">
+
+        <h3>About this hotel</h3>
+        <h5 class="pt-2 pb-2">{{ hotel.description }}</h5>
+
+        <hr class="pb-3">
+
         <div class="row">
             <div class="col">
-                <div class="card text-center bg-secondary-subtle">
+                <div class="card text-center">
                     <div class="card-body">
                         <h5 class="card-title">Proposed by {{ hotel_owner.name }} {{ hotel_owner.lastname }} from {{ hotel_owner.company }}</h5>
                         <p class="card-text">Contact: {{ hotel_owner.mail }}</p>

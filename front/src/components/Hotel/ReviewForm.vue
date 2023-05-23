@@ -13,18 +13,23 @@ let numberOfStars = 0
 
 
 const isHovered = ref(false)
-const starsHovered = ref([false, false, false, false, false])
+const starsHovered = ref([true, true, true, true, true])
 
 
 function mouseenter(index, isHovered) {
     starsHovered.value = starsHovered.value.map(() => false);
 
     for (let i = 0; i <= index; i++) {
-        starsHovered.value.splice(i, 1, isHovered);
+        starsHovered.value.splice(i, true, isHovered);
     }
 }
 
 function mouseleave() {
+    if (!numberOfStars) {
+        starsHovered.value = starsHovered.value.map(() => true);
+        return 0
+    }
+
     starsHovered.value = starsHovered.value.map(() => false);
 
     for (let i = 0; i < numberOfStars; i++) {
@@ -73,9 +78,11 @@ function submitForm(event) {
         </div>
 
         <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label"></label>
-            <textarea class="form-control" v-model="review" id="exampleFormControlTextarea1" rows="3" placeholder="Give us your opinion"></textarea>
+            <label for="review" class="form-label"></label>
+            <input type="text" class="form-control" v-model="review" id="review" rows="3" placeholder="Give us your opinion" required>
+
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </template>
+
