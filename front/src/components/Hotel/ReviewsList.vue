@@ -14,7 +14,7 @@ const isLoaded = ref(false)
 async function fetchReviews() {
     // fetch all reviews of the hotel and store them in reviews array 
 
-    let response = await fetch(`http://localhost:8000/reviews/hotel/${route.params.id}`)
+    let response = await fetch(`http://localhost:8000/reviews/hotel/${route.params.id}?limit=5`)
     let reviews = await response.json()
 
     return reviews
@@ -63,7 +63,7 @@ onMounted(async () => {
     </div>
 
     <!-- reviews -->
-    <div v-else class="container-fluid p-5 row">
+    <div v-else class="row pb-5 pt-5">
         <div v-for="(item, index) in reviews" class="col-lg-6">
 
             <!-- client name -->

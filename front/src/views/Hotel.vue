@@ -8,10 +8,12 @@ import ReviewsList from '@/components/Hotel/ReviewsList.vue'
 </script>
 
 <template>
-    <Images />
-    <Informations />
-    <ReviewForm />
-    <ReviewsList />
+    <div class="container ps-5 pe-5">
+        <Images />
+        <Informations />
+        <ReviewForm />
+        <ReviewsList />
+    </div>
 </template>
 
 

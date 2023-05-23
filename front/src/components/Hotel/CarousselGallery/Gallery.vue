@@ -5,7 +5,7 @@ defineProps({
 </script>
 
 <template>
-    <div class="container-fluid p-5">
+    <div class="pb-5 pt-5">
 
         <div class="row p-1 bg-light  rounded border m-0 ">
 

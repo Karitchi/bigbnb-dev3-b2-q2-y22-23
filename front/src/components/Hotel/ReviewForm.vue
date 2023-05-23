@@ -9,7 +9,7 @@ const review = ref('');
 const rating = ref(null);
 const showSuccessToast = ref(false);
 
-let numberOfStars = 0
+let numberOfStars = 5
 
 
 const isHovered = ref(false)
@@ -23,7 +23,6 @@ function mouseenter(index, isHovered) {
         starsHovered.value.splice(i, true, isHovered);
     }
 }
-
 function mouseleave() {
     if (!numberOfStars) {
         starsHovered.value = starsHovered.value.map(() => true);
@@ -36,7 +35,6 @@ function mouseleave() {
         starsHovered.value[i] = true
     }
 }
-
 function click() {
     numberOfStars = 0
 
@@ -57,10 +55,9 @@ function submitForm(event) {
         rating: numberOfStars,
     })
         .then(function (response) {
-            showSuccessToast.value = true;
             review.value = ''
-            numberOfStars = 0
-            starsHovered.value = starsHovered.value.map(() => false);
+            numberOfStars = 5
+            starsHovered.value = starsHovered.value.map(() => true);
         })
         .catch(function (error) {
             console.log(error);
@@ -68,10 +65,8 @@ function submitForm(event) {
 };
 </script>
 
-
-
 <template>
-    <form class="container-fluid p-5" @submit="submitForm">
+    <form class="pb-5 pt-5" @submit="submitForm">
 
         <!-- stars -->
         <div class="mb-3">
@@ -87,5 +82,8 @@ function submitForm(event) {
         <!-- submit button -->
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+
+
+    
 </template>
 

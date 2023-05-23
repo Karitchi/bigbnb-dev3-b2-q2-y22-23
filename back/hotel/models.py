@@ -3,10 +3,6 @@ from django.db import models
 from hotel_owner.models import HotelOwner
 from city.models import City
 
-
-
-
-
 class Hotel(models.Model):
     hotel_id = models.AutoField(primary_key=True)
     hotel_owner_id = models.ForeignKey(HotelOwner, on_delete=models.CASCADE)
