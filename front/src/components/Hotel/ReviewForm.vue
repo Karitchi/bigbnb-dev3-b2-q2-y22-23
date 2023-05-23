@@ -65,7 +65,6 @@ function submitForm(event) {
         .catch(function (error) {
             console.log(error);
         });
-
 };
 </script>
 
@@ -73,15 +72,19 @@ function submitForm(event) {
 
 <template>
     <form class="container-fluid p-5" @submit="submitForm">
+
+        <!-- stars -->
         <div class="mb-3">
             <i v-for="(isHovered, index) in starsHovered" :key="index" :class="{ 'bi': true, 'bi-star-fill': isHovered, 'bi-star': !isHovered, 'text-success': true }" @mouseenter="mouseenter(index, true)" @mouseleave="mouseleave" @click="click"></i>
         </div>
 
+        <!-- text field -->
         <div class="mb-3">
             <label for="review" class="form-label"></label>
             <input type="text" class="form-control" v-model="review" id="review" rows="3" placeholder="Give us your opinion" required>
-
         </div>
+
+        <!-- submit button -->
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </template>
