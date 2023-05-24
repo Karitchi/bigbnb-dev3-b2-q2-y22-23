@@ -22,7 +22,6 @@ def hotel_review_list(request, hotel_id):
     
     if request.method == 'POST':
         serializer = ClientReviewSerializer(data=request.data)
-        print(serializer)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

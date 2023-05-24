@@ -14,7 +14,7 @@ const isLoaded = ref(false)
 async function fetchReviews() {
     // fetch all reviews of the hotel and store them in reviews array 
 
-    let response = await fetch(`http://localhost:8000/reviews/hotel/${route.params.id}?limit=5`)
+    let response = await fetch(`http://localhost:8000/reviews/hotel/${route.params.id}`)
     let reviews = await response.json()
 
     return reviews

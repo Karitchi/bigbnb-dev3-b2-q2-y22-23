@@ -49,7 +49,7 @@ function submitForm(event) {
     event.preventDefault();
 
     axios.post(`http://localhost:8000/reviews/hotel/${route.params.id}/`, {
-        client_id: 1,
+        client_id: 2,
         hotel_id: route.params.id,
         review: review.value,
         rating: numberOfStars,
