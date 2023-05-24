@@ -44,6 +44,12 @@ describe('Test My-Hotels', () => {
     })
 });
 
+describe('Test filter', () => {
+    it('testNormal', () => {
+        cy.visit('/filter_hotels');
+    })
+});
+
 
 function testButtonApprove(buttonType) {
     cy.get('body').then($body => {

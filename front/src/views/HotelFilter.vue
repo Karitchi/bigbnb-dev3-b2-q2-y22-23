@@ -3,12 +3,12 @@
     <aside class="sidebar">
       <div class="filter_input">
         <label>Price :</label>
-        <input type="number" v-model="priceRange[0]" @change="fetchHotels">
-        <input type="number" v-model="priceRange[1]" @change="fetchHotels">
+        <input type="number" v-model="priceRange[0]" @input="fetchHotels">
+        <input type="number" v-model="priceRange[1]" @inpute="fetchHotels">
 
-        <label>Rating :</label>
-        <input type="number" v-model="ratingRange[0]" @change="fetchHotels">
-        <input type="number" v-model="ratingRange[1]" @change="fetchHotels">
+        <label>Room quantity:</label>
+        <input type="number" v-model="roomRange[0]" @input="fetchHotels">
+        <input type="number" v-model="roomRange[1]" @input="fetchHotels">
       </div>
     </aside>
     <main class="main-content">
@@ -35,17 +35,20 @@ export default {
     return {
       hotels: [],
       priceRange: [0, 2000],
-      ratingRange: [0, 5],
+      roomRange: [0, 500],
     };
   },
   methods: {
     fetchHotels() {
+      if (this.priceRange.includes("") || this.roomRange.includes("")){
+        return
+      }
       axios.get(`${this.$api}hotels/filter_hotels`, {
           params: {
             min_price: this.priceRange[0],
             max_price: this.priceRange[1],
-            min_rating: this.ratingRange[0],
-            max_rating: this.ratingRange[1],
+            min_room: this.roomRange[0],
+            max_room: this.roomRange[1],
           },
         })
         .then((response) => {
@@ -62,6 +65,8 @@ export default {
       params: {
         min_price: this.priceRange[0],
         max_price: this.priceRange[1],
+        min_room: this.roomRange[0],
+        max_room: this.roomRange[1],
       }
     })
     .then(response => this.hotels = response.data);
