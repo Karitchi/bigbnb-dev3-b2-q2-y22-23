@@ -5,3 +5,4 @@ media
 docker
 mariadb
 mariadb-script.txt
+migrations/
