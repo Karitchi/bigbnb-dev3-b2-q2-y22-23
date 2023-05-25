@@ -1,20 +1,21 @@
 <template>
   <div class="container-fluid p-5" id="all-hotels">
-    <div v-for="hotel in this.hotels" class="row m-0 hotel" >
-      <card-hotel :hotel="hotel"/>
+    <div v-for="hotel in this.hotels" class="row m-0 hotel">
+      <card-hotel :hotel="hotel" />
     </div>
   </div>
 </template>
 
 <style scoped>
-  @import '../assets/variables.scss';
-  #all-hotels {
-    text-align: center;
-  }
+@import '../assets/variables.scss';
 
-  .hotel {
-    display: inline;
-  }
+#all-hotels {
+  text-align: center;
+}
+
+.hotel {
+  display: inline;
+}
 </style>
 
 
@@ -25,7 +26,7 @@ import axios from "axios";
 export default {
   name: 'App',
   components: {
-        CardHotel,
+    CardHotel,
   },
 
   data() {
@@ -37,7 +38,7 @@ export default {
   methods: {
     fetchAllHotels() {
       axios.get(`${this.$api}hotels/`)
-      .then(response => this.setHotels(response.data));
+        .then(response => this.setHotels(response.data));
     },
 
     setHotels(responseData) {
@@ -46,12 +47,12 @@ export default {
         return;
 
       this.hotels = this.hotels
-          .sort((a, b) => {
-            if (this.isHotelOwnerOf(a.hotel_owner) && !this.isHotelOwnerOf(b.hotel_owner))
-              return -1;
-            if (this.isHotelOwnerOf(b.hotel_owner) && !this.isHotelOwnerOf(a.hotel_owner))
-              return 1;
-          })
+        .sort((a, b) => {
+          if (this.isHotelOwnerOf(a.hotel_owner) && !this.isHotelOwnerOf(b.hotel_owner))
+            return -1;
+          if (this.isHotelOwnerOf(b.hotel_owner) && !this.isHotelOwnerOf(a.hotel_owner))
+            return 1;
+        })
 
       console.log(this.hotels)
     }

@@ -6,6 +6,8 @@ from rest_framework.response import Response
 from city.models import City
 from .models import Hotel
 from .serializers import HotelSerializer
+from image.models import Image
+from image.serializers import ImageSerializer
 
 
 @api_view(['GET', 'POST'])
@@ -85,3 +87,15 @@ def filter_hotels(request):
     # hotels = hotels.filter(room_quantity__lte=max_room)
     serializer = HotelSerializer(hotels, many=True)
     return Response(status=status.HTTP_200_OK, data=serializer.data)
+    
+@api_view(['GET'])
+def hotel_images(request, hotel_id):
+
+    try:
+        images = Image.objects.filter(hotel_id=hotel_id)
+    except Image.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'GET':
+        serializer = ImageSerializer(images, many=True)
+        return Response(serializer.data)
