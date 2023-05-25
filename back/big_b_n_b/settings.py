@@ -84,7 +84,9 @@ INSTALLED_APPS = [
     'city',
     'client',
     'hotel',
-    'booking'
+    'booking',
+    'image',
+    'review'
 ]
 
 MIDDLEWARE = [
@@ -130,9 +132,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'big_bnb',
-        'USER': 'root',
-        'PASSWORD': '1234',
-        'HOST': 'localhost',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
         'PORT': '3306',
     }
 }
@@ -160,7 +162,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Brussels'
 
 USE_I18N = True
 

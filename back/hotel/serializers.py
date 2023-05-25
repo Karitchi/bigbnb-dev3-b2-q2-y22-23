@@ -12,3 +12,4 @@ class HotelSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Hotel
         fields = ('id', 'hotel_owner', 'name', 'img', 'description', 'city', 'rooms', 'price')
+        # fields = ('hotel_owner', 'name', 'description', 'city', 'rooms', 'price')

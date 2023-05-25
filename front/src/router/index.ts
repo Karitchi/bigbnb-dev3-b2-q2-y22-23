@@ -5,9 +5,11 @@ import Register from '../views/Register.vue'
 import About from '../views/About.vue'
 import MyHotels from '../views/MyHotels.vue'
 import MyBookings from '../views/MyBookings.vue'
+import HotelDetails from '../views/HotelDetails.vue'
 import Modification from '../views/Modification.vue'
 import InfoHotel from '../views/InfoHotel.vue'
 import HotelFilter from '../views/HotelFilter.vue'
+import Hotel from '@/views/Hotel.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -39,6 +41,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/my_bookings',
     name: 'MyBookins',
     component: MyBookings
+  },
+  {
+    path: '/hotels/:id',
+    name: 'Hotel',
+    component: Hotel
   },
   {
     path: '/modification/:id',

@@ -58,7 +58,7 @@ class User(AbstractBaseUser):
         return True
 
     @staticmethod
-    def has_module_perm(app_label):
+    def has_module_perms(app_label):
         return True
 
     def __str__(self):
