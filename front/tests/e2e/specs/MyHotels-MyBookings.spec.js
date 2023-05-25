@@ -46,7 +46,43 @@ describe('Test My-Hotels', () => {
 
 describe('Test filter', () => {
     it('testNormal', () => {
-        cy.visit('/filter_hotels');
+        let min_price = 0
+        let max_price = 200
+        let min_room = 0
+        let max_room = 90
+
+        cy.visit('http://127.0.0.1:8080/filter_hotels')
+        cy.get('input[id=min_price]').focus().clear().type(min_price).should('have.attr', 'type', 'number');
+        cy.get('input[id=max_price]').focus().clear().type(max_price).should('have.attr', 'type', 'number');
+        cy.get('input[id=min_room]').focus().clear().type(min_room).should('have.attr', 'type', 'number');
+        cy.get('input[id=max_room]').focus().clear().type(max_room).should('have.attr', 'type', 'number');
+
+        cy.wait(500);
+
+        cy.get('div.hotels-list ul li').should('have.length', 1);
+
+        cy.get('button.btn').click()
+        cy.get('h3.cart-title').should('contain.text', "Test");
+
+        min_price = 0
+        max_price = 200
+        min_room = 0
+        max_room = 500
+        cy.visit('http://127.0.0.1:8080/filter_hotels')
+        cy.get('input[id=min_price]').focus().clear().type(min_price).should('have.attr', 'type', 'number');
+        cy.get('input[id=max_price]').focus().clear().type(max_price).should('have.attr', 'type', 'number');
+        cy.get('input[id=min_room]').focus().clear().type(min_room).should('have.attr', 'type', 'number');
+        cy.get('input[id=max_room]').focus().clear().type(max_room).should('have.attr', 'type', 'number');
+        
+        cy.get('div.hotels-list ul li').should('have.length', 4);
+
+        cy.contains('button.btn.btn-outline-primary', "Plus d'informations").should(($elements) => {
+                expect($elements.eq(0)).to.have.text("Plus d'informations");
+                // expect($elements.eq(1)).to.have.text("Plus d'informations");
+                // expect($elements.eq(2)).to.have.text("Plus d'informations");
+                // expect($elements.eq(3)).to.have.text("Plus d'informations");
+        });
+
     })
 });
 

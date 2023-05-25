@@ -3,12 +3,12 @@
     <aside class="sidebar">
       <div class="filter_input">
         <label>Price :</label>
-        <input type="number" v-model="priceRange[0]" @input="fetchHotels">
-        <input type="number" v-model="priceRange[1]" @inpute="fetchHotels">
+        <input id="min_price" type="number" v-model="priceRange[0]" @input="fetchHotels">
+        <input id="max_price" type="number" v-model="priceRange[1]" @inpute="fetchHotels">
 
         <label>Room quantity:</label>
-        <input type="number" v-model="roomRange[0]" @input="fetchHotels">
-        <input type="number" v-model="roomRange[1]" @input="fetchHotels">
+        <input id="min_room" type="number" v-model="roomRange[0]" @input="fetchHotels">
+        <input id="max_room" type="number" v-model="roomRange[1]" @input="fetchHotels">
       </div>
     </aside>
     <main class="main-content">
