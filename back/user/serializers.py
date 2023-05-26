@@ -43,15 +43,11 @@ class UserSerializerValidator:
     __serializer_class: Type[serializers.ModelSerializer] = None
     __user: User = None
 
-    def __init__(self, data: dict, serializer_class: Type[serializers.ModelSerializer]):
+    def __init__(self, data: dict[str:any], serializer_class: Type[serializers.ModelSerializer]):
         self.__data = data
-        if 'info' in data.keys():
-            data = data['info']
-
-        self.__serializer = UserSerializer(data=data)
-        self.__serializer_class = serializer_class
-        if not self.__serializer.is_valid():
-            self.__error = self.__serializer.errors
+        if self.is_data_valid():
+            self.serializer = data
+        self.serializer_class = serializer_class
 
     def is_data_valid(self) -> bool:
         if self.__is_data_valid is not None:
@@ -98,14 +94,7 @@ class UserSerializerValidator:
         if not self.is_user_has_been_created():
             raise RuntimeError('User not created yet, use `user#create_user()`')
 
-        data = {
-            'id': self.__data['id'],
-            'info': self.__data
-        }
-        if 'company' not in self.__data.keys():
-            return data
-        data['company'] = self.__data['company']
-        return data
+        return self.__data
 
     def get_current_response(self) -> Response:
         if not self.is_data_valid():
@@ -114,12 +103,13 @@ class UserSerializerValidator:
         if self.is_duplicated():
             return Response(status=status.HTTP_409_CONFLICT)
 
+        serializer: serializers.ModelSerializer = self.__serializer_class(data=self.__data)
+        if not serializer.is_valid():
+            return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
+
         if not self.is_user_has_been_created():
             self.create_user()
 
-        serializer: serializers.ModelSerializer = self.__serializer_class(data=self.get_final_data())
-        if not serializer.is_valid():
-            return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
         serializer.save()
         return Response(status=status.HTTP_201_CREATED)
 
@@ -128,3 +118,23 @@ class UserSerializerValidator:
 
     def is_valid(self) -> bool:
         return self.is_data_valid() and not self.is_duplicated()
+
+    @property
+    def serializer_class(self):
+        return self.__serializer_class
+
+    @serializer_class.setter
+    def serializer_class(self, serializer_class: Type[serializers.ModelSerializer]):
+        if not issubclass(serializer_class, serializers.ModelSerializer):
+            raise ValueError("Serializer Class isn't a ModeSerializer class")
+        self.__serializer_class = serializer_class
+
+    @property
+    def serializer(self):
+        return self.__serializer
+
+    @serializer.setter
+    def serializer(self, data:dict):
+        self.__serializer = UserSerializer(data=data['info'])
+        if not self.__serializer.is_valid():
+            self.__error = self.__serializer.errors
