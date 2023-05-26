@@ -134,7 +134,7 @@ class UserSerializerValidator:
         return self.__serializer
 
     @serializer.setter
-    def serializer(self, data:dict):
+    def serializer(self, data: dict):
         self.__serializer = UserSerializer(data=data['info'])
         if not self.__serializer.is_valid():
             self.__error = self.__serializer.errors
