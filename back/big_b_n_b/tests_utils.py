@@ -237,3 +237,8 @@ class BigBNBTestCase(TestCase):
             'name': BigBNBTestCase.get_random_str(5),
             'password': BigBNBTestCase.get_random_str(5)
         }
+
+    @staticmethod
+    def get_filter_url(min_price: float, max_price: float, min_room: float, max_room: float) -> str:
+        return \
+            f'/hotels/filter_hotels/?min_price={min_price}&max_price={max_price}&min_room={min_room}&max_room={max_room}'

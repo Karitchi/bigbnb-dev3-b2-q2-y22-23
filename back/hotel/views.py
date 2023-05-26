@@ -62,7 +62,6 @@ def filter_hotels(request):
     max_price = request.GET.get('max_price')
     min_room = request.GET.get('min_room')
     max_room = request.GET.get('max_room')
-    print(type(min_room))
 
     try:
         min_price = float(min_price)
@@ -75,7 +74,6 @@ def filter_hotels(request):
             raise ValueError
 
     except ValueError:
-        print('coucou')
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
     hotels = Hotel.objects.all()
@@ -83,8 +81,6 @@ def filter_hotels(request):
     hotels = hotels.filter(price__lte=max_price)
     hotels = hotels.filter(room_quantity__gte=min_room)
     hotels = hotels.filter(room_quantity__lte=max_room)
-    # hotels = hotels.filter(room_quantity__gte=min_room)
-    # hotels = hotels.filter(room_quantity__lte=max_room)
     serializer = HotelSerializer(hotels, many=True)
     return Response(status=status.HTTP_200_OK, data=serializer.data)
     
