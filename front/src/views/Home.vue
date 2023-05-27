@@ -1,4 +1,5 @@
 <template>
+  <search></search>
   <div class="container-fluid p-5" id="all-hotels">
     <div v-for="hotel in this.hotels" class="row m-0 hotel">
       <card-hotel :hotel="hotel" />
@@ -21,12 +22,14 @@
 
 <script>
 import CardHotel from '../components/CardHotel.vue'
+import Search from '../components/search.vue';
 import axios from "axios";
 
 export default {
   name: 'App',
   components: {
     CardHotel,
+    Search,
   },
 
   data() {
