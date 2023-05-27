@@ -39,7 +39,7 @@ onMounted(async () => {
         <div class="spinner-border" role="status"></div>
     </div>
 
-    <div v-else class="pb-5 pt-5">
+    <div v-else class="pb-3 pt-3 rounded border border-secondary-subtle">
 
         <h1 class="h1">{{ hotel.name }}</h1>
         <hr class="pb-3">
