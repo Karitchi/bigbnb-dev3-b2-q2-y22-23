@@ -64,7 +64,7 @@ export default {
     setDisconnect() {
       localStorage.clear();
       this.connected = false;
-      this.$router.push('/');
+      location.reload();
     }
   }
 }
