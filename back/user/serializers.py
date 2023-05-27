@@ -94,6 +94,11 @@ class UserSerializerValidator:
         if not self.is_user_has_been_created():
             raise RuntimeError('User not created yet, use `user#create_user()`')
 
+        self.__data = self.__data | {
+            'is_active': True,
+            'staff': False,
+            'admin': False
+        }
         return self.__data
 
     def get_current_response(self) -> Response:
@@ -103,15 +108,24 @@ class UserSerializerValidator:
         if self.is_duplicated():
             return Response(status=status.HTTP_409_CONFLICT)
 
-        serializer: serializers.ModelSerializer = self.__serializer_class(data=self.__data)
-        if not serializer.is_valid():
-            return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
+        errors = self.get_serializer_data_error()
+        if errors is not None:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data=errors)
 
         if not self.is_user_has_been_created():
             self.create_user()
 
+        serializer: serializers.ModelSerializer = self.__serializer_class(data=self.__data)
+        if not serializer.is_valid():
+            return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
+
         serializer.save()
         return Response(status=status.HTTP_201_CREATED)
+
+    def get_serializer_data_error(self):
+        serializer = self.__serializer_class(data=self.__data | {'user_id': 1})
+        if not serializer.is_valid():
+            return serializer.errors
 
     def is_user_has_been_created(self) -> bool:
         return self.__user is not None
