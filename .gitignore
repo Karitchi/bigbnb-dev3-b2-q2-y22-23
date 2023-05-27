@@ -2,8 +2,10 @@
 venv/
 __pycache__/
 media
-docker
+migrations/
+
+# environnement nico
 docker-compose.yml
+docker
 mariadb
 mariadb-script.txt
-migrations/
