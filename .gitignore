@@ -3,6 +3,7 @@ venv/
 __pycache__/
 media
 docker
+docker-compose.yml
 mariadb
 mariadb-script.txt
 migrations/
