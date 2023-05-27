@@ -23,7 +23,7 @@
               <div class="d-flex ms-auto">
                 <div v-if="!this.connected">
                   <router-link to="/login">Se connecter</router-link>
-                  <router-link to="/register">S'inscrire</router-link>
+                  <router-link to="/register_client">S'inscrire</router-link>
                 </div>
                 <div v-else>
                   <router-link to="/">Mon profil</router-link>
@@ -64,7 +64,7 @@ export default {
     setDisconnect() {
       localStorage.clear();
       this.connected = false;
-      this.$router.push('/');
+      location.reload();
     }
   }
 }
