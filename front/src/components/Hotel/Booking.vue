@@ -48,14 +48,15 @@ function submitForm(event) {
 
 <template>
     <div v-if="!isLoaded" class="text-center">
-        <div v-if="!isLoaded" class="spinner-border" role="status"></div>
+        <div class="spinner-border" role="status"></div>
     </div>
 
 
-    <div v-else class="pb-3 pt-3 col rounded border border-secondary-subtle">
-        <h5> {{ hotelPrice }} per nights</h5>
-        <form class="" @submit="submitForm">
-
+    <div v-else>
+        <h1> {{ hotelPrice }} $</h1> 
+        <span>per night</span>
+        
+        <form @submit="submitForm">
             <div class="input-group mb-3">
                 <input type="date" id="arrival" class="form-control" v-model="arrivalDate">
                 <input type="date" id="departure" class="form-control" v-model="departureDate">
@@ -68,6 +69,5 @@ function submitForm(event) {
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-
     </div>
 </template>

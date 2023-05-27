@@ -5,9 +5,7 @@ defineProps({
 </script>
 
 <template>
-    <div class="pb-5">
-
-        <div class="row p-1 bg-light  rounded border m-0 ">
+        <div class="row ">
 
             <!-- first image -->
             <div class="col p-1 big-col">
@@ -22,9 +20,7 @@ defineProps({
                     </div>
                 </div>
             </div>
-
         </div>
-    </div>
 </template>
 
 <style scoped>
