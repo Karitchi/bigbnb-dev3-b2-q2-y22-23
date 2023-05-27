@@ -5,7 +5,7 @@
           <div class="card-body">
               <h3 class="cart-title">{{ this.hotel.name }}</h3>
             <p class="card-text"> <i>{{ this.hotel.description }}</i></p>
-              <button @click="this.goToHotel" class="btn btn-outline-primary" style="margin-bottom: 5px">{{ this.infoMsg }}</button>
+              <button @click="this.goToHotel" class="btn btn-primary" style="margin-bottom: 5px">{{ this.infoMsg }}</button>
             <p class="card-footer">By <i>{{ this.hotelOwner.company }}</i></p>
           </div>
       </div>
@@ -39,7 +39,7 @@ export default {
 
     goToHotel() {
       if (!this.isHotelOwnerOf(this.hotel.hotel_owner)) {
-        this.$router.push(`/hotel_info/${this.hotel.id}`)
+        this.$router.push(`/hotels/${this.hotel.id}`)
       } else {
         this.$router.push(`/modification/${this.hotel.id}`)
       }
