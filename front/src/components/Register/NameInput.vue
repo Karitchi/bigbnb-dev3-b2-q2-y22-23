@@ -32,7 +32,7 @@
 <script>
 export default {
   name: "NameInput",
-  emits: ['input-name'],
+  emits: ['input'],
 
   data() {
     return {
@@ -44,7 +44,7 @@ export default {
 
   methods: {
     onInput() {
-      this.$emit('input-name', {
+      this.$emit('input', {
         'name': this.name,
         'lastname': this.lastname,
         'isValid': this.name !== '' && this.lastname !== '' && this.name.length <= this.MAX_CHARS && this.lastname.length <= this.MAX_CHARS

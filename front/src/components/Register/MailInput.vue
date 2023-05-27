@@ -28,7 +28,7 @@
 <script>
 export default {
   name: "MailInput",
-  emits: ['input-mail'],
+  emits: ['input'],
 
   data() {
     return {
@@ -41,7 +41,7 @@ export default {
     onInput() {
       this.isValid =
           /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.mail);
-      this.$emit('input-mail', {
+      this.$emit('input', {
         'mail': this.mail,
         'isValid': this.isValid
       });

@@ -83,7 +83,7 @@
 <script>
 export default {
   name: "Password",
-  emits: ['input-password'],
+  emits: ['input'],
 
   data() {
     return {
@@ -108,7 +108,7 @@ export default {
       this.containsUppercase = this.password.toLowerCase() !== this.password;
       this.containsNumber = /\d/.test(this.password);
       this.containsSpecialChars = /[@!#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(this.password);
-      this.$emit('input-password', {
+      this.$emit('input', {
         'password': this.password,
         'isValid': this.isValid()
       });
