@@ -172,7 +172,7 @@
 
 .my-input {
   width: 40%;
-  padding: 8px;
+  
   margin-bottom: 10px;
   border: 1px solid #DFE0E2;
   border-radius: 4px;
@@ -191,5 +191,21 @@
 .hover-button:hover {
   background-color: #326b80; /* Couleur plus foncée pour l'effet de survol */
 }
+
+.input1 {
+    margin-left: 9.7%;
+  }
+  
+  .input2 {
+    margin-left: 16%;
+  }
+  
+  .input3 {
+    margin-left: 11.6%;
+  }
+  
+  .input4 {
+    margin-left: 6.8%;
+  }
 
 </style>
