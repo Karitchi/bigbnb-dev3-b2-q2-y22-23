@@ -3,12 +3,12 @@
     <aside class="sidebar">
       <div class="filter_input">
         <label>Price :</label>
-        <input id="min_price" type="number" v-model="priceRange[0]" @input="fetchHotels">
-        <input id="max_price" type="number" v-model="priceRange[1]" @inpute="fetchHotels">
+        <input id="min_price" type="number" v-model="priceRange[0]" @input="fetchHotels" placeholder="Minimum price">
+        <input id="max_price" type="number" v-model="priceRange[1]" @inpute="fetchHotels" placeholder="Maximum price price">
 
         <label>Room quantity:</label>
-        <input id="min_room" type="number" v-model="roomRange[0]" @input="fetchHotels">
-        <input id="max_room" type="number" v-model="roomRange[1]" @input="fetchHotels">
+        <input id="min_room" type="number" v-model="roomRange[0]" @input="fetchHotels" placeholder="Minimum room">
+        <input id="max_room" type="number" v-model="roomRange[1]" @input="fetchHotels" placeholder="Maximum room">
       </div>
     </aside>
     <main class="main-content">
@@ -75,6 +75,7 @@ export default {
 </script>
 
 <style>
+@import '../assets/variables.scss';
 
 .filters {
   margin-bottom: 1rem;

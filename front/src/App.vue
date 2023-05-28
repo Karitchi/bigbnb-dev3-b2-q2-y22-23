@@ -4,15 +4,15 @@
     <router-view/>
     <!-- Contenu de la page ici -->
 
-    <footer class="my-footer py-3">
-      <div class="container">
+    <footer class="my-footer py-3 footer-bottom">
+      <div class="footer-container">
         <div class="row">
           <div class="col-md-12 text-center">
-            <a href="#" class="mx-2">big_bnb.inc</a>|
-            <router-link to="/login" class="mx-2">Confidentialité</router-link>|
-            <a href="#" class="mx-2">Conditions générales</a>|
-            <a href="#" class="mx-2">Plan du site</a>|
-            <router-link to="/about" class="mx-2">Infos de l'entreprise</router-link>|
+            <a href="#" class="custom-footer">Big_bnb.inc</a>
+            <router-link to="/login" class="custom-footer">Privacy</router-link>
+            <a href="#" class="custom-footer">Terms and Conditions</a>
+            <a href="#" class="custom-footer">Site map</a>
+            <router-link to="/about" class="custom-footer">Infos</router-link>
           </div>
         </div>
       </div>
@@ -38,3 +38,24 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+/* .footer-container{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 10px;
+} */
+.custom-footer {
+  display: inline-block;
+  background-color: #75ABBC;
+  text-decoration: none;
+  color: whitesmoke;
+  padding-right: 15px;
+  padding-left: 15px;
+
+}
+
+a.custom-footer:hover {
+  text-decoration: underline;
+}
+</style>

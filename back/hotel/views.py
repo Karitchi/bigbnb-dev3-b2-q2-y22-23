@@ -95,3 +95,12 @@ def hotel_images(request, hotel_id):
     if request.method == 'GET':
         serializer = ImageSerializer(images, many=True)
         return Response(serializer.data)
+    
+
+@api_view(['GET'])
+def search(request):
+    location = request.GET.get('location')
+
+    hotels = Hotel.objects.filter(city_id__name__icontains=location)
+    serializer = HotelSerializer(hotels, many=True)
+    return Response(status=status.HTTP_200_OK, data=serializer.data)
