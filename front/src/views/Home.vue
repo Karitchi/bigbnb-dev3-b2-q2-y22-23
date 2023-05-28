@@ -1,13 +1,11 @@
 <template>
-  <div class="container-img">
-      <img class="home-img" src="../assets/home.png">
-</div>
+  
   <search></search>
-  <!-- <div class="container-fluid p-5" id="all-hotels">
+  <div class="container-fluid p-5" id="all-hotels">
     <div v-for="hotel in this.hotels" class="row m-0 hotel">
       <card-hotel :hotel="hotel" />
     </div>
-  </div> -->
+  </div>
 </template>
 
 <style scoped>

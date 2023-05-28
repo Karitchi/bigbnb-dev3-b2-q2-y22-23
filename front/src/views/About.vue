@@ -1,33 +1,42 @@
 <template>
+    <div class="container-img">
+      <img class="home-img" src="../assets/home.png">
+    </div>
     <div class="container-fluid">
+        
 
-        <h1>About</h1>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis accusamus, fugiat, voluptatem, quas perspiciatis nobis rerum a temporibus distinctio fuga ipsum neque sapiente sed explicabo obcaecati necessitatibus quia officia doloremque.
-            Dolores iure, voluptatum repudiandae debitis consequuntur, doloribus ipsa ad illum nihil ullam voluptatem error nisi mollitia harum architecto, animi nesciunt libero magnam sapiente cum voluptatibus sint maxime molestias? Eligendi, harum?
-            Veritatis in iste possimus eius sint voluptatem doloribus quae. Nesciunt, hic! Natus ipsum, iure facilis consectetur quod vel laborum culpa dolorem! Sint cumque autem ad, qui doloribus labore soluta nesciunt.
-            Est corporis aliquid, nisi, nulla ipsam iste ex esse qui nesciunt excepturi dolore, saepe perferendis dolorem incidunt alias. Tenetur odit vel maxime, aspernatur suscipit in voluptas perferendis quo corporis a!
-            Assumenda suscipit necessitatibus autem animi modi ab voluptatibus sint cum nemo quam cupiditate corporis eos voluptate error veniam in, omnis nesciunt ea iusto quod. Sed officia error quos ex vitae.
-            A quos placeat officia porro quidem, quod excepturi voluptatum ea quam expedita et, neque cumque vitae reiciendis aperiam dolore deleniti. Veniam adipisci labore quas vero a? Eligendi molestiae deserunt nisi.
-            Molestiae distinctio quas labore asperiores porro in. Possimus laborum aliquam rerum cupiditate nobis quaerat earum sit libero reiciendis, esse necessitatibus illo omnis officiis, quasi doloribus repudiandae natus assumenda id cum.
-            Tempore ullam ratione earum. Nulla quod libero impedit quos aliquam illo numquam. Unde nesciunt, beatae quae atque officia delectus illo perferendis ab adipisci nisi dolorum deserunt? Fugit sapiente pariatur soluta!
-            Iusto perferendis fugit eaque quaerat ratione, repellendus eos hic assumenda explicabo vitae voluptate placeat neque aliquam qui fuga magni velit. Fugiat amet assumenda dolorum unde commodi illum exercitationem vitae consectetur?
-            Deserunt debitis consectetur atque sunt, adipisci consequatur sint necessitatibus incidunt totam minima odit facere praesentium, nulla suscipit minus id dignissimos veniam officiis rerum harum. Et quidem esse dolorem at aliquam.
-            Sunt, magnam assumenda voluptate dolore doloremque at placeat odio quas deleniti nesciunt adipisci doloribus, dolores sapiente enim iusto unde. Quia, magni quam. Velit nisi alias officiis perferendis perspiciatis dicta repellat!
-            Numquam magni earum autem illum ea dolorem cum iusto culpa accusantium est, repellat ad dolor voluptatibus ipsum et nisi veritatis! Tempora enim qui dolorem reprehenderit molestiae ullam totam, exercitationem odio.
-            Aperiam, quia amet accusantium id nulla quos explicabo aliquam eum maxime dolorum? Ad saepe ab tempore in cum dolorem, quis animi sapiente, velit, nam soluta vitae aperiam nulla laudantium eaque.
-            Reprehenderit voluptatibus dolor sint voluptate dolorem, nobis porro facere natus, id laboriosam eaque fugiat nulla voluptatem minima. Voluptatum debitis minima obcaecati, ullam, enim sit dignissimos deleniti earum animi, blanditiis temporibus?
-            Totam, temporibus. Error tempora ab suscipit itaque ducimus iure vitae nobis, veritatis corporis aliquam, alias nihil! Id magni, dicta accusamus dolor nobis molestias vitae exercitationem, nemo ipsa ipsum optio expedita.
-            Sit, nihil veniam. Est tenetur quam deleniti autem odit tempora, nobis quaerat sint libero nihil! Enim vero nemo ullam similique ipsam voluptate, vel expedita porro id dolorum tempora veritatis eaque!
-            Veritatis neque, reprehenderit impedit optio quos, velit odit repellendus nisi quidem, consectetur harum mollitia quas laborum minima beatae deserunt! Ab architecto non perspiciatis dolorem at natus, aliquid aperiam assumenda consequuntur.
-            Error cum doloremque reiciendis! Incidunt magni delectus, voluptates pariatur cupiditate deserunt aliquid veniam numquam? Saepe, unde suscipit? Accusamus id ex doloremque excepturi ipsa eveniet quidem aliquam, reiciendis, suscipit voluptas sint.
-            Sunt pariatur quasi animi, eos architecto, nobis incidunt distinctio, corporis nihil illum repudiandae molestias enim cupiditate ea unde fuga delectus quis deserunt! Blanditiis perspiciatis iure totam dolorem sed, rem fuga?
-            Est earum animi deserunt rerum libero accusantium impedit fuga obcaecati in aliquid, voluptatem rem blanditiis nisi odio perspiciatis officia eum ipsum, eligendi quo expedita? Quo quisquam blanditiis distinctio natus nam.
-            Ratione sit soluta adipisci sapiente placeat odit debitis voluptatem deleniti corrupti, natus excepturi corporis dolore praesentium aperiam numquam tempore harum? Repudiandae cum magnam tenetur aliquid reiciendis culpa repellendus dolor quibusdam.
-            Suscipit deleniti explicabo ad omnis esse similique nam ipsa ratione, vero vitae pariatur, porro, molestias dolor maiores ab natus fugiat minima saepe recusandae! Similique, qui! Delectus optio atque quisquam numquam!
-            Nam eius, ex officia non eos quos saepe culpa itaque, esse, maxime maiores quibusdam ab dolorem molestiae aliquid magni ullam recusandae porro modi veritatis? Enim dolorem aliquid explicabo numquam repellat!
-            Doloribus, voluptas deserunt blanditiis repudiandae obcaecati velit, cum placeat consequatur eum facere similique facilis expedita ratione nisi sed deleniti doloremque! Commodi reprehenderit praesentium obcaecati illum quam dignissimos quas sequi nesciunt.
-            Tempore illum quos distinctio quis! Animi, fugiat, vero amet eaque eius laudantium doloremque itaque porro, voluptatem sed velit obcaecati ab! Delectus accusamus ut aliquam provident dolorem est eveniet, possimus obcaecati.
-        </p>
+        <h1>Page d'information</h1>
+    <p>Bienvenue sur notre site de réservation de groupe pour des team building dans des hôtels ! Nous sommes là pour vous aider à organiser des événements d'entreprise mémorables et enrichissants.</p>
+
+    <p>Notre plateforme vous offre la possibilité de choisir parmi une large sélection d'hôtels partenaires, spécialement choisis pour leurs installations adaptées aux activités de team building. Chaque hôtel propose également une gamme d'activités passionnantes pour renforcer la cohésion d'équipe et favoriser la collaboration.</p>
+
+    <h2>Comment ça fonctionne :</h2>
+    <ol>
+        <li>Recherchez et explorez : Parcourez notre catalogue d'hôtels et découvrez les différentes options disponibles. Utilisez nos filtres de recherche avancée pour affiner vos résultats en fonction de vos préférences.</li>
+        <li>Choisissez votre hôtel : Sélectionnez l'hôtel qui correspond le mieux à vos besoins et à ceux de votre équipe. Consultez les descriptions détaillées, les photos et les avis pour prendre une décision éclairée.</li>
+        <li>Réservez votre séjour : Une fois que vous avez trouvé l'hôtel idéal, procédez à la réservation en fournissant les détails nécessaires tels que les dates, le nombre de participants et les préférences spécifiques. Notre système de réservation simple et sécurisé vous guidera tout au long du processus.</li>
+        <li>Explorez les activités de team building : Découvrez les différentes activités de team building proposées par l'hôtel de votre choix. Qu'il s'agisse de jeux d'équipe, de défis en plein air, de séances de formation ou d'autres expériences uniques, vous trouverez des options adaptées à vos besoins.</li>
+        <li>Profitez de votre séjour : Une fois sur place, profitez des installations de l'hôtel, participez aux activités de team building et créez des souvenirs inoubliables avec votre équipe. Notre objectif est de vous offrir une expérience exceptionnelle qui renforcera les liens et favorisera la collaboration au sein de votre entreprise.</li>
+    </ol>
+
+    <p>Nous sommes ravis de vous accompagner dans l'organisation de votre prochain team building. N'hésitez pas à nous contacter si vous avez des questions ou besoin d'assistance supplémentaire.</p>
+
+    <p>L'équipe de réservation de groupe.</p>
+        
     </div>
 </template>
+
+<style>
+.container-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  margin-top: 50px;
+}
+
+.home-img {
+  max-width: 100%;
+  max-height: 100%;
+}
+</style>

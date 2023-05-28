@@ -4,7 +4,7 @@
     <router-view/>
     <!-- Contenu de la page ici -->
 
-    <footer class="my-footer py-3 footer-bottom">
+    <footer class="my-footer py-3 footer-bottom" :style="['/login', '/register_client', '/register_hotel_owner', '/my_hotels', '/my_bookings'].includes($route.path) || $route.path.startsWith('/modification/') ? 'position: fixed; left: 0; bottom: 0; width: 100%;' :''">
       <div class="footer-container">
         <div class="row">
           <div class="col-md-12 text-center">

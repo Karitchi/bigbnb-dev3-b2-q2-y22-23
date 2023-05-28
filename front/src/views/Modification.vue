@@ -30,19 +30,7 @@
 
         <button @click="test" type="submit" class="my-button hover-button">Enregistrer les modifications</button>
       </form>
-      <footer class="my-footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 text-center">
-            <a href="#" class="mx-2">big_bnb.inc</a>|
-            <router-link to="/login" class="mx-2">Confidentialité</router-link>|
-            <a href="#" class="mx-2">Conditions générales</a>|
-            <a href="#" class="mx-2">Plan du site</a>|
-            <router-link to="/about" class="mx-2">Infos de l'entreprise</router-link>|
-          </div>
-        </div>
-      </div>
-    </footer>
+    
     </div>
   </div>
 </template>
@@ -200,28 +188,6 @@
   resize: vertical;
   box-sizing: border-box;
 }
-
-.my-footer {
-  background-color: #75ABBC;
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 0;
-  color: #071013;
-  font-size: 16px;
-  line-height: 1.5;
-}
-
-.my-footer a {
-  color: #1B4B5A;
-  text-decoration: none;
-}
-
-.my-footer .container {
-  padding: 1rem;
-}
-
 .hover-button:hover {
   background-color: #326b80; /* Couleur plus foncée pour l'effet de survol */
 }
