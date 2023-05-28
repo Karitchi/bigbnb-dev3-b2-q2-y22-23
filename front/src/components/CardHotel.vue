@@ -7,6 +7,7 @@
             <p class="card-text"> <i>{{ this.hotel.description }}</i></p>
               <button @click="this.goToHotel" class="btn btn-primary" style="margin-bottom: 5px">{{ this.infoMsg }}</button>
             <p class="card-footer">By <i>{{ this.hotelOwner.company }}</i></p>
+
           </div>
       </div>
   </div>

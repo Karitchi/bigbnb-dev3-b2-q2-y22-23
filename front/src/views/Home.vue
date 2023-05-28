@@ -1,11 +1,14 @@
 <template>
-  
+  <div class="container-img">
+      <img class="home-img" src="../assets/home.png">
+</div>
   <search></search>
-  <div class="container-fluid p-5" id="all-hotels">
+  <!-- <filter></filter> -->
+  <!-- <div class="container-fluid p-5" id="all-hotels">
     <div v-for="hotel in this.hotels" class="row m-0 hotel">
       <card-hotel :hotel="hotel" />
     </div>
-  </div>
+  </div> -->
 </template>
 
 <style scoped>
@@ -70,5 +73,16 @@ export default {
 </script>
 
 <style scoped>
+.container-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  margin-top: 50px;
+}
 
+.home-img {
+  max-width: 100%;
+  max-height: 100%;
+}
 </style>

@@ -58,6 +58,7 @@ def hotel_detail(request, hotel_id):
 
 @api_view(['GET'])
 def filter_hotels(request):
+    location = request.GET.get('location')
     min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
     min_room = request.GET.get('min_room')
@@ -76,7 +77,7 @@ def filter_hotels(request):
     except ValueError:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-    hotels = Hotel.objects.all()
+    hotels = Hotel.objects.filter(city_id__name__icontains=location)
     hotels = hotels.filter(price__gte=min_price)
     hotels = hotels.filter(price__lte=max_price)
     hotels = hotels.filter(room_quantity__gte=min_room)
@@ -99,8 +100,41 @@ def hotel_images(request, hotel_id):
 
 @api_view(['GET'])
 def search(request):
-    location = request.GET.get('location')
+    # location = request.GET.get('location')
 
-    hotels = Hotel.objects.filter(city_id__name__icontains=location)
-    serializer = HotelSerializer(hotels, many=True)
-    return Response(status=status.HTTP_200_OK, data=serializer.data)
+    # hotels = Hotel.objects.filter(city_id__name__icontains=location)
+    # serializer = HotelSerializer(hotels, many=True)
+    # return Response(status=status.HTTP_200_OK, data=serializer.data)
+
+    location = request.GET.get('location')
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    min_room = request.GET.get('min_room')
+    max_room = request.GET.get('max_room')
+
+    try:
+        min_price = float(min_price)
+        max_price = float(max_price)
+        min_room = int(min_room)
+        max_room = int(max_room)
+        if min_price < 0 or max_price < min_price:
+            raise ValueError
+        if min_room < 0 or max_room < min_room:
+            raise ValueError
+        if not location:
+            hotels = Hotel.objects.all()
+            serializer = HotelSerializer(hotels, many=True)
+            return Response(status=status.HTTP_200_OK, data=serializer.data)
+        else:
+            hotels = Hotel.objects.filter(city_id__name__icontains=location)
+            hotels = hotels.filter(price__gte=min_price)
+            hotels = hotels.filter(price__lte=max_price)
+            hotels = hotels.filter(room_quantity__gte=min_room)
+            hotels = hotels.filter(room_quantity__lte=max_room)
+            serializer = HotelSerializer(hotels, many=True)
+            return Response(status=status.HTTP_200_OK, data=serializer.data)
+
+    except ValueError:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+   
