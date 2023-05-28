@@ -1,14 +1,21 @@
 <template>
-  <form @submit="this.login">
-    <label for="login-email">Email :</label>
-    <input type="email" id="login-email" v-model="this.email"><br>
-    <label for="login-pw">Mot de passe :</label>
-    <input type="password" id="login-pw" v-model="this.password"><br>
-    <button type="submit">Se connecter</button>
-  </form>
+  <div class="login-container">
+    <h2>Connexion</h2>
+    <form @submit="login" class="login-form">
+      <div class="form-group">
+        <label for="login-email">Email :</label>
+        <input type="email" id="login-email" v-model="email" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="login-pw">Mot de passe :</label>
+        <input type="password" id="login-pw" v-model="password" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-primary">Se connecter</button>
+    </form>
 
-  <div v-if="this.errorMsg !== ''">
-    <p>Erreur : {{ this.errorMsg }}</p>
+    <div v-if="errorMsg !== ''" class="error-message">
+      <p>Erreur : {{ errorMsg }}</p>
+    </div>
   </div>
 </template>
 
@@ -61,5 +68,25 @@ export default {
 </script>
 
 <style scoped>
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+}
 
+.login-form {
+  width: 300px;
+  margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
 </style>
+
