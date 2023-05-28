@@ -15,8 +15,8 @@
                   <router-link class="connect" to="/register_client">S'inscrire</router-link>
                 </div>
                 <div v-else>
-                  <router-link to="/">Mon profil</router-link>
-                  <button @click="this.setDisconnect()" data-test-id="button-disconnect">Se déconnecter</button>
+                  <router-link class="connect" to="/">Mon profil</router-link>
+                  <button class="connect" @click="this.setDisconnect()" data-test-id="button-disconnect">Se déconnecter</button>
                 </div>
 
               </div>
