@@ -6,7 +6,7 @@
               <h3 class="cart-title">{{ this.hotel.name }}</h3>
             <p class="card-text"> <i>{{ this.hotel.description }}</i></p>
               <button @click="this.goToHotel" class="btn btn-outline-primary" style="margin-bottom: 5px">{{ this.infoMsg }}</button>
-            <p class="card-footer">By <i>{{ this.hotelOwner.company }}</i></p>
+            <p class="card-footer"> {{ this.hotel.price }} €</p>
           </div>
       </div>
   </div>

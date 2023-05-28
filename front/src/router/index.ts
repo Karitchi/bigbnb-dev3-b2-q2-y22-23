@@ -12,6 +12,7 @@ import Hotel from '@/views/Hotel.vue'
 import RegisterClient from '@/views/RegisterClient.vue'
 import RegisterHotelOwner from '@/views/RegisterHotelOwner.vue'
 
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
