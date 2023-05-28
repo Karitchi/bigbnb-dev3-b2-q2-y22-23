@@ -2,6 +2,8 @@
 import { onMounted, watch, ref } from 'vue'
 import { useRoute } from 'vue-router';
 import axios from 'axios'
+import { isConnected, getID } from '@/main.ts'
+
 
 const route = useRoute()
 
@@ -17,7 +19,6 @@ let hotelPrice = null
 let numberAvailableRooms = null
 
 const isLoaded = ref(false)
-
 
 async function getHotel() {
     const response = await fetch(`http://127.0.0.1:8000/hotels/${route.params.id}`)
@@ -47,8 +48,20 @@ function getTomorrowDate() {
 }
 
 async function book() {
+    let userID = null
+
+    // check if the user is connected and if he is get his user id
+    try {
+        userID = getID();
+        console.log(userID)
+    } catch (error) {
+        console.log(error)
+        console.log("hello")
+        return
+    }
+
     axios.post(`http://localhost:8000/bookings/`, {
-        client_id: 2,
+        client_id: userID ,
         hotel_id: 1,
         start_date: arrivalDate.value,
         end_date: departureDate.value,
@@ -80,14 +93,14 @@ onMounted(async () => {
 // check arrival date validity
 watch(arrivalDate, (arrivalDate) => {
     const todayDate = getTodayDate();
-    
+
     arrivalDate < todayDate ? isDateValid.value = false : isDateValid.value = true
 })
 
 // check departure date validity
 watch(departureDate, (departureDate) => {
     const tomorrowDate = getTomorrowDate();
-    
+
     departureDate < tomorrowDate ? isDateValid.value = false : isDateValid.value = true
 })
 
@@ -114,27 +127,36 @@ async function submitForm(event) {
 
 
     <div v-else>
+
+        <!-- hotel price -->
         <h1> {{ hotelPrice }}<i class="bi bi-currency-dollar"></i> per night</h1>
 
 
         <form @submit="submitForm" class="needs-validation" novalidate>
+
+            <label for="departureDate" class="form-label">departureDate</label>
+            <label for="arrivalDate" class="form-label">arrivalDate</label>
+
+            <!-- dates -->
             <div class="input-group mb-3">
-                <input type="date" id="arrival" class="form-control" :class="{ 'is-valid': isDateValid, 'is-invalid': !isDateValid }" v-model="arrivalDate" required>
-                <input type="date" id="departure" class="form-control" :class="{ 'is-valid': isDateValid, 'is-invalid': !isDateValid }" v-model="departureDate" required>
+                <input type="date" id="arrivalDate" class="form-control" :class="{ 'is-valid': isDateValid, 'is-invalid': !isDateValid }" v-model="arrivalDate" required>
+                <input type="date" id="departureDate" class="form-control" :class="{ 'is-valid': isDateValid, 'is-invalid': !isDateValid }" v-model="departureDate" required>
                 <div class="invalid-feedback">
                     please enter valid dates
                 </div>
             </div>
 
+            <!-- number of wanted rooms -->
             <div class="mb-3">
-                <label for="rooms" class="form-label">rooms</label>
+                <label for="rooms" class="form-label">wanted rooms</label>
                 <input type="number" class="form-control" min="1" :max="numberAvailableRooms" id="rooms" v-model="numberRoomsWanted" :class="{ 'is-valid': isNumberRoomsValid, 'is-invalid': !isNumberRoomsValid }" required>
                 <div class="invalid-feedback">
                     please book between 1 and {{ numberAvailableRooms }} rooms
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <!-- submit button -->
+            <button type="submit" class="btn btn-primary">book</button>
         </form>
     </div>
 </template>

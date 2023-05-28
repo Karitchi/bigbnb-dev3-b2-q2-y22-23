@@ -12,6 +12,17 @@ app.config.globalProperties.$api = 'http://localhost:8000/';
 app.config.globalProperties.$hotelOwnerUserType = 'hotel_owner';
 app.config.globalProperties.$clientUserType = 'client';
 
+
+export function isConnected(): boolean {
+    return localStorage.getItem('access') !== null;
+}
+
+export function getID() {
+    if (!isConnected())
+        throw 'Not Connected'
+    return Number(localStorage.getItem('id'));
+}
+
 app.mixin({
     methods: {
         storeToken(data: {'access': string, 'refresh': string}) {
