@@ -79,9 +79,9 @@ body {
 
 input.search {
   display: block;
-  width: 350px;
-  margin: 20px auto;
-  padding: 10px 45px;
+  width: 600px;
+  margin: 40px auto 20px auto;
+  padding: 15px 45px;
   background: white url("../assets/search-icon.svg") no-repeat 15px center;
   background-size: 15px 15px;
   font-size: 16px;
