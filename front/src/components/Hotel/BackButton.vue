@@ -11,5 +11,5 @@ function goBack() {
 </script>
 
 <template>
-    <button type="button" class="btn btn-primary mt-3 mb-3" @click="goBack">Go Back</button>
+    <button type="button" class="btn btn-primary" @click="goBack">Go Back</button>
 </template>

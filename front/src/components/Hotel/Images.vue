@@ -35,7 +35,7 @@ onMounted(async () => {
     </div>
 
     <div v-else>
-        <Gallery class="d-none d-lg-flex" :urls="urls" />
-        <Caroussel class="d-xs-flex d-lg-none" :urls="urls" />
+        <Gallery class="d-none d-lg-flex p-1 m-0" :urls="urls" />
+        <Caroussel class="d-lg-none" :urls="urls" />
     </div>
 </template>

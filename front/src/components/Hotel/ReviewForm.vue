@@ -66,7 +66,7 @@ function submitForm(event) {
 </script>
 
 <template>
-    <form class="pb-5 pt-5" @submit="submitForm">
+    <form  @submit="submitForm">
 
         <!-- stars -->
         <div class="mb-3">
