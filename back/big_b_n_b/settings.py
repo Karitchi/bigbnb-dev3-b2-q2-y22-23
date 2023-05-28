@@ -132,9 +132,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'big_bnb',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
+        'USER': 'coco',
+        'PASSWORD': 'sql',
+        'HOST': 'localhost',
         'PORT': '3306',
     }
 }

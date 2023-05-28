@@ -103,13 +103,13 @@ class UserSerializerValidator:
         if self.is_duplicated():
             return Response(status=status.HTTP_409_CONFLICT)
 
-        serializer: serializers.ModelSerializer = self.__serializer_class(data=self.__data)
-        if not serializer.is_valid():
-            return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
-
         if not self.is_user_has_been_created():
             self.create_user()
 
+        serializer: serializers.ModelSerializer = self.__serializer_class(data=self.__data)
+        if not serializer.is_valid():
+            return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
+        
         serializer.save()
         return Response(status=status.HTTP_201_CREATED)
 
