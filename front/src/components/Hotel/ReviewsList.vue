@@ -63,7 +63,7 @@ onMounted(async () => {
     </div>
 
     <!-- reviews -->
-    <div v-else class="row pb-5 pt-5">
+    <div v-else >
         <div v-for="(item, index) in reviews" class="col-lg-6">
 
             <!-- client name -->
