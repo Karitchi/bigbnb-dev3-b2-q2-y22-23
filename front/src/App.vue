@@ -40,11 +40,6 @@ export default {
 </script>
 
 <style scoped>
-/* .footer-container{
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 10px;
-} */
 .custom-footer {
   display: inline-block;
   background-color: #75ABBC;

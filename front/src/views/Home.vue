@@ -70,16 +70,5 @@ export default {
 </script>
 
 <style scoped>
-.container-img {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 400px;
-  margin-top: 50px;
-}
 
-.home-img {
-  max-width: 100%;
-  max-height: 100%;
-}
 </style>
