@@ -1,0 +1,12 @@
+.valid-input, .invalid-input {
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+}
+
+.valid-input {
+    color: #28a745;
+}
+
+.invalid-input {
+    color: #dc3545;
+}
