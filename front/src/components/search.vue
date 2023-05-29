@@ -3,16 +3,6 @@
       <div id="searchBox">
         <input class="search" type="text" v-model="location" @input="search" placeholder="Where are you going?">
       </div>
-    <main class="container-fluid p-5" id="all-hotels">
-      <div class="hotels-list">
-        <div v-if="hotels.length">
-          <div v-for="hotel in this.hotels" class="row m-0 hotel">
-            <card-hotel :hotel="hotel" />
-          </div>
-        </div>
-        <p v-else>No hotels found.</p>
-      </div>
-    </main>
   </div>
 </template>
 
@@ -23,12 +13,14 @@ import CardHotel from "@/components/CardHotel";
 export default {
   name: "search",
   components: { CardHotel },
+  emits: ['input'],
+
   data() {
     return {
-      hotels: [],
       input: "", // Add the input property
     };
   },
+
   methods: {
     async search() {
       axios
@@ -38,13 +30,20 @@ export default {
           },
         })
         .then((response) => {
-          this.hotels = response.data;
+          this.$emit('input', {'hotels': response.data});
         })
         .catch((error) => {
           console.log(error);
         });
     },
   },
+
+  mounted() {
+    axios.get(`${this.$api}hotels/`)
+    .catch(error => console.log(error))
+    .then(response => this.$emit('input', {'hotels': response.data}));
+  },
+
   watch: {
     input: {
       handler(newValue) {

@@ -1,13 +1,14 @@
 <template>
   <div class="container-img">
-      <img class="home-img" src="../assets/home.png">
+      <img class="home-img" src="../assets/home.png" alt="Big_BNB logo">
 </div>
-  <search></search>
-  <!-- <div class="container-fluid p-5" id="all-hotels">
-    <div v-for="hotel in this.hotels" class="row m-0 hotel">
+  <search @input="this.onInput" />
+  <div id="all-hotels">
+    <div v-for="hotel in this.hotels" class="hotel">
       <card-hotel :hotel="hotel" />
     </div>
-  </div> -->
+  </div>
+
 </template>
 
 <style scoped>
@@ -37,7 +38,7 @@ export default {
 
   data() {
     return {
-      hotels: []
+      hotels: [],
     }
   },
 
@@ -52,15 +53,22 @@ export default {
       if (this.getUserType() !== this.$hotelOwnerUserType)
         return;
 
-      this.hotels = this.hotels
-        .sort((a, b) => {
-          if (this.isHotelOwnerOf(a.hotel_owner) && !this.isHotelOwnerOf(b.hotel_owner))
-            return -1;
-          if (this.isHotelOwnerOf(b.hotel_owner) && !this.isHotelOwnerOf(a.hotel_owner))
-            return 1;
-        })
+      this.sortHotel();
 
-      console.log(this.hotels)
+    },
+
+    onInput(data) {
+      this.hotels = data['hotels'];
+      this.sortHotel();
+    },
+
+    sortHotel() {
+      this.hotels = this.hotels.sort((a, b) => {
+        if (this.isHotelOwnerOf(a.hotel_owner) && !this.isHotelOwnerOf(b.hotel_owner))
+          return -1;
+        if (this.isHotelOwnerOf(b.hotel_owner) && !this.isHotelOwnerOf(a.hotel_owner))
+          return 1;
+      })
     }
   },
 
