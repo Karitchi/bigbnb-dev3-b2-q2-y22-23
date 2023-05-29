@@ -41,7 +41,6 @@ export default {
       priceRange: [0, 2000],
       roomRange: [0, 500],
       inResearch: false,
-      error: '',
     };
   },
 
@@ -80,21 +79,6 @@ export default {
     .catch(error => console.log(error))
     .then(response => this.$emit('input', {'hotels': response.data}));
   },
-
-//   watch: {
-//     input: {
-//       handler(newValues) {
-//         this.location = newValues[0];
-//         this.min_price = newValues[1];
-//         this.max_price = newValues[2];
-//         this.min_room = newValues[3];
-//         this.max_room = newValues[4];
-//         this.search();
-//       },
-//       immediate: true,
-//       deep: true,
-//     },
-// },
 };
 
 </script>
