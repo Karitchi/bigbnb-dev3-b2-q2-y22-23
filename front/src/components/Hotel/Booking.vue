@@ -54,6 +54,7 @@ async function book() {
     try {
         userID = getID();
     } catch (error) {
+        console.log("error: " + error)
         return
     }
 
@@ -102,14 +103,25 @@ watch(departureDate, (departureDate) => {
 
 // check number of booked rooms validity
 watch(numberRoomsWanted, (numberRoomsWanted) => {
-    numberRoomsWanted < 1 ? isNumberRoomsValid.value = false : isNumberRoomsValid.value = true
-    numberRoomsWanted > numberAvailableRooms ? isNumberRoomsValid.value = false : isNumberRoomsValid.value = true
+    if (numberRoomsWanted < 1) {
+        isNumberRoomsValid.value = false
+    } else if (numberRoomsWanted > 1) {
+        isNumberRoomsValid.value = true
+    } else if (numberRoomsWanted > numberAvailableRooms) {
+        isNumberRoomsValid.value = false
+    } else {
+        isNumberRoomsValid.value = true
+    }
+
 })
 
 
 async function submitForm(event) {
     event.preventDefault();
 
+    console.log(isNumberRoomsValid.value)
+    console.log(isDateValid.value)
+    console.log("")
     if (isDateValid.value && isNumberRoomsValid.value) {
         await book()
     }
@@ -129,7 +141,7 @@ async function submitForm(event) {
 
 
         <form @submit="submitForm" class="needs-validation" novalidate>
-            
+
             <!-- dates labels -->
             <div class="row">
                 <div class="col">
