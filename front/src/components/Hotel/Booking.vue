@@ -15,14 +15,26 @@ const numberRoomsWanted = ref(1)
 const isDateValid = ref(true)
 const isNumberRoomsValid = ref(true)
 
+const hotel = ref(null)
+
 let hotelPrice = null
 let numberAvailableRooms = null
+const totalPrice = ref(null)
 
 const bookButton = ref(null)
 const successToast = ref(null)
 const failureToast = ref(null)
 
 const isLoaded = ref(false)
+
+watch(numberRoomsWanted, (numberRoomsWanted) => {
+    if (numberRoomsWanted > 0) {
+        totalPrice.value = (hotel.value.price * numberRoomsWanted).toFixed(2)
+    } else {
+        totalPrice.value = 0
+    }
+})
+
 
 async function getHotel() {
     const response = await fetch(`http://127.0.0.1:8000/hotels/${route.params.id}`)
@@ -102,17 +114,15 @@ async function book() {
 }
 
 onMounted(async () => {
-    const hotel = await getHotel()
+    hotel.value = await getHotel()
 
-    hotelPrice = hotel.price
-    numberAvailableRooms = hotel.rooms
+    hotelPrice = hotel.value.price
+    numberAvailableRooms = hotel.value.rooms
+
+    totalPrice.value = hotel.value.price
 
     isLoaded.value = true
-
-
-
 })
-
 
 // check arrival date validity
 watch(arrivalDate, (arrivalDate) => {
@@ -132,16 +142,19 @@ watch(departureDate, (departureDate) => {
 watch(numberRoomsWanted, (numberRoomsWanted) => {
     if (numberRoomsWanted < 1) {
         isNumberRoomsValid.value = false
-    } else if (numberRoomsWanted > 1) {
+        return
+    } else {
         isNumberRoomsValid.value = true
-    } else if (numberRoomsWanted > numberAvailableRooms) {
+    }
+    if (numberRoomsWanted > numberAvailableRooms) {
         isNumberRoomsValid.value = false
+        return
+        console.log(false)
     } else {
         isNumberRoomsValid.value = true
     }
 
 })
-
 
 async function submitForm(event) {
     event.preventDefault();
@@ -150,8 +163,6 @@ async function submitForm(event) {
         await book()
     }
 };
-
-
 </script>
 
 <template>
@@ -197,6 +208,9 @@ async function submitForm(event) {
                 </div>
             </div>
 
+            <div>
+                <h5 class="mb-3 text-secondary">Total price: {{ totalPrice }}</h5>
+            </div>
             <!-- submit button -->
             <button id="bookButton" ref="bookButton" type="submit" class="btn btn-primary">book</button>
 
