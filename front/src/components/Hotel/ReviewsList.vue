@@ -50,6 +50,7 @@ function changeDateFormat() {
 onMounted(async () => {
     reviews.value = await fetchReviews()
     clients.value = await fetchClients()
+    console.log(clients.value)
     changeDateFormat()
 
     isLoaded.value = true
@@ -63,11 +64,11 @@ onMounted(async () => {
     </div>
 
     <!-- reviews -->
-    <div v-else >
-        <div v-for="(item, index) in reviews" class="col-lg-6">
+    <div class="row m-0">
+        <div v-for="(item, index) in reviews" class="col-lg-6 p-2  mb-3">
 
             <!-- client name -->
-            <h3>{{ clients[index].name }} {{ clients[index].lastname }}</h3>
+            <h5>{{ clients[index].info.name }}</h5>
 
             <!-- date and start -->
             <p class="text-secondary">
