@@ -18,6 +18,10 @@ const isNumberRoomsValid = ref(true)
 let hotelPrice = null
 let numberAvailableRooms = null
 
+const bookButton = ref(null)
+const successToast = ref(null)
+const failureToast = ref(null)
+
 const isLoaded = ref(false)
 
 async function getHotel() {
@@ -47,6 +51,24 @@ function getTomorrowDate() {
     return `${year}-${month}-${day}`;
 }
 
+function printSuccessToast() {
+    const toastTrigger = bookButton.value
+    const toastLiveExample = successToast.value
+
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+
+    toastBootstrap.show()
+}
+
+function printFailureToast() {
+    const toastTrigger = bookButton.value
+    const toastLiveExample = failureToast.value
+
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+
+    toastBootstrap.show()
+}
+
 async function book() {
     let userID = null
 
@@ -54,7 +76,7 @@ async function book() {
     try {
         userID = getID();
     } catch (error) {
-        console.log("error: " + error)
+        printFailureToast()
         return
     }
 
@@ -69,9 +91,11 @@ async function book() {
         payment_method: "paypal",
     })
         .then(function (response) {
+            // reset book form value
             arrivalDate.value = getTodayDate()
             departureDate.value = getTomorrowDate()
             numberRoomsWanted.value = 1
+            printSuccessToast()
         })
         .catch(function (error) {
         })
@@ -84,6 +108,9 @@ onMounted(async () => {
     numberAvailableRooms = hotel.rooms
 
     isLoaded.value = true
+
+
+
 })
 
 
@@ -119,13 +146,12 @@ watch(numberRoomsWanted, (numberRoomsWanted) => {
 async function submitForm(event) {
     event.preventDefault();
 
-    console.log(isNumberRoomsValid.value)
-    console.log(isDateValid.value)
-    console.log("")
     if (isDateValid.value && isNumberRoomsValid.value) {
         await book()
     }
 };
+
+
 </script>
 
 <template>
@@ -165,13 +191,42 @@ async function submitForm(event) {
             <div class="mb-3">
                 <label for="rooms" class="form-label text-secondary">wanted rooms</label>
                 <input type="number" class="form-control" min="1" :max="numberAvailableRooms" id="rooms" v-model="numberRoomsWanted" :class="{ 'is-valid': isNumberRoomsValid, 'is-invalid': !isNumberRoomsValid }" required>
+
                 <div class="invalid-feedback">
                     please book between 1 and {{ numberAvailableRooms }} rooms
                 </div>
             </div>
 
             <!-- submit button -->
-            <button type="submit" class="btn btn-primary">book</button>
+            <button id="bookButton" ref="bookButton" type="submit" class="btn btn-primary">book</button>
+
+            <!-- success toast -->
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div id="successToast" ref="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="false">
+                    <div class="toast-header">
+                        <i class="bi bi-check-lg me-2"></i>
+                        <strong class="me-auto text-success">Success</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body ">
+                        The hotel is booked
+                    </div>
+                </div>
+            </div>
+
+            <!-- failure toast -->
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div id="failureToast" ref="failureToast" class="toast" role="alert" aria-live="assertive" aria-atomic="false">
+                    <div class="toast-header">
+                        <i class="bi bi-x me-2"></i>
+                        <strong class="me-auto text-danger">Failure</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body ">
+                        Please login to book an hotel
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
 </template>
