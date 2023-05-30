@@ -18,7 +18,7 @@
           </div>
 
           <div v-else>
-            <router-link class="btn btn-dark me-2" to="/">Mon profil</router-link>
+            <router-link to="/my_hotels" v-if="this.getUserType() === 'hotel_owner'" class="btn btn-dark me-2">Mes hôtel</router-link>
             <button class="btn btn-dark ms-2" @click="this.setDisconnect()" data-test-id="button-disconnect">Se déconnecter</button>
           </div>
 
@@ -54,6 +54,10 @@ export default {
       localStorage.clear();
       this.connected = false;
       location.reload();
+    },
+
+    getUserType() {
+      return localStorage.getItem('type');
     }
   }
 }
