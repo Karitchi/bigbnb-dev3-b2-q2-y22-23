@@ -1,28 +1,20 @@
 <template>
-  <div class="container-img">
-      <img class="home-img" src="../assets/home.png" alt="Big_BNB logo">
-</div>
+  <!-- <div class="container-img">
+    <img class="home-img" src="../assets/home.png" alt="Big_BNB logo">
+  </div> -->
+
   <search @input="this.onInput" />
-  <div v-if="this.hotels.length !== 0" id="all-hotels">
-    <div v-for="hotel in this.hotels" class="hotel">
-      <card-hotel :hotel="hotel" />
+
+  <div v-if="this.hotels.length !== 0">
+    <div class="row row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 m-0">
+      <div v-for="hotel in hotels" :key="hotel.id" class="col m-0 p-3">
+        <CardHotel :hotel="hotel" />
+      </div>
     </div>
   </div>
+
   <p v-else class="d-flex justify-content-center">No hotels found.</p>
-
 </template>
-
-<style scoped>
-@import '../assets/variables.scss';
-
-#all-hotels {
-  text-align: center;
-}
-
-.hotel {
-  display: inline;
-}
-</style>
 
 
 <script>
@@ -79,18 +71,3 @@ export default {
 
 }
 </script>
-
-<style scoped>
-.container-img {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 400px;
-  margin-top: 50px;
-}
-
-.home-img {
-  max-width: 100%;
-  max-height: 100%;
-}
-</style>
