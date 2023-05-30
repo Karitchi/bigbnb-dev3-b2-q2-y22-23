@@ -5,7 +5,12 @@
       <h3 class="cart-title">{{ this.hotel.name }}</h3>
       <p class="card-text"> <i>{{ this.hotel.description }}</i></p>
       <p class="card-footer">By <i>{{ this.hotelOwner.company }}</i></p>
-      <button @click="this.goToHotel" class="btn btn-primary me-auto" style="margin-bottom: 5px">{{ this.infoMsg }}</button>
+      <button
+          @click="this.isHotelOwner ? this.$router.push(`/modification/${this.hotel.id}`) : this.$router.push(`/hotels/${this.hotel.id}`)"
+          class="btn btn-primary me-auto"
+          style="margin-bottom: 5px">
+        {{ this.isHotelOwner ? 'Modifier informations' : 'Plus d\'informations' }}
+      </button>
     </div>
   </div>
 </template>
@@ -21,6 +26,7 @@ export default {
     return {
       hotelOwner: {},
       infoMsg: "",
+      isHotelOwner: null
     }
   },
 
@@ -28,24 +34,12 @@ export default {
     setHotelOwner() {
       axios.get(`${this.$api}hotel_owners/${this.hotel.hotel_owner}`)
         .then(response => this.hotelOwner = response.data);
-    },
-
-    goToHotel() {
-      if (!this.isHotelOwnerOf(this.hotel.hotel_owner)) {
-        this.$router.push(`/hotels/${this.hotel.id}`)
-      } else {
-        this.$router.push(`/modification/${this.hotel.id}`)
-      }
     }
   },
 
   mounted() {
-    if (!this.isHotelOwnerOf(this.hotel.hotel_owner)) {
-      this.infoMsg = "Plus d'informations";
-    } else {
-      this.infoMsg = "Modifier informations"
-    }
     this.setHotelOwner();
+    this.isHotelOwner = this.isHotelOwnerOf(this.hotel.hotel_owner);
   }
 }
 </script>

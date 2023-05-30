@@ -18,7 +18,7 @@
           </div>
 
           <div v-else>
-            <router-link to="/my_hotels" v-if="this.getUserType() === 'hotel_owner'" class="btn btn-dark me-2">Mes hôtel</router-link>
+            <router-link to="/my_hotels" v-if="this.getUserType() === 'hotel_owner'" class="btn btn-dark me-2">Mes hôtels</router-link>
             <button class="btn btn-dark ms-2" @click="this.setDisconnect()" data-test-id="button-disconnect">Se déconnecter</button>
           </div>
 

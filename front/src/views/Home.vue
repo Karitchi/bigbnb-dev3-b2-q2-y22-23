@@ -1,8 +1,4 @@
 <template>
-  <!-- <div class="container-img">
-    <img class="home-img" src="../assets/home.png" alt="Big_BNB logo">
-  </div> -->
-
   <search @input="this.onInput" />
 
   <div v-if="this.hotels.length !== 0">
