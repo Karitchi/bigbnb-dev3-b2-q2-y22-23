@@ -13,7 +13,8 @@ const showSuccessToast = ref(false);
 const reviewButton = ref(null)
 
 const successToast = ref(null)
-const failureToast = ref(null)
+const loginFailureToast = ref(null)
+const hotelOwnerFailureToast = ref(null)
 
 
 
@@ -62,9 +63,21 @@ function printSuccessToast() {
     toastBootstrap.show()
 }
 
-function printFailureToast() {
+function printLoginFailureToast() {
     const toastTrigger = reviewButton.value
-    const toastLiveExample = failureToast.value
+    const toastLiveExample = loginFailureToast.value
+
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+
+    toastBootstrap.show()
+}
+
+function printHotelOwnerFailureToast() {
+    const toastTrigger = reviewButton.value
+    const toastLiveExample = hotelOwnerFailureToast.value
+
+    console.log(toastTrigger)
+    console.log(toastLiveExample)
 
     const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
 
@@ -96,6 +109,7 @@ function submitForm(event) {
             printSuccessToast()
         })
         .catch(function (error) {
+            printHotelOwnerFailureToast()
         });
 };
 </script>
@@ -131,9 +145,9 @@ function submitForm(event) {
             </div>
         </div>
 
-        <!-- failure toast -->
+        <!-- login failure toast -->
         <div class="toast-container position-fixed top-0 end-0 p-3">
-            <div id="failureToast" ref="failureToast" class="toast" role="alert" aria-live="assertive" aria-atomic="false">
+            <div id="loginFailureToast" ref="loginFailureToast" class="toast" role="alert" aria-live="assertive" aria-atomic="false">
                 <div class="toast-header">
                     <i class="bi bi-x me-2"></i>
                     <strong class="me-auto text-danger">Failure</strong>
@@ -141,6 +155,21 @@ function submitForm(event) {
                 </div>
                 <div class="toast-body ">
                     Please login to post your comment
+                </div>
+            </div>
+        </div>
+
+
+        <!-- login  as hotel owner failure toast -->
+        <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div id="hotelOwnerFailureToast" ref="hotelOwnerFailureToast" class="toast" role="alert" aria-live="assertive" aria-atomic="false">
+                <div class="toast-header">
+                    <i class="bi bi-x me-2"></i>
+                    <strong class="me-auto text-danger">Failure</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body ">
+                    Hotel owners cannot post comments
                 </div>
             </div>
         </div>
