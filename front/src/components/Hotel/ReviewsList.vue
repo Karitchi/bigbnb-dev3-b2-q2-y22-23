@@ -76,7 +76,7 @@ onMounted(async () => {
             </p>
 
             <!-- review text -->
-            <p>{{ item.review }}</p>
+            <p style="max-height: 100px; overflow: auto;">{{ item.review }}</p>
         </div>
     </div>
 </template>
