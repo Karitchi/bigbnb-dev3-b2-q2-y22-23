@@ -1,23 +1,40 @@
 <template>
   <form>
+
+    <!-- search bar -->
     <div id="searchBox" class="mt-3 input-group mb-3 w-50 mx-auto">
       <input class="search p-2 form-control" type="text" v-model="location" placeholder="Where are you going?">
       <button type="submit" class="btn btn-primary" @click="this.search" :disabled="this.inResearch">
         <span class="d-none d-sm-inline">
           {{ this.inResearch ? 'Recherche en cours ...' : 'Rechercher' }}
         </span>
-          <i class="bi bi-search ms-2"></i>
+        <i class="bi bi-search ms-2"></i>
       </button>
     </div>
 
-    <div class="filter_input ">
-      <label>Price :</label>
-      <input id="min_price" type="number" v-model="priceRange[0]" placeholder="Min">
-      <input id="max_price" type="number" v-model="priceRange[1]" placeholder="Max">
+    <!-- filters -->
+    <div class="d-flex justify-content-center">
+      <div class="row row-cols-1 row-cols-sm-2 ms-2 me-2">
 
-      <label>Room quantity:</label>
-      <input id="min_room" type="number" v-model="roomRange[0]" placeholder="Min">
-      <input id="max_room" type="number" v-model="roomRange[1]" placeholder="Max">
+        <!-- price -->
+        <div class="col mb-3">
+          <label for="price">Price: </label>
+          <div class="input-group" id="price">
+            <input class="form-control" id="min-price" type="number" v-model="priceRange[0]" placeholder="Min">
+            <input class="form-control" id="max-price" type="number" v-model="priceRange[1]" placeholder="Max">
+          </div>
+        </div>
+
+        <!-- rooms -->
+        <div class="col mb-3">
+          <label for="rooms">Room quantity:</label>
+          <div class="input-group" id="rooms">
+            <input class="form-control" id="min-rooms" type="number" v-model="roomRange[0]" placeholder="Min">
+            <input class="form-control" id="max-rooms" type="number" v-model="roomRange[1]" placeholder="Max">
+          </div>
+        </div>
+
+      </div>
     </div>
 
   </form>
@@ -81,83 +98,3 @@ export default {
 };
 
 </script>
-
-<style scoped>
-@import '../assets/variables.scss';
-@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
-
-.filter_input {
-  display: block;
-  text-align: center;
-}
-
-.filter_input label {
-  margin: 1rem;
-  font-weight: bold;
-}
-
-.filter_input input {
-  border: 1px solid #ccc;
-  border-radius: 0.25rem;
-  padding: 0.5rem;
-  font-size: 0.75rem;
-  margin-bottom: 0.5rem;
-}
-
-.filter_input input[type="number"] {
-  -moz-appearance: textfield;
-  width: 75px;
-  height: 24px;
-  padding: 4px;
-  font-size: 12px;
-  margin: 0.25rem;
-}
-
-.min-max-input-container input::-webkit-outer-spin-button,
-.min-max-input-container input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.min-max-input-container input:disabled {
-  opacity: 0.5;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-}
-
-.hotels-list {
-  margin-top: 1rem;
-}
-
-#all-hotels {
-  text-align: center;
-}
-
-.hotel {
-  display: inline;
-}
-
-
-body {
-  padding: 20px;
-  min-height: 100vh;
-  background-color: rgb(234, 242, 255);
-}
-
-input.filter_input {
-  display: block;
-  width: 600px;
-  margin: 40px auto 20px auto;
-  padding: 15px 45px;
-  background: white url("../assets/search-icon.svg") no-repeat 15px center;
-  background-size: 15px 15px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-}
-</style>
