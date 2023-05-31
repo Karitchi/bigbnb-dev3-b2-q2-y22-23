@@ -5,9 +5,15 @@
       <h1 class="my-heading titre">Modification de l'hôtel</h1>
 
       <form @submit.prevent="modifierHotel" class="my-form">
-        <div v-if="errorForm !== ''" class="my-alert" role="alert">
+
+        <div v-if="this.errorForm !== ''" class="alert alert-danger" role="alert">
           {{ this.errorForm }}
         </div>
+
+        <div class="alert alert-success" role="alert" v-if="this.success">
+          Changements effectués avec succès !
+        </div>
+
         <div class="form-row">
           <label for="nom" class="my-label">Nom de l'hôtel:</label>
           <input type="text" id="nom" v-model="name" class="my-input input1">
@@ -28,6 +34,16 @@
           <input type="number" step="0.01" id="prix" v-model="price" class="my-input input4">
         </div>
 
+        <div class="form-row">
+          <label for="phone" class="my-label">Numéro de téléphone:</label>
+          <input type="tel" id="phone" v-model="phone_number" class="my-input input5">
+        </div>
+
+        <div class="form-row">
+          <label for="mail" class="my-label">mail:</label>
+          <input type="email" id="mail" v-model="mail" class="my-input input6">
+        </div>
+
         <button @click="test" type="submit" class="my-button hover-button">Enregistrer les modifications</button>
       </form>
     
@@ -44,11 +60,14 @@
     data() {
       return {
         hotel: {},
-       name : "",
-       img : "",
-       description : "",
+        name : "",
+        img : "",
+        description : "",
         price : "",
-        errorForm: ''
+        phone_number : "",
+        mail : "",
+        errorForm: '',
+        success : false
       }
    },
 
@@ -58,9 +77,17 @@
           .catch(error => console.log("certaines données sont introuvables"))
     }, // get {export default.$api -> django -> localhost port 8000} dans le tableau hotels/ {export default.modification:id}on met tout dans une variabel reponse
     methods: {
-     goBack() {
+      goBack() {
         this.$router.go(-1);
      },
+      isValidPhoneNumber(phoneNumber) {
+        const phoneRegex = /^[0-9]{10}$/;
+        return phoneRegex.test(phoneNumber);
+      },
+      isValidEmail(email) {
+        const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        return emailRegex.test(email);
+      },
       modifierHotel() {
        /*const imageRegex = /\.(jpeg|jpg|gif|png)$/i; // Expression régulière pour vérifier les extensions d'image courantes, a voir quelles extensions on utilisera !
 
@@ -71,25 +98,42 @@
        if (this.image.length > 100){
          this.errorForm = "Le lien vers l'image de l'hotel ne doit pas dépasser 100 caractères"
        }*/
-       if (this.name.length < 3 || this.name.length > 30) {
-         this.errorForm = "Le nom de l'hôtel doit contenir entre 3 et 30 caractères.";
+        if (this.name.length < 3 || this.name.length > 30) {
+          this.errorForm = "Le nom de l'hôtel doit contenir entre 3 et 30 caractères.";
+          this.success = false;
           return
-       }
-       if (this.price <= 0){
-          this.errorForm = "Le prix de la chambre doit être supérieur à zéro"
+        }
+        if (this.price <= 0){
+          this.errorForm = "Le prix de la chambre doit être supérieur à zéro";
+          this.success = false;
           return
-       }
-       this.errorForm = ''
+        }
+        if (this.phone_number && !this.isValidPhoneNumber(this.phone_number)) {
+          this.errorForm = "Le numéro de téléphone n'est pas valide.";
+          this.success = false;
+          return;
+        }
+        if (this.mail && !this.isValidEmail(this.mail)) {
+          this.errorForm = "L'adresse e-mail n'est pas valide.";
+          this.success = false;
+          return;
+        }
+        this.errorForm = ''
         this.hotel.name = this.name
         this.hotel.description = this.description
         this.hotel.price = this.price
+        this.hotel.phone_number = this.phone_number
+        this.hotel.mail = this.mail
         axios.patch(`${this.$api}hotels/${this.$route.params.id}/`, {
           name: this.hotel.name,
-         price: this.hotel.price,
-         description: this.hotel.description
+          price: this.hotel.price,
+          description: this.hotel.description,
+          phone_number : this.hotel.phone_number,
+          mail : this.hotel.mail
         }).catch(error => {
            console.log("test");
-          });
+           this.success = false;
+          }).then(response => this.success = true);
       },
 
       responseHotel(responseData) {
@@ -97,9 +141,11 @@
        if (!this.isHotelOwnerOf(this.hotel.hotel_owner)) {
          this.$router.go(-1);
        }
-       this.name = this.hotel.name;
+        this.name = this.hotel.name;
         this.description = this.hotel.description;
         this.price = this.hotel.price;
+        this.phone_number = this.hotel.phone_number;
+        this.mail = this.hotel.mail;
      },
      onFileChange(event) {
        /*Gérer le changement de fichier d'image ici
@@ -205,7 +251,15 @@
   }
   
   .input4 {
-    margin-left: 6.8%;
+    margin-left: 7.4%;
+  }
+
+  .input5 {
+    margin-left: 5.5%;
+  }
+
+  .input6 {
+    margin-left: 15.5%;
   }
 
 </style>
