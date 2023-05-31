@@ -9,7 +9,7 @@ import Booking from '@/components/Hotel/Booking.vue'
 </script>
 
 <template>
-    <div class="container ps-5 pe-5">
+    <div class="container ps-sm-5 pe-sm-5">
         <BackButton class="mt-3 mb-3" />
         <Images class="mb-5  rounded border shadow" />
         <div class="row m-0 p-1 d-none d-lg-flex">
