@@ -19,7 +19,7 @@
         <li>Profitez de votre séjour : Une fois sur place, profitez des installations de l'hôtel, participez aux activités de team building et créez des souvenirs inoubliables avec votre équipe. Notre objectif est de vous offrir une expérience exceptionnelle qui renforcera les liens et favorisera la collaboration au sein de votre entreprise.</li>
     </ol>
 
-    <p>Nous sommes ravis de vous accompagner dans l'organisation de votre prochain team building. N'hésitez pas à nous contacter si vous avez des questions ou besoin d'assistance supplémentaire.</p>
+    <p>Nous serions ravis de vous accompagner dans l'organisation de votre prochain team building. N'hésitez pas à nous contacter si vous avez des questions ou besoin d'assistance supplémentaire.</p>
 
     <p>L'équipe de réservation de groupe.</p>
         
