@@ -13,3 +13,5 @@ class Hotel(models.Model):
     city_id = models.ForeignKey(City, on_delete=models.CASCADE)
     room_quantity = models.IntegerField()
     price = models.FloatField()
+    mail = models.CharField(max_length=255)
+    phone_number = models.CharField(max_length=15)

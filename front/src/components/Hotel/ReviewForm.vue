@@ -76,9 +76,6 @@ function printHotelOwnerFailureToast() {
     const toastTrigger = reviewButton.value
     const toastLiveExample = hotelOwnerFailureToast.value
 
-    console.log(toastTrigger)
-    console.log(toastLiveExample)
-
     const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
 
     toastBootstrap.show()

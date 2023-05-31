@@ -34,17 +34,22 @@ onMounted(async () => {
 
     <div v-else>
 
+        <!-- hotel name -->
         <h1 class="h1">{{ hotel.name }}</h1>
         <hr class="pb-3">
 
-        <div>
-            <h5 class="pt-2 pb-2"><i class="fa fa-bed"></i>
-                {{ hotel.rooms }} rooms left</h5>
-            <h5 class="bi bi-geo pt-2 pb-2"> Located in {{ city.name }}, {{ city.country }}</h5>
-        </div>
+        <!-- location -->
+        <h5 class="bi bi-geo pt-2 pb-2"> Located in {{ city.name }}, {{ city.country }}</h5>
+
+        <!-- rooms left -->
+        <h5 class="pt-2 pb-2">
+            <i class="fa fa-bed"></i>
+            {{ hotel.rooms }} rooms left
+        </h5>
 
         <hr class="pb-3">
 
+        <!-- abbout -->
         <h3>About this hotel</h3>
         <p class="pt-2 pb-2" style="height: 100px; overflow: auto;">{{ hotel.description }}</p>
 
@@ -52,12 +57,11 @@ onMounted(async () => {
 
         <div class="row">
             <div class="col">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Proposed by {{ hotel_owner.name }} {{ hotel_owner.lastname }} from {{ hotel_owner.company }}</h5>
-                        <p class="card-text">Contact: {{ hotel_owner.mail }}</p>
-                    </div>
-                </div>
+                <h5 class="mb-3">Proposed by {{ hotel_owner.company }}</h5>
+                <ul class="list-group">
+                    <li class="list-group-item m-0">Mail: {{ hotel.mail }}</li>
+                    <li class="list-group-item m-0">Phone number: {{ hotel.phone_number }}</li>
+                </ul>
             </div>
         </div>
     </div>
