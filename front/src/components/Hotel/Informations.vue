@@ -13,10 +13,10 @@ const isLoaded = ref(false)
 
 onMounted(async () => {
     let response
-    
+
     response = await fetch(`http://127.0.0.1:8000/hotels/${route.params.id}`)
     hotel.value = await response.json()
-    
+
     response = await fetch(`http://127.0.0.1:8000/cities/${hotel.value.city}`)
     city.value = await response.json()
 
@@ -32,15 +32,15 @@ onMounted(async () => {
         <div class="spinner-border" role="status"></div>
     </div>
 
-    <div v-else >
+    <div v-else>
 
         <h1 class="h1">{{ hotel.name }}</h1>
         <hr class="pb-3">
 
         <div>
-            <h5 class="pt-2 pb-2">{{ hotel.rooms }} rooms left</h5>
+            <h5 class="pt-2 pb-2"><i class="fa fa-bed"></i>
+                {{ hotel.rooms }} rooms left</h5>
             <h5 class="bi bi-geo pt-2 pb-2"> Located in {{ city.name }}, {{ city.country }}</h5>
-            <h5 class="bi bi-wallet pt-2 pb-2"> {{ hotel.price }} dollars per night</h5>
         </div>
 
         <hr class="pb-3">
@@ -60,10 +60,5 @@ onMounted(async () => {
                 </div>
             </div>
         </div>
-
-
-        <!-- <p>{{ city.location_x }}</p>
-        <p>{{ city.location_y }}</p> -->
-
     </div>
 </template>
