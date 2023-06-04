@@ -5,17 +5,23 @@
       <h1 class="my-heading titre">Modification de l'hôtel</h1>
 
       <form @submit.prevent="modifierHotel" class="my-form">
-        <div v-if="errorForm !== ''" class="my-alert" role="alert">
+
+        <div v-if="this.errorForm !== ''" class="alert alert-danger" role="alert">
           {{ this.errorForm }}
         </div>
+
+        <div class="alert alert-success" role="alert" v-if="this.success">
+          Changements effectués avec succès !
+        </div>
+
         <div class="form-row">
           <label for="nom" class="my-label">Nom de l'hôtel:</label>
           <input type="text" id="nom" v-model="name" class="my-input input1">
         </div>
 
         <div class="form-row">
-          <label for="image" class="my-label">Image:</label>
-          <input type="text" id="image" v-model="image" class="my-input input2">
+          <label for="image" class="my-label">img:</label>
+          <input type="text" id="image" v-model="img" class="my-input input2">
         </div>
 
         <div class="form-row">
@@ -28,21 +34,19 @@
           <input type="number" step="0.01" id="prix" v-model="price" class="my-input input4">
         </div>
 
+        <div class="form-row">
+          <label for="phone" class="my-label">Numéro de téléphone:</label>
+          <input type="tel" id="phone" v-model="phone_number" class="my-input input5">
+        </div>
+
+        <div class="form-row">
+          <label for="mail" class="my-label">mail:</label>
+          <input type="email" id="mail" v-model="mail" class="my-input input6">
+        </div>
+
         <button @click="test" type="submit" class="my-button hover-button">Enregistrer les modifications</button>
       </form>
-      <footer class="my-footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 text-center">
-            <a href="#" class="mx-2">big_bnb.inc</a>|
-            <router-link to="/login" class="mx-2">Confidentialité</router-link>|
-            <a href="#" class="mx-2">Conditions générales</a>|
-            <a href="#" class="mx-2">Plan du site</a>|
-            <router-link to="/about" class="mx-2">Infos de l'entreprise</router-link>|
-          </div>
-        </div>
-      </div>
-    </footer>
+    
     </div>
   </div>
 </template>
@@ -50,75 +54,108 @@
 
 
 <script>
-import axios from 'axios';
+  import axios from 'axios';
 
-export default {
-  data() {
-    return {
-      hotel: {},
-      name : "",
-      image : "",
-      description : "",
-      price : "",
-      errorForm: ''
-    }
-  },
-  mounted() {
-    axios.get(`${this.$api}hotels/${this.$route.params.id}`).then(response=>this.responseHotel(response.data)).catch(error => console.log("certaines données sont introuvables"))
-  }, // get {export default.$api -> django -> localhost port 8000} dans le tableau hotels/ {export default.modification:id}on met tout dans une variabel reponse
-  methods: {
-    goBack() {
-      this.$router.go(-1);
-    },
-    modifierHotel() {
-      //const imageRegex = /\.(jpeg|jpg|gif|png)$/i; // Expression régulière pour vérifier les extensions d'image courantes, a voir quelles extensions on utilisera !
-      //
-      //if (!imageRegex.test(this.image)) {
-      //  this.errorForm = "Le lien vers l'image de l'hôtel n'est pas valide.";
-      //  return;
-      //}
-      if (this.image.length > 100){
-        this.errorForm = "Le lien vers l'image de l'hotel ne doit pas dépasser 100 caractères"
+  export default {
+    data() {
+      return {
+        hotel: {},
+        name : "",
+        img : "",
+        description : "",
+        price : "",
+        phone_number : "",
+        mail : "",
+        errorForm: '',
+        success : false
       }
-      if (this.name.length < 3 || this.name.length > 30) {
-        this.errorForm = "Le nom de l'hôtel doit contenir entre 3 et 30 caractères.";
-        return
-      }
-      if (this.price <= 0){
-        this.errorForm = "Prix null ou négatif"
-        return
-      }
-      //if (this.description.length > 255) {
-      //  this.errorForm = "La description de l'hotel ne doit pas dépasser 255 caractères."
-      //}
-      this.errorForm = ''
-      this.hotel.name = this.name
-      this.hotel.description = this.description
-      this.hotel.price = this.price
-      axios.patch(`${this.$api}hotels/${this.$route.params.id}/`, {
-        name: this.hotel.name,
-        price: this.hotel.price,
-        description: this.hotel.description
-      }).catch(error => {
-          console.log("test");
-        });
-    },
+   },
 
-    responseHotel(responseData) {
-      this.hotel = responseData;
-      this.name = this.hotel.name;
-      this.description = this.hotel.description;
-      this.price = this.hotel.price;
+    mounted() {
+      axios.get(`${this.$api}hotels/${this.$route.params.id}`)
+          .then(response=>this.responseHotel(response.data))
+          .catch(error => console.log("certaines données sont introuvables"))
+    }, // get {export default.$api -> django -> localhost port 8000} dans le tableau hotels/ {export default.modification:id}on met tout dans une variabel reponse
+    methods: {
+      goBack() {
+        this.$router.go(-1);
+     },
+      isValidPhoneNumber(phoneNumber) {
+        const phoneRegex = /^[0-9]{10}$/;
+        return phoneRegex.test(phoneNumber);
+      },
+      isValidEmail(email) {
+        const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        return emailRegex.test(email);
+      },
+      modifierHotel() {
+       /*const imageRegex = /\.(jpeg|jpg|gif|png)$/i; // Expression régulière pour vérifier les extensions d'image courantes, a voir quelles extensions on utilisera !
+
+       if (!imageRegex.test(this.img)) {
+          this.errorForm = "Le lien vers l'image de l'hôtel n'est pas valide.";
+          return;
+       }
+       if (this.image.length > 100){
+         this.errorForm = "Le lien vers l'image de l'hotel ne doit pas dépasser 100 caractères"
+       }*/
+        if (this.name.length < 3 || this.name.length > 30) {
+          this.errorForm = "Le nom de l'hôtel doit contenir entre 3 et 30 caractères.";
+          this.success = false;
+          return
+        }
+        if (this.price <= 0){
+          this.errorForm = "Le prix de la chambre doit être supérieur à zéro";
+          this.success = false;
+          return
+        }
+        if (this.phone_number && !this.isValidPhoneNumber(this.phone_number)) {
+          this.errorForm = "Le numéro de téléphone n'est pas valide.";
+          this.success = false;
+          return;
+        }
+        if (this.mail && !this.isValidEmail(this.mail)) {
+          this.errorForm = "L'adresse e-mail n'est pas valide.";
+          this.success = false;
+          return;
+        }
+        this.errorForm = ''
+        this.hotel.name = this.name
+        this.hotel.description = this.description
+        this.hotel.price = this.price
+        this.hotel.phone_number = this.phone_number
+        this.hotel.mail = this.mail
+        axios.patch(`${this.$api}hotels/${this.$route.params.id}/`, {
+          name: this.hotel.name,
+          price: this.hotel.price,
+          description: this.hotel.description,
+          phone_number : this.hotel.phone_number,
+          mail : this.hotel.mail
+        }).catch(error => {
+           console.log("test");
+           this.success = false;
+          }).then(response => this.success = true);
+      },
+
+      responseHotel(responseData) {
+       this.hotel = responseData;
+       if (!this.isHotelOwnerOf(this.hotel.hotel_owner)) {
+         this.$router.go(-1);
+       }
+        this.name = this.hotel.name;
+        this.description = this.hotel.description;
+        this.price = this.hotel.price;
+        this.phone_number = this.hotel.phone_number;
+        this.mail = this.hotel.mail;
+     },
+     onFileChange(event) {
+       /*Gérer le changement de fichier d'image ici
+        Par exemple, lire le fichier image et effectuer des actions supplémentaires si nécessaire*/
+     },
+     test(){
+        console.log(this.name)
+     },
     },
-    onFileChange(event) {
-      // Gérer le changement de fichier d'image ici
-      // Par exemple, lire le fichier image et effectuer des actions supplémentaires si nécessaire
-    },
-    test(){
-      console.log(this.name)
-    },
-  },
-};
+  };
 </script>
 
 <style scoped>
@@ -181,7 +218,7 @@ export default {
 
 .my-input {
   width: 40%;
-  padding: 8px;
+  
   margin-bottom: 10px;
   border: 1px solid #DFE0E2;
   border-radius: 4px;
@@ -197,46 +234,32 @@ export default {
   resize: vertical;
   box-sizing: border-box;
 }
-
-.my-footer {
-  background-color: #75ABBC;
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 0;
-  color: #071013;
-  font-size: 16px;
-  line-height: 1.5;
-}
-
-.my-footer a {
-  color: #1B4B5A;
-  text-decoration: none;
-}
-
-.my-footer .container {
-  padding: 1rem;
-}
-
 .hover-button:hover {
   background-color: #326b80; /* Couleur plus foncée pour l'effet de survol */
 }
+
 .input1 {
-  margin-left: 10%;
-}
+    margin-left: 9.7%;
+  }
+  
+  .input2 {
+    margin-left: 16%;
+  }
+  
+  .input3 {
+    margin-left: 11.6%;
+  }
+  
+  .input4 {
+    margin-left: 7.4%;
+  }
 
-.input2 {
-  margin-left: 14.6%;
-}
+  .input5 {
+    margin-left: 5.5%;
+  }
 
-.input3 {
-  margin-left: 11.5%;
-}
-
-.input4 {
-  margin-left: 7.4%;
-}
+  .input6 {
+    margin-left: 15.5%;
+  }
 
 </style>
-  

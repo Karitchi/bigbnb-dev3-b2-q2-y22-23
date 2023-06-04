@@ -1,7 +1,10 @@
-from django.core.exceptions import ValidationError
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from hotel_owner.models import HotelOwner
+
 from city.models import City
+from client.models import Client
+from hotel_owner.models import HotelOwner
+
 
 class Hotel(models.Model):
     hotel_id = models.AutoField(primary_key=True)
@@ -11,4 +14,5 @@ class Hotel(models.Model):
     city_id = models.ForeignKey(City, on_delete=models.CASCADE)
     room_quantity = models.IntegerField()
     price = models.FloatField()
-
+    mail = models.EmailField(max_length=255)
+    phone_number = models.CharField(max_length=15)

@@ -32,4 +32,4 @@ def city_details(request, city_id):
 
     if request.method == 'DELETE':
         city.delete()
-        return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_204_NO_CONTENT)

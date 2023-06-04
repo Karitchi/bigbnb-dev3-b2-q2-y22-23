@@ -6,7 +6,7 @@ defineProps({
 
 <template>
     <!-- caroussel -->
-    <div id="carouselExampleIndicators" class="carousel slide pb-5 pt-5">
+    <div id="carouselExampleIndicators" class="carousel slide">
         <div class="carousel-inner">
 
             <!-- images -->

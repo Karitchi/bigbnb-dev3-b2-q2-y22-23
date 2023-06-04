@@ -1,6 +1,8 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router';
+import axios from 'axios'
+import Facility from './Facility'
 
 const route = useRoute()
 
@@ -19,12 +21,8 @@ onMounted(async () => {
     response = await fetch(`http://127.0.0.1:8000/cities/${hotel.value.city}`)
     city.value = await response.json()
 
-    response = await fetch(`http://127.0.0.1:8000/hotel_owners/${hotel.value.hotel_owner}`)
-    hotel_owner.value = await response.json()
-
-    // console.log(hotel.value)
-    // console.log(city.value)
-    // console.log(hotel_owner.value)
+    // response = await fetch(`http://127.0.0.1:8000/hotel_owners/${hotel.value.hotel_owner}`)
+    await axios.get(`http://127.0.0.1:8000/hotel_owners/${hotel.value.hotel_owner}/`).then(response => hotel_owner.value = response.data);
 
     isLoaded.value = true
 })
@@ -35,38 +33,40 @@ onMounted(async () => {
         <div class="spinner-border" role="status"></div>
     </div>
 
-    <div v-else class="pb-5 pt-5">
+    <div v-else>
 
+        <!-- hotel name -->
         <h1 class="h1">{{ hotel.name }}</h1>
         <hr class="pb-3">
 
-        <div>
-            <h5 class="pt-2 pb-2">{{ hotel.rooms }} rooms left</h5>
-            <h5 class="bi bi-geo pt-2 pb-2"> Located in {{ city.name }}, {{ city.country }}</h5>
-            <h5 class="bi bi-wallet pt-2 pb-2"> {{ hotel.price }} dollars per night</h5>
-        </div>
+        <!-- location -->
+        <h5 class="bi bi-geo pt-2 pb-2"> Located in {{ city.name }}, {{ city.country }}</h5>
+        
+        <!-- rooms left -->
+        <h5 class="pt-2 pb-2">
+            <i class="fa fa-bed"></i>
+            {{ hotel.rooms }} rooms left
+        </h5>
+        
+        <!-- facilités -->
+        <Facility/>
 
         <hr class="pb-3">
 
+        <!-- abbout -->
         <h3>About this hotel</h3>
-        <h5 class="pt-2 pb-2">{{ hotel.description }}</h5>
+        <p class="pt-2 pb-2" style="height: 100px; overflow: auto;">{{ hotel.description }}</p>
 
         <hr class="pb-3">
 
         <div class="row">
             <div class="col">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Proposed by {{ hotel_owner.name }} {{ hotel_owner.lastname }} from {{ hotel_owner.company }}</h5>
-                        <p class="card-text">Contact: {{ hotel_owner.mail }}</p>
-                    </div>
-                </div>
+                <h5 class="mb-3">Proposed by {{ hotel_owner.company }}</h5>
+                <ul class="list-group">
+                    <li class="list-group-item m-0">Mail: {{ hotel.mail }}</li>
+                    <li class="list-group-item m-0">Phone number: {{ hotel.phone_number }}</li>
+                </ul>
             </div>
         </div>
-
-
-        <!-- <p>{{ city.location_x }}</p>
-        <p>{{ city.location_y }}</p> -->
-
     </div>
 </template>

@@ -1,11 +1,9 @@
 from django.urls import include, path
 from rest_framework import routers
-from .views import HotelOwnerViewSet
+from hotel_owner import views
 
-router = routers.DefaultRouter()
-router.register(r'hotel_owners', HotelOwnerViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('', views.all_hotel_owners),
+    path('<int:hotel_owner_id>/', views.hotel_owner_detail)
 ]

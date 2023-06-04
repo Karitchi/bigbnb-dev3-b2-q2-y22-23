@@ -4,13 +4,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', include('hotel_owner.urls')),
-    path('', include('city.urls')),
-    path('', include('client.urls')),
-    path('', include('hotel.urls')),
-    path('', include('booking.urls')),
-    path('', include('review.urls')),
-    
+    path('hotel_owners/', include('hotel_owner.urls')),
+    path('cities/', include('city.urls')),
+    path('clients/', include('client.urls')),
+    path('hotels/', include('hotel.urls')),
+    path('bookings/', include('booking.urls')),
+    path('token/', include('user.urls')),
+    path('reviews/', include('review.urls')),
+    path('facilities/', include('facility.urls')),
     path('admin/', admin.site.urls)
 ]
 

@@ -32,19 +32,21 @@ def bookings_details(request, booking_id):
 
     if request.method == 'DELETE':
         booking.delete()
-        return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['PATCH'])
 def set_read(request, booking_id):
-    print(request.data)
     try:
         booking = Booking.objects.all().get(pk=booking_id)
     except Booking.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if 'unread' not in request.data.keys():
-        return Response(status=status.HTTP_206_PARTIAL_CONTENT)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    if not isinstance(request.data['unread'], bool):
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
     serializer = BookingSerializer(booking, data={'unread': request.data['unread']}, partial=True)
     if serializer.is_valid():
@@ -61,7 +63,10 @@ def set_approved(request, booking_id):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if 'approved' not in request.data.keys():
-        return Response(status=status.HTTP_206_PARTIAL_CONTENT)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    if not isinstance(request.data['approved'], bool):
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
     serializer = BookingSerializer(booking, data={'approved': request.data['approved']}, partial=True)
     if serializer.is_valid():

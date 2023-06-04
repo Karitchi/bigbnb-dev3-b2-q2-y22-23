@@ -63,11 +63,11 @@ onMounted(async () => {
     </div>
 
     <!-- reviews -->
-    <div v-else class="row pb-5 pt-5">
-        <div v-for="(item, index) in reviews" class="col-lg-6">
+    <div class="row m-0">
+        <div v-for="(item, index) in reviews" class="col-lg-6 p-2  mb-3">
 
             <!-- client name -->
-            <h3>{{ clients[index].name }} {{ clients[index].lastname }}</h3>
+            <h5>{{ clients[index]?.info?.name }}</h5>
 
             <!-- date and start -->
             <p class="text-secondary">
@@ -76,7 +76,7 @@ onMounted(async () => {
             </p>
 
             <!-- review text -->
-            <p>{{ item.review }}</p>
+            <p style="max-height: 100px; overflow: auto;">{{ item.review }}</p>
         </div>
     </div>
 </template>

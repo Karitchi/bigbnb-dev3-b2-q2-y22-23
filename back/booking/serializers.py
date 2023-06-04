@@ -10,8 +10,8 @@ class BookingSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Booking
-        # fields = ('id', 'client', 'hotel', 'start_date', 'end_date', 'rooms', 'total_price', 'payment_date', 'payment_method', 'unread', 'approved')
-        fields = ('client', 'hotel', 'start_date', 'end_date', 'rooms','total_price', 'payment_date', 'payment_method', 'unread')
+        fields = ('id', 'client', 'hotel', 'start_date', 'end_date', 'rooms', 'total_price', 'payment_date',
+                  'payment_method', 'unread', 'approved')
 
 
 def data_from_booking(booking: Booking) -> dict[str:object]:
