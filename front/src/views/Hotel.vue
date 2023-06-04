@@ -13,12 +13,12 @@ import Booking from '@/components/Hotel/Booking.vue'
         <BackButton class="mt-3 mb-3" />
         <Images class="mb-5  rounded border shadow" />
         <div class="row m-0 p-1 d-none d-lg-flex">
-            <Informations class="col me-2 pb-3 pt-3 shadow border rounded " />
-            <Booking class="col ms-2 pb-3 pt-3 shadow border rounded " />
+            <Informations class="col me-2 pb-3 pt-3 shadow border rounded" style="width: 60%;"/>
+            <Booking class="col ms-2 pb-3 pt-3 shadow border rounded h-100 position-sticky" style="top: 2rem;" />
         </div>
 
         <div class="m-0 p-1 d-lg-none">
-            <Informations class="mb-2 p-3 shadow border rounded" />
+            <Informations class="mb-4 p-3 shadow border rounded" />
             <Booking class="mt-2 p-3 shadow border rounded" />
         </div>
         
