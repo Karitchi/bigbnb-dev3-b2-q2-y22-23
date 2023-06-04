@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router';
 import axios from 'axios'
+import Facility from './Facility'
 
 const route = useRoute()
 
@@ -40,12 +41,15 @@ onMounted(async () => {
 
         <!-- location -->
         <h5 class="bi bi-geo pt-2 pb-2"> Located in {{ city.name }}, {{ city.country }}</h5>
-
+        
         <!-- rooms left -->
         <h5 class="pt-2 pb-2">
             <i class="fa fa-bed"></i>
             {{ hotel.rooms }} rooms left
         </h5>
+        
+        <!-- facilités -->
+        <Facility/>
 
         <hr class="pb-3">
 
