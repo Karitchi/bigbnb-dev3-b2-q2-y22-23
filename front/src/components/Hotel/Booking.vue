@@ -25,17 +25,27 @@ const bookButton = ref(null)
 const successToast = ref(null)
 const loginFailureToast = ref(null)
 const hotelOwnerFailureToast = ref(null)
+const discount = ref(1);
 
 
 const isLoaded = ref(false)
 
 watch(numberRoomsWanted, (numberRoomsWanted) => {
+    if (numberRoomsWanted >= 50) {
+        discount.value = 0.95
+    } else {
+        discount.value = 1
+    }
+})
+
+watch(numberRoomsWanted, (numberRoomsWanted) => {
     if (numberRoomsWanted > 0) {
-        totalPrice.value = (hotel.value.price * numberRoomsWanted).toFixed(2)
+        totalPrice.value = (hotel.value.price * numberRoomsWanted * discount.value).toFixed(2)
     } else {
         totalPrice.value = 0
     }
 })
+
 
 async function getHotel() {
     const response = await fetch(`http://127.0.0.1:8000/hotels/${route.params.id}`)
@@ -184,6 +194,7 @@ async function submitForm(event) {
 
         <!-- hotel price -->
         <h1> {{ hotelPrice }}<i class="bi bi-currency-dollar"></i> <span class="text-secondary">per night</span> </h1>
+        <h5 class="mb-3 text-success">Receive a 5% discount when booking 50 rooms.</h5>
 
 
         <form @submit="submitForm" class="needs-validation" novalidate>
@@ -217,9 +228,16 @@ async function submitForm(event) {
                 </div>
             </div>
 
+            <!-- total price -->
             <div>
                 <h5 class="mb-3 text-secondary">Total price: {{ totalPrice }}</h5>
             </div>
+
+            <!-- discount -->
+            <div v-if="discount == 0.95">
+                <h5 class="mb-3 text-success">discount applied</h5>
+            </div>
+
             <!-- submit button -->
             <button id="bookButton" ref="bookButton" type="submit" class="btn btn-primary">book</button>
 
