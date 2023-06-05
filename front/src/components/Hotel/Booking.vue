@@ -114,12 +114,12 @@ async function book() {
 
     // add booking
     axios.post(`http://localhost:8000/bookings/`, {
-        client_id: userID,
-        hotel_id: 1,
+        client: userID,
+        hotel: route.params.id,
         start_date: arrivalDate.value,
         end_date: departureDate.value,
-        booked_rooms: numberRoomsWanted.value,
-        total_price: 500.00,
+        rooms: numberRoomsWanted.value,
+        total_price: totalPrice.value,
         payment_method: "paypal",
     })
         .then(function (response) {
@@ -130,6 +130,7 @@ async function book() {
             printSuccessToast()
         })
         .catch(function (error) {
+            console.log(error)
             printHotelOwnerFailureToast()
         })
 }
