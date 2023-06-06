@@ -12,6 +12,7 @@ urlpatterns = [
     path('token/', include('user.urls')),
     path('reviews/', include('review.urls')),
     path('facilities/', include('facility.urls')),
+    path('images/', include('image.urls')),
     path('admin/', admin.site.urls)
 ]
 
