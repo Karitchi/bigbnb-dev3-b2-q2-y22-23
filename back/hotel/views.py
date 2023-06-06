@@ -1,3 +1,5 @@
+import uuid
+
 from django.db.models import Min, Max, Avg
 from rest_framework import status, generics, viewsets
 from rest_framework.decorators import api_view
@@ -86,7 +88,7 @@ def filter_hotels(request):
     return Response(status=status.HTTP_200_OK, data=serializer.data)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def hotel_images(request, hotel_id):
     try:
         images = Image.objects.filter(hotel_id=hotel_id)
@@ -95,7 +97,16 @@ def hotel_images(request, hotel_id):
 
     if request.method == 'GET':
         serializer = ImageSerializer(images, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    if request.method == 'POST':
+        image_file = request.FILES.get('image')
+        image_file.name = str(uuid.uuid4()) + '.' + image_file.name.split('.')[-1]
+        model = Image()
+        model.url = image_file
+        model.hotel_id = Hotel.objects.all().get(hotel_id=hotel_id)
+        model.save()
+        return Response(status=status.HTTP_201_CREATED)
 
 
 @api_view(['GET'])

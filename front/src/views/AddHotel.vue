@@ -7,6 +7,7 @@
     <price @input="this.setPrice" />
     <mail-input @input="this.setMail" />
     <phone-number @input="this.setPhoneNumber" />
+    <add-image @input="this.setImage" />
     <button
         type="submit"
         class="btn btn-primary"
@@ -25,10 +26,11 @@ import Price from "@/components/AddHotel/Price.vue";
 import MailInput from "@/components/Register/MailInput.vue";
 import PhoneNumber from "@/components/AddHotel/PhoneNumber.vue";
 import axios from "axios";
+import AddImage from "@/components/AddHotel/AddImage.vue";
 
 export default {
   name: "AddHotel",
-  components: {PhoneNumber, MailInput, Price, RoomQuantity, City, HotelDescription, HotelName},
+  components: {AddImage, PhoneNumber, MailInput, Price, RoomQuantity, City, HotelDescription, HotelName},
 
   data() {
     return {
@@ -46,7 +48,9 @@ export default {
       isMailValid: false,
       phoneNumber: '',
       isPhoneNumberValid: false,
-      isFormValid: false
+      isFormValid: false,
+      image: null,
+      isImageValid: false
     }
   },
 
@@ -69,7 +73,7 @@ export default {
           'Content-Type': 'application/json'
         }
       })
-          .then(response => this.onSuccess());
+          .then(response => this.onCreateHotel(response.data));
       e.preventDefault();
     },
 
@@ -115,15 +119,31 @@ export default {
       this.setFormValid();
     },
 
+    setImage(data) {
+      this.image = data['image'];
+      this.isImageValid = data['isValid'];
+      this.setFormValid();
+    },
+
     setFormValid() {
       this.isFormValid = this.isNameValid && this.isDescriptionValid && this.isCityValid && this.isRoomsValid && this.isPriceValid
-          && this.isMailValid && this.isPhoneNumberValid;
+          && this.isMailValid && this.isPhoneNumberValid && this.isImageValid;
+    },
+
+    onCreateHotel(responseData) {
+      let formData = new FormData();
+      formData.append('image', this.image);
+      axios.post(`${this.$api}hotels/${responseData.id}/images/`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(response => this.onSuccess());
     },
 
     onSuccess() {
       this.$router.push('/my_hotels');
-      alert('Votre hôtel a été ajouté avec succès !')
-    },
+      alert(`L'hôtel ${this.name} a été ajouté avec succès !`);
+    }
   },
 
   beforeMount() {
