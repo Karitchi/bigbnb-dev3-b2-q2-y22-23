@@ -11,6 +11,7 @@ import HotelFilter from '../views/HotelFilter.vue'
 import Hotel from '@/views/Hotel.vue'
 import RegisterClient from '@/views/RegisterClient.vue'
 import RegisterHotelOwner from '@/views/RegisterHotelOwner.vue'
+import AddHotel from "@/views/AddHotel.vue";
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -68,6 +69,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/register_hotel_owner',
     name: 'RegisterHotelOwner',
     component: RegisterHotelOwner
+  },
+  {
+    path: '/add_hotel',
+    name: 'AddHotel',
+    component: AddHotel
   }
 ]
 
