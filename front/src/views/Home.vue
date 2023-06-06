@@ -1,37 +1,33 @@
 <template>
-  <div class="container-fluid p-5" id="all-hotels">
-    <div v-for="hotel in this.hotels" class="row m-0 hotel">
-      <card-hotel :hotel="hotel" />
+  <search @input="this.onInput" />
+
+  <div v-if="this.hotels.length !== 0">
+    <div class="row row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 m-0">
+      <div v-for="hotel in hotels" :key="hotel.id" class="col m-0 p-3">
+        <CardHotel :hotel="hotel" />
+      </div>
     </div>
   </div>
+
+  <p v-else class="d-flex justify-content-center">No hotels found.</p>
 </template>
-
-<style scoped>
-@import '../assets/variables.scss';
-
-#all-hotels {
-  text-align: center;
-}
-
-.hotel {
-  display: inline;
-}
-</style>
 
 
 <script>
 import CardHotel from '../components/CardHotel.vue'
+import Search from '../components/search.vue';
 import axios from "axios";
 
 export default {
   name: 'App',
   components: {
     CardHotel,
+    Search,
   },
 
   data() {
     return {
-      hotels: []
+      hotels: [],
     }
   },
 
@@ -46,15 +42,22 @@ export default {
       if (this.getUserType() !== this.$hotelOwnerUserType)
         return;
 
-      this.hotels = this.hotels
-        .sort((a, b) => {
-          if (this.isHotelOwnerOf(a.hotel_owner) && !this.isHotelOwnerOf(b.hotel_owner))
-            return -1;
-          if (this.isHotelOwnerOf(b.hotel_owner) && !this.isHotelOwnerOf(a.hotel_owner))
-            return 1;
-        })
+      this.sortHotel();
 
-      console.log(this.hotels)
+    },
+
+    onInput(data) {
+      this.hotels = data['hotels'];
+      this.sortHotel();
+    },
+
+    sortHotel() {
+      this.hotels = this.hotels.sort((a, b) => {
+        if (this.isHotelOwnerOf(a.hotel_owner) && !this.isHotelOwnerOf(b.hotel_owner))
+          return -1;
+        if (this.isHotelOwnerOf(b.hotel_owner) && !this.isHotelOwnerOf(a.hotel_owner))
+          return 1;
+      })
     }
   },
 

@@ -2,12 +2,21 @@
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router';
 import axios from 'axios';
+import { getID } from '@/main.ts'
 
 const route = useRoute()
 
 const review = ref('');
 const rating = ref(null);
 const showSuccessToast = ref(false);
+
+const reviewButton = ref(null)
+
+const successToast = ref(null)
+const loginFailureToast = ref(null)
+const hotelOwnerFailureToast = ref(null)
+
+
 
 let numberOfStars = 5
 
@@ -45,11 +54,47 @@ function click() {
     }
 }
 
+function printSuccessToast() {
+    const toastTrigger = reviewButton.value
+    const toastLiveExample = successToast.value
+
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+
+    toastBootstrap.show()
+}
+
+function printLoginFailureToast() {
+    const toastTrigger = reviewButton.value
+    const toastLiveExample = loginFailureToast.value
+
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+
+    toastBootstrap.show()
+}
+
+function printHotelOwnerFailureToast() {
+    const toastTrigger = reviewButton.value
+    const toastLiveExample = hotelOwnerFailureToast.value
+
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+
+    toastBootstrap.show()
+}
+
 function submitForm(event) {
     event.preventDefault();
+    let userID = null
+
+    // check if the user is connected and if he is get his user id
+    try {
+        userID = getID();
+    } catch (error) {
+        printFailureToast()
+        return
+    }
 
     axios.post(`http://localhost:8000/reviews/hotel/${route.params.id}/`, {
-        client_id: 2,
+        client_id: userID,
         hotel_id: route.params.id,
         review: review.value,
         rating: numberOfStars,
@@ -58,15 +103,16 @@ function submitForm(event) {
             review.value = ''
             numberOfStars = 5
             starsHovered.value = starsHovered.value.map(() => true);
+            printSuccessToast()
         })
         .catch(function (error) {
-            console.log(error);
+            printHotelOwnerFailureToast()
         });
 };
 </script>
 
 <template>
-    <form class="pb-5 pt-5" @submit="submitForm">
+    <form @submit="submitForm">
 
         <!-- stars -->
         <div class="mb-3">
@@ -80,10 +126,50 @@ function submitForm(event) {
         </div>
 
         <!-- submit button -->
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" id="reviewButton" ref="reviewButton" class="btn btn-primary">Submit</button>
+
+        <!-- success toast -->
+        <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div id="successToast" ref="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="false">
+                <div class="toast-header">
+                    <i class="bi bi-check-lg me-2"></i>
+                    <strong class="me-auto text-success">Success</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body ">
+                    Your comment is posted!
+                </div>
+            </div>
+        </div>
+
+        <!-- login failure toast -->
+        <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div id="loginFailureToast" ref="loginFailureToast" class="toast" role="alert" aria-live="assertive" aria-atomic="false">
+                <div class="toast-header">
+                    <i class="bi bi-x me-2"></i>
+                    <strong class="me-auto text-danger">Failure</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body ">
+                    Please login to post your comment
+                </div>
+            </div>
+        </div>
+
+
+        <!-- login  as hotel owner failure toast -->
+        <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div id="hotelOwnerFailureToast" ref="hotelOwnerFailureToast" class="toast" role="alert" aria-live="assertive" aria-atomic="false">
+                <div class="toast-header">
+                    <i class="bi bi-x me-2"></i>
+                    <strong class="me-auto text-danger">Failure</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body ">
+                    Hotel owners cannot post comments
+                </div>
+            </div>
+        </div>
     </form>
-
-
-    
 </template>
 

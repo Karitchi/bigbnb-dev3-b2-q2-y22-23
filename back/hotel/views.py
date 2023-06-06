@@ -58,11 +58,11 @@ def hotel_detail(request, hotel_id):
 
 @api_view(['GET'])
 def filter_hotels(request):
+    location = request.GET.get('location')
     min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
     min_room = request.GET.get('min_room')
     max_room = request.GET.get('max_room')
-    print(type(min_room))
 
     try:
         min_price = float(min_price)
@@ -75,27 +75,52 @@ def filter_hotels(request):
             raise ValueError
 
     except ValueError:
-        print('coucou')
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-    hotels = Hotel.objects.all()
+    hotels = Hotel.objects.filter(city_id__name__icontains=location)
     hotels = hotels.filter(price__gte=min_price)
     hotels = hotels.filter(price__lte=max_price)
     hotels = hotels.filter(room_quantity__gte=min_room)
     hotels = hotels.filter(room_quantity__lte=max_room)
-    # hotels = hotels.filter(room_quantity__gte=min_room)
-    # hotels = hotels.filter(room_quantity__lte=max_room)
     serializer = HotelSerializer(hotels, many=True)
     return Response(status=status.HTTP_200_OK, data=serializer.data)
-    
+
+
 @api_view(['GET'])
 def hotel_images(request, hotel_id):
-
     try:
         images = Image.objects.filter(hotel_id=hotel_id)
     except Image.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    
+
     if request.method == 'GET':
         serializer = ImageSerializer(images, many=True)
         return Response(serializer.data)
+
+
+@api_view(['GET'])
+def search(request):
+    location: str = request.GET.get('location')
+    min_price: str = request.GET.get('min_price')
+    max_price: str = request.GET.get('max_price')
+    min_room: str = request.GET.get('min_room')
+    max_room: str = request.GET.get('max_room')
+
+    hotels = Hotel.objects.all()
+    if location is not None:
+        hotels = hotels.filter(city_id__name__icontains=location)
+
+    if min_price is not None and min_price.isdigit():
+        hotels = hotels.filter(price__gte=float(min_price))
+
+    if max_price is not None and max_price.isdigit():
+        hotels = hotels.filter(price__lte=float(max_price))
+
+    if min_room is not None and min_room.isdigit():
+        hotels = hotels.filter(room_quantity__gte=int(min_room))
+
+    if max_room is not None and max_room.isdigit():
+
+        hotels = hotels.filter(room_quantity__lte=int(max_room))
+
+    return Response(status=status.HTTP_200_OK, data=HotelSerializer(hotels, many=True).data)

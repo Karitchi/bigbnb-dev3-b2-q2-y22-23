@@ -1,14 +1,26 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import './assets/variables.scss'
+import './assets/register.css'
 import VueJwtDecode from 'vue-jwt-decode'
+
 
 const app = createApp(App);
 app.use(router).mount('#app');
 app.config.globalProperties.$api = 'http://localhost:8000/';
 app.config.globalProperties.$hotelOwnerUserType = 'hotel_owner';
 app.config.globalProperties.$clientUserType = 'client';
+
+
+export function isConnected(): boolean {
+    return localStorage.getItem('access') !== null;
+}
+
+export function getID() {
+    if (!isConnected())
+        throw 'Not Connected'
+    return Number(localStorage.getItem('id'));
+}
 
 app.mixin({
     methods: {

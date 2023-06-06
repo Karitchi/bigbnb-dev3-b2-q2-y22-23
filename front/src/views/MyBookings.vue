@@ -39,7 +39,6 @@ export default {
       hotelOwner: null,
       hotels: [],
       bookings: [],
-      bookingsFiltered: [],
     }
   },
 
@@ -71,7 +70,6 @@ export default {
             if (a.unread && !b.unread)
               return -1;
           });
-      this.bookingsFiltered = this.bookings;
     },
 
     onAccept(id) {

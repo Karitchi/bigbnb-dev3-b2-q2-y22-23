@@ -86,7 +86,8 @@ INSTALLED_APPS = [
     'hotel',
     'booking',
     'image',
-    'review'
+    'review',
+    'facility'
 ]
 
 MIDDLEWARE = [
