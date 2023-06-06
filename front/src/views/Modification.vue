@@ -1,8 +1,5 @@
 <template>
-  <img v-for="image in this.images"
-       :src="this.$api + image.url" alt="en,d" class = "img"
-       @click="removeImg(image)"
-  />
+
   <div class="page-container">
     <div class="content-container">
       <button @click="goBack" class="my-button hover-button">Retour</button>
@@ -15,7 +12,7 @@
         </div>
 
         <div class="alert alert-success" role="alert" v-if="this.success">
-          Changements effectués avec succès !
+          <bold><i>Changements effectués avec succès !</i></bold>
         </div>
 
         <div class="form-row">
@@ -43,11 +40,18 @@
           <input type="email" id="mail" v-model="mail" class="my-input input6">
         </div>
 
-        <div>
+        <div class="injectionImage">
           <add-image @input="this.setImage" />
         </div>
 
-        <button type="submit" class="my-button hover-button">Enregistrer les modifications</button>
+        <div class="image-container">
+          <img v-for="image in this.images"
+            :src="this.$api + image.url" alt="en,d" class="img"
+            @click="removeImg(image)"
+          />
+        </div>
+
+        <button type="submit" class="my-button hover-button"><bold>Enregistrer les modifications</bold></button>
       </form>
     
     </div>
@@ -189,6 +193,15 @@
 
 <style scoped>
 
+img:hover {
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+injectionImage{
+  font-weight: bold;
+}
+
 img{
   width : 300px;
   height : 200px;
@@ -226,8 +239,9 @@ img{
   margin-top: 20px;
   border: 3px solid #DFE0E2;
   padding: 20px;
-  max-width: 1400px;
-  margin-left: 10px;
+  max-width: 1600px;
+  flex-grow: 1;
+  margin-left: 30px;
 }
 
 .form-row {
@@ -270,8 +284,16 @@ img{
   background-color: #326b80; /* Couleur plus foncée pour l'effet de survol */
 }
 
+.image-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  margin-bottom: 30px;
+  border : 2px solid #DFE0E2; 
+}
+
 .input1 {
-    margin-left: 9.7%;
+    margin-left: 9.1%;
   }
   
   .input2 {
@@ -279,11 +301,11 @@ img{
   }
   
   .input3 {
-    margin-left: 11.6%;
+    margin-left: 10.6%;
   }
   
   .input4 {
-    margin-left: 7.4%;
+    margin-left: 7.2%;
   }
 
   .input5 {
@@ -291,7 +313,7 @@ img{
   }
 
   .input6 {
-    margin-left: 15.5%;
+    margin-left: 14%;
   }
 
 </style>
