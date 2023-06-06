@@ -7,8 +7,8 @@
 
       <form @submit="this.modifierHotel" class="my-form">
 
-        <div v-if="this.errorForm !== ''" class="alert alert-danger" role="alert">
-          {{ this.errorForm }}
+        <div v-if="errorForm !== ''" class="alert alert-danger" role="alert">
+          {{ errorForm }}
         </div>
 
         <div class="alert alert-success" role="alert" v-if="this.success">
@@ -53,12 +53,9 @@
 
         <button type="submit" class="my-button hover-button"><bold>Enregistrer les modifications</bold></button>
       </form>
-    
     </div>
   </div>
 </template>
-
-
 
 <script>
   import axios from 'axios';
@@ -219,6 +216,7 @@ img{
   flex: 1;
   padding-bottom: 80px; /* Espacement en bas pour éviter que le footer ne chevauche le contenu */
 }
+
 .my-button {
   background-color: #75ABBC;
   color: white;
@@ -259,12 +257,11 @@ img{
 
 .my-label {
   font-weight: bold;
-  float : left;
+  float: left;
 }
 
 .my-input {
   width: 40%;
-  
   margin-bottom: 10px;
   border: 1px solid #DFE0E2;
   border-radius: 4px;
@@ -280,6 +277,7 @@ img{
   resize: vertical;
   box-sizing: border-box;
 }
+
 .hover-button:hover {
   background-color: #326b80; /* Couleur plus foncée pour l'effet de survol */
 }
@@ -308,12 +306,11 @@ img{
     margin-left: 7.2%;
   }
 
-  .input5 {
-    margin-left: 5.5%;
-  }
+.input5 {
+  margin-left: 5.5%;
+}
 
-  .input6 {
-    margin-left: 14%;
-  }
-
+.input6 {
+  margin-left: 14%;
+}
 </style>
