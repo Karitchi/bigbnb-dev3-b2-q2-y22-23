@@ -1,6 +1,10 @@
 <template>
   <div class="card shadow">
-    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" class="card-img-top" alt="...">
+    <img
+        :src="this.image !== null ? this.$api + this.image : this.DEFAULT_IMAGE"
+        class="card-img-top"
+        alt="hotel image"
+    />
     <div class="card-body">
       <h3 class="cart-title">{{ this.hotel.name }}</h3>
       <p class="card-text" style="height: 100px; overflow: auto;">
@@ -25,7 +29,9 @@ export default {
     return {
       hotelOwner: {},
       infoMsg: "",
-      isHotelOwner: null
+      isHotelOwner: null,
+      image: null,
+      DEFAULT_IMAGE: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
     }
   },
 
@@ -33,12 +39,27 @@ export default {
     setHotelOwner() {
       axios.get(`${this.$api}hotel_owners/${this.hotel.hotel_owner}`)
         .then(response => this.hotelOwner = response.data);
+    },
+
+    fetchImages() {
+      axios.get(`${this.$api}hotels/${this.hotel.id}/images/`)
+          .then(response => this.setImages(response.data))
+          .catch(error => this.image = null);
+    },
+
+    setImages(responseData) {
+      if (responseData.length > 0) {
+        this.image = responseData[0].url;
+      } else {
+        this.image = null;
+      }
     }
   },
 
   mounted() {
     this.setHotelOwner();
     this.isHotelOwner = this.isHotelOwnerOf(this.hotel.hotel_owner);
+    this.fetchImages();
   }
 }
 </script>
