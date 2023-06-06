@@ -4,6 +4,8 @@
         :src="this.image !== null ? this.$api + this.image : this.DEFAULT_IMAGE"
         class="card-img-top"
         alt="hotel image"
+        width="300"
+        height="200"
     />
     <div class="card-body">
       <h3 class="cart-title">{{ this.hotel.name }}</h3>
