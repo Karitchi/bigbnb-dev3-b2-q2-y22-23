@@ -1,10 +1,7 @@
-from django.urls import include, path
-from rest_framework import routers
-from .views import ClientViewSet
+from django.urls import path
 
-router = routers.DefaultRouter()
-router.register(r'clients', ClientViewSet)
+from . import views
+
 urlpatterns = [
-    path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('<int:image_id>/', views.image_detail)
 ]

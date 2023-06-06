@@ -1,10 +1,14 @@
 <template>
+  <img v-for="image in this.images"
+       :src="this.$api + image.url" alt="en,d" class = "img"
+       @click="removeImg(image)"
+  />
   <div class="page-container">
     <div class="content-container">
       <button @click="goBack" class="my-button hover-button">Retour</button>
       <h1 class="my-heading titre">Modification de l'hôtel</h1>
 
-      <form @submit.prevent="modifierHotel" class="my-form">
+      <form @submit="this.modifierHotel" class="my-form">
 
         <div v-if="errorForm !== ''" class="alert alert-danger" role="alert">
           {{ errorForm }}
@@ -17,11 +21,6 @@
         <div class="form-row">
           <label for="nom" class="my-label">Nom de l'hôtel:</label>
           <input type="text" id="nom" v-model="name" class="my-input input1">
-        </div>
-
-        <div class="form-row">
-          <label for="image" class="my-label">img:</label>
-          <input type="text" id="image" v-model="img" class="my-input input2">
         </div>
 
         <div class="form-row">
@@ -44,165 +43,156 @@
           <input type="email" id="mail" v-model="mail" class="my-input input6">
         </div>
 
-        <div v-for="(facility, index) in facilities" :key="index">
-          <div class="form-row">
-            <label :for="'facility-name-' + index" class="my-label">Equipement/service:</label>
-            <input :id="'facility-name-' + index" v-model="facility.name" class="my-input">
-          </div>
-          <div class="form-row">
-            <label :for="'facility-description-' + index" class="my-label">Equipement/service Description:</label>
-            <input :id="'facility-description-' + index" v-model="facility.description" class="my-input">
-          </div>
-        </div>
-
-        <div class="controls">
-          <a href="#" id="add_more_fields" @click.prevent="addFacility"><i class="fa fa-plus"></i> Ajouter</a>
-          <a href="#" id="remove_fields" @click.prevent="removeFacility"><i class="fa fa-plus"></i> Retirer</a>
+        <div>
+          <add-image @input="this.setImage" />
         </div>
 
         <button type="submit" class="my-button hover-button">Enregistrer les modifications</button>
-
       </form>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+  import axios from 'axios';
+  import AddImage from '@/components/AddHotel/AddImage.vue'
 
-export default {
-  data() {
-    return {
-      hotel: {},
-      name: "",
-      img: "",
-      description: "",
-      price: "",
-      phone_number: "",
-      mail: "",
-      errorForm: '',
-      success: false,
-      facilities: [{ name: '', description: '' }],
-    }
-  },
-
-  mounted() {
-    axios.get(`${this.$api}hotels/${this.$route.params.id}`)
-      .then(response => this.responseHotel(response.data))
-      .catch(error => console.log("certaines données sont introuvables"))
-  },
-
-  methods: {
-    goBack() {
-      this.$router.go(-1);
-    },
-
-    isValidPhoneNumber(phoneNumber) {
-      const phoneRegex = /^[0-9]{10}$/;
-      return phoneRegex.test(phoneNumber);
-    },
-
-    isValidEmail(email) {
-      const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-      return emailRegex.test(email);
-    },
-
-    modifierHotel() {
-      if (this.name.length < 3 || this.name.length > 30) {
-        this.errorForm = "Le nom de l'hôtel doit contenir entre 3 et 30 caractères.";
-        this.success = false;
-        return;
+  export default {
+    components: {AddImage},
+    data() {
+      return {
+        images: [],
+        hotel: {},
+        name : "",
+        img : null,
+        description : "",
+        price : "",
+        phone_number : "",
+        mail : "",
+        errorForm: '',
+        success : false
       }
+   },
 
-      if (this.price <= 0) {
-        this.errorForm = "Le prix de la chambre doit être supérieur à zéro";
-        this.success = false;
-        return;
-      }
+    mounted() {
+      axios.get(`${this.$api}hotels/${this.$route.params.id}`)
+          .then(response=>this.responseHotel(response.data))
+          .catch(error => console.log("certaines données sont introuvables"))
+      this.generateImg()
+    }, // get {export default.$api -> django -> localhost port 8000} dans le tableau hotels/ {export default.modification:id}on met tout dans une variabel reponse
+    methods: {
+      
+      generateImg(){
+        axios.get(`${this.$api}hotels/${this.$route.params.id}/images/`).then(response => this.images = response.data);
+      },
 
-      if (this.phone_number && !this.isValidPhoneNumber(this.phone_number)) {
-        this.errorForm = "Le numéro de téléphone n'est pas valide.";
-        this.success = false;
-        return;
-      }
-
-      if (this.mail && !this.isValidEmail(this.mail)) {
-        this.errorForm = "L'adresse e-mail n'est pas valide.";
-        this.success = false;
-        return;
-      }
-
-      this.errorForm = '';
-
-      this.hotel.name = this.name;
-      this.hotel.description = this.description;
-      this.hotel.price = this.price;
-      this.hotel.phone_number = this.phone_number;
-      this.hotel.mail = this.mail;
-
-      axios.patch(`${this.$api}hotels/${this.$route.params.id}/`, {
-        name: this.hotel.name,
-        price: this.hotel.price,
-        description: this.hotel.description,
-        phone_number: this.hotel.phone_number,
-        mail: this.hotel.mail
-      })
-        .catch(error => {
-          console.log("test");
-          this.success = false;
-        })
-        .then(response => this.success = true);
-
-      this.facilities.forEach((facility, index) => {
-        axios.post(`${this.$api}facilities/${this.$route.params.id}/`, {
-          name: facility.name,
-          description: facility.description
-        })
-          .catch(error => {
-            console.log("test2");
-            this.success = false;
-          })
-          .then(response => {
-            this.success = true;
-          });
-      });
-    },
-
-    responseHotel(responseData) {
-      this.hotel = responseData;
-      if (!this.isHotelOwnerOf(this.hotel.hotel_owner)) {
+      addImg() {
+        if (this.img === null){
+          this.success = true
+          return
+        }
+        let formData = new FormData();
+        formData.append('image', this.img);
+        axios.post(`${this.$api}hotels/${this.hotel.id}/images/`, formData, {
+          headers: {
+           'Content-Type': 'multipart/form-data'
+          }
+        }).then(response => this.onSuccess());
+      },
+      onSuccess(){
+        this.success = true
+        this.generateImg()
+      },
+      setImage(data){
+        this.img = data['image']
+      },
+      goBack() {
         this.$router.go(-1);
-      }
-      this.name = this.hotel.name;
-      this.description = this.hotel.description;
-      this.price = this.hotel.price;
-      this.phone_number = this.hotel.phone_number;
-      this.mail = this.hotel.mail;
-    },
+      },
+      removeImg(image) {
+        axios.delete(`${this.$api}images/${image.image_id}`).then(response => this.images = this.images.filter(item => item !== image))
+      },
+      isValidPhoneNumber(phoneNumber) {
+        const phoneRegex = /^[0-9]{10}$/;
+        return phoneRegex.test(phoneNumber);
+      },
+      isValidEmail(email) {
+        const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        return emailRegex.test(email);
+      },
+      modifierHotel(event) {
+    
+        if (this.name.length < 3 || this.name.length > 30) {
+          this.errorForm = "Le nom de l'hôtel doit contenir entre 3 et 30 caractères.";
+          this.success = false;
+          event.preventDefault();
+          return
+        }
+        if (this.price <= 0){
+          this.errorForm = "Le prix de la chambre doit être supérieur à zéro";
+          this.success = false;
+          event.preventDefault();
+          return
+        }
+        if (this.phone_number && !this.isValidPhoneNumber(this.phone_number)) {
+          this.errorForm = "Le numéro de téléphone n'est pas valide.";
+          this.success = false;
+          event.preventDefault();
+          return;
+        }
+        if (this.mail && !this.isValidEmail(this.mail)) {
+          this.errorForm = "L'adresse e-mail n'est pas valide.";
+          this.success = false;
+          event.preventDefault();
+          return;
+        }
+        this.errorForm = ''
+        this.hotel.name = this.name
+        this.hotel.description = this.description
+        this.hotel.price = this.price
+        this.hotel.phone_number = this.phone_number
+        this.hotel.mail = this.mail
+        axios.patch(`${this.$api}hotels/${this.$route.params.id}/`, {
+          name: this.hotel.name,
+          price: this.hotel.price,
+          description: this.hotel.description,
+          phone_number : this.hotel.phone_number,
+          mail : this.hotel.mail
+        }).catch(error => {
+           console.log("test");
+           this.success = false;
+          }).then(response => this.addImg());
+          event.preventDefault();
+      },
 
-    addFacility() {
-      this.facilities.push({ name: '', description: '' });
+      responseHotel(responseData) {
+       this.hotel = responseData;
+       if (!this.isHotelOwnerOf(this.hotel.hotel_owner)) {
+         this.$router.go(-1);
+       }
+        this.name = this.hotel.name;
+        this.description = this.hotel.description;
+        this.price = this.hotel.price;
+        this.phone_number = this.hotel.phone_number;
+        this.mail = this.hotel.mail;
+     },
+     onFileChange(event) {
+       /*Gérer le changement de fichier d'image ici
+        Par exemple, lire le fichier image et effectuer des actions supplémentaires si nécessaire*/
+     },
     },
-
-    removeFacility() {
-      if (this.facilities.length > 1) {
-        this.facilities.pop();
-      }
-    },
-
-    onFileChange(event) {
-      /*Gérer le changement de fichier d'image ici
-       Par exemple, lire le fichier image et effectuer des actions supplémentaires si nécessaire*/
-    },
-
-    test() {
-      console.log(this.name)
-    },
-  },
-};
+  };
 </script>
 
 <style scoped>
+
+img{
+  width : 300px;
+  height : 200px;
+  padding : 30px;
+  object-fit: cover;
+}
+
 .page-container {
   display: flex;
   flex-direction: column;
